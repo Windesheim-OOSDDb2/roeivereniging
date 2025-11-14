@@ -39,8 +39,9 @@ Het project wordt ontwikkeld door 7 leden, met de volgende rollen:
 - **Scrum Master**: Procesbewaking en teamcoördinatie - **Justen Cremer**
 - **Ontwikkelaars**: Bouwen van de applicatie - **Alle leden**
 - **Testers**: Waarborgen kwaliteit - **Alle leden**
-- **Notulist**: Documentatie van belangrijke besluiten - **Jameena**
+- **Notulist**: Documentatie van belangrijke besluiten - **Jameena Dedden**
 
 ## Licentie
 Dit project is gelicentieerd onder de MIT License - zie het `LICENSE`-bestand voor meer details.
+
 
