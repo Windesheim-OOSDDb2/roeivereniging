@@ -1,16 +1,12 @@
-﻿using RoeiVereniging.ViewModels;
-using RoeiVereniging.Views;
-
-namespace RoeiVereniging
+﻿namespace RoeiVereniging
 {
     public partial class App : Application
     {
-        public App(LoginViewModel viewModel)
+        public App()
         {
             InitializeComponent();
 
-            //MainPage = new AppShell();
-            MainPage = new LoginView(viewModel);
+            MainPage = new AppShell();
         }
     }
 }

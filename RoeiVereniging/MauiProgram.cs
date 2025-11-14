@@ -26,16 +26,6 @@ namespace RoeiVereniging
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-            // Register interfaces and services
-            builder.Services.AddSingleton<IAuthService, AuthService>();
-            builder.Services.AddSingleton<IClientService, ClientService>();
-
-            // Register repositories
-            builder.Services.AddSingleton<IClientRepository, ClientRepository>();
-            builder.Services.AddSingleton<GlobalViewModel>();
-
-            // Register views and viewmodels
-            builder.Services.AddTransient<LoginView>().AddTransient<LoginViewModel>();
 
             return builder.Build();
         }
