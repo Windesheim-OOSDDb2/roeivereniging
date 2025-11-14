@@ -1,4 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using RoeiVereniging.Core.Services;
+using RoeiVereniging.ViewModels;
+using RoeiVereniging.Views;
+using Microsoft.Extensions.Logging;
+using RoeiVereniging.Core.Interfaces.Services;
+using RoeiVereniging.Core.Interfaces.Repositories;
+using RoeiVereniging.Core.Data.Repositories;
+using CommunityToolkit.Maui;
 
 namespace RoeiVereniging
 {
@@ -9,6 +16,7 @@ namespace RoeiVereniging
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
