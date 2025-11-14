@@ -1,6 +1,6 @@
 # Roeivereniging Reserveringssysteem
 
-Dit project is (wordt) ontwikkeld om het reserveren van boten eenvoudiger, efficiënter en veiliger te maken.
+Dit project is ontwikkeld om het reserveren van boten eenvoudiger, efficiënter en veiliger te maken.
 
 ## Over het project
 De roeivereniging had voorheen geen geautomatiseerde systeem voor het reserveren van boten, alles verliep handmatig.
@@ -17,8 +17,8 @@ Het reserveringssysteem biedt de volgende functionaliteiten:
 - Maximum van 2 uur reserveren en alleen tijdens daglicht.
 - Bestuurs leden kunnen schademeldingen registreren en onderhoudsstatus bekijken.
 - Dashboard met trends en inzichten voor bestuursleden.
-- Weers informatie tonen voor gereserveerde tijden.
-- Wedstrijdscommisarissen kunnen ver vooruit reserveren.
+- Weersinformatie tonen voor gereserveerde tijden.
+- Wedstrijdcommissarissen kunnen ver vooruit reserveren.
 - Waarschuwingen bij onveilige omstandigheden (bijv. slecht weer).
 
 ## Gebruikte technologieën
@@ -35,12 +35,12 @@ Het project bestaat uit de volgende fasen:
 3. Testen, implementatie & evaluatie — 1 week
 
 Het project wordt ontwikkeld door 7 leden, met de volgende rollen:
-- **Opdrachtgever** Beoordeelt eindresultaat
-- **Product Owner** Communicatie met stakeholders
-- **Scrum Master** Procesbewaking en teamcoördinatie
-- **Ontwikkelaars** Bouwen van de applicatie
-- **Testers** Waarborgen kwaliteit
-- **Notulist** Documentatie van belangrijke besluiten
+- **Product Owner**: Communicatie met stakeholders - **Chris Friemann**, **John Brouwers** 
+- **Scrum Master**: Procesbewaking en teamcoördinatie - **Justen Cremer**
+- **Ontwikkelaars**: Bouwen van de applicatie - **Alle leden**
+- **Testers**: Waarborgen kwaliteit - **Alle leden**
+- **Notulist**: Documentatie van belangrijke besluiten - **Jameena**
 
 ## Licentie
 Dit project is gelicentieerd onder de MIT License - zie het `LICENSE`-bestand voor meer details.
+
