@@ -1,10 +1,10 @@
-﻿using RoeiVereniging.Core.Services;
+﻿//using RoeiVereniging.Core.Services;
 using RoeiVereniging.ViewModels;
 using RoeiVereniging.Views;
 using Microsoft.Extensions.Logging;
-using RoeiVereniging.Core.Interfaces.Services;
-using RoeiVereniging.Core.Interfaces.Repositories;
-using RoeiVereniging.Core.Data.Repositories;
+//using RoeiVereniging.Core.Interfaces.Services;
+//using RoeiVereniging.Core.Interfaces.Repositories;
+//using RoeiVereniging.Core.Data.Repositories;
 using CommunityToolkit.Maui;
 
 namespace RoeiVereniging
@@ -26,7 +26,7 @@ namespace RoeiVereniging
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-
+            builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             return builder.Build();
         }
     }
