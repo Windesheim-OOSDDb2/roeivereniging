@@ -27,9 +27,9 @@ Check for more kinds of branches on [Conventional Branches](https://conventional
 
 ### Branch Naming Conventions
 
-- Feature branches: `feature/<short‑description>`  
-  *Examples:* `feature/login` , `feature/reserve`
-- Hotfix branches: `hotfix/<issue>`, e.g. `hotfix/login-bug`
+- Feature branches: feature/<linear-identifier>  
+  *Examples: feature/WIN-12 , feature/WIN-232
+- Hotfix branches: hotfix/<linear-identifier>, e.g. hotfix/WIN-52
 
 ### Commit Message Conventions
 Use a consistent style for commit messages to improve clarity. A common format is:
