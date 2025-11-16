@@ -66,7 +66,7 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
 1. **Fork** the repository and clone to your local machine.  
    ```bash
    git clone <your‑fork‑url>
-   cd Windesheim-OOSDDb2/roeivereniging
+   cd roeivereniging
    git checkout develop
    ```
 
