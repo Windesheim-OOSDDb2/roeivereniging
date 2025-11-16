@@ -81,7 +81,7 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
 
 5. **Push your feature branch** to your fork:  
    ```bash
-   git push origin feature/<your-feature-name>
+   git push origin feature/<linear-identifier>
    ```
 
 6. **Open a Pull Request (PR)** from your feature branch → `development` (unless hotfix → `Master`). Provide a clear description of what you changed, referencing relevant UC (Use Case) if applicable. Request reviews.
