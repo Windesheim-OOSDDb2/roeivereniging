@@ -74,7 +74,7 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
 
 3. **Create a feature branch** off `development`:  
    ```bash
-   git checkout -b feature/<your-feature-name> develop
+   git checkout -b feature/<linear-identifier> development
    ```
 
 4. **Make your changes**, commit often with meaningful messages.
