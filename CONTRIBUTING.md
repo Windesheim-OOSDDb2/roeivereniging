@@ -32,7 +32,7 @@ Check for more kinds of branches on [Conventional Branches](https://conventional
 - Hotfix branches: hotfix/<linear-identifier>, e.g. hotfix/WIN-52
 
 ### Commit Message Conventions
-Use a consistent style for commit messages to improve clarity. A common format is:
+Use a consistent style for commit messages to improve clarity. The format we use is:
 
 ```
 <type>[optional scope]: <description>
