@@ -114,12 +114,12 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
 
 ## Additional Guidelines
 
-- Always update **documentation** when needed  
-- Ensure consistency in naming, file structure, and project layering (UI / Core / Data).  
-- Try to write or maintain tests if possible. Even basic ones help.  
-- Use descriptive commit messages; avoid “fixed stuff” or “changes” without context.
-- Only the creator of a PR may merge the PR
-- In the branch section, it will be feature/<identifier> or fix/<identifier>. 
+- **Always update **documentation** when needed** 
+- **Ensure consistency in naming, file structure, and project layering (UI / Core / Data).**  
+- **Try to write or maintain tests if possible. Even basic ones help.**  
+- **Use descriptive commit messages; avoid “fixed stuff” or “changes” without context.**
+- **Only the creator of a PR may merge the PR**
+- **In the branch section, it will be feature/<identifier> or fix/<identifier>.** 
 ---
 
 ## Resources
