@@ -50,6 +50,8 @@ Where `<type>` is one of:
 - `refactor` — code change that neither fixes a bug nor adds a feature
 - `test` — adding missing tests or correcting existing tests
 - `chore` — changes to the build process or auxiliary tools and libraries such as documentation
+- `[optional scope]`this is used to tell in what project you are working. like `.Core` and `Core.data`
+- `[optional body]` this is used for more detailed description of the type
 
 *Examples:*
 - `feat(Core.Data): implement GetAvailableProducts logic`
