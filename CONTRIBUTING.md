@@ -18,9 +18,9 @@ Here are the branches we use:
 |--------|---------|
 | `Master` | Production‑ready code. Merges only from `release/*` and `hotfix/*`. |
 | `develop` | Ongoing development. All feature branches are merged here. When ready, a release branch is cut from this. |
-| `feature/<name>` | New features, enhancements, or tasks (e.g. implementing UC05, adding new service, etc.). Branch off from `develop`. |
-| `hotfix/<description>` | For urgent fixes when the code in `Master` fails in production. Branch off `Master`. |
-| `docs/<description>` | Documentation updates. Branch off `development`. |
+| `feature/<linear-identifier>` | New features, enhancements, or tasks (e.g. implementing UC05, adding new service, etc.). Branch off from `develop`. |
+| `hotfix/<linear-identifier>` | For urgent fixes when the code in `Master` fails in production. Branch off `Master`. |
+| `docs/<linear-identifier>` | Documentation updates. Branch off `development`. |
 | `release/<version>` | Prepares a new production release. Branch off `development`. |
 
 Check for more kinds of branches on [Conventional Branches](https://conventional-branch.github.io/)
