@@ -39,7 +39,7 @@ Use a consistent style for commit messages to improve clarity. The format we use
 
 [optional body]
 
-[optional footer(s)]
+
 ```
 
 Where `<type>` is one of:
