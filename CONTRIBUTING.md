@@ -105,7 +105,7 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
   6. Publish the release.
 
 - **Hotfix Branch**  
-  1. If there is a critical bug in `Master`, branch: `hotfix/<description>` from `Master`.  
+  1. If there is a critical bug in `Master`, branch: `hotfix/<linear-identifier>` from `Master`.  
   2. Fix, test.  
   3. Merge hotfix into `Master` and `development`.  
   4. Tag the fix on `Master`.  
