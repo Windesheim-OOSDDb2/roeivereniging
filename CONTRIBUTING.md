@@ -21,10 +21,10 @@ Here are the branches we use:
 | `feature/<linear-identifier>` | New features, enhancements, or tasks (e.g. implementing UC05, adding new service, etc.). Branch off from `develop`. |
 | `hotfix/<linear-identifier>` | For urgent fixes when the code in `Master` fails in production. Branch off `Master`. |
 | `docs/<linear-identifier>` | Documentation updates. Branch off `development`. |
+| `fix/<linear-identifier>` | for fixes when the code has failed`. |
 | `release/<version>` | Prepares a new production release. Branch off `development`. |
 
 Check for more kinds of branches on [Conventional Branches](https://conventional-branch.github.io/)
-
 ### Branch Naming Conventions
 
 - Feature branches: feature/<linear-identifier>  
