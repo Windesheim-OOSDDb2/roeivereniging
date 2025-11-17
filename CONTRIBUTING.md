@@ -1,6 +1,6 @@
 ﻿# Contributing Guidelines
 
-Thank you for your interest in contributing to **Roervereneging**! This document describes how we organize work using *Gitflow*, how to set up your branches, submit contributions, and ensure code quality. Please follow these steps to help maintain clarity, consistency, and a stable development process.
+Thank you for your interest in contributing to **Roeivereniging**! This document describes how we organize work using *Gitflow*, how to set up your branches, submit contributions, and ensure code quality. Please follow these steps to help maintain clarity, consistency, and a stable development process.
 
 ---
 
@@ -17,11 +17,11 @@ Here are the branches we use:
 | Branch | Purpose |
 |--------|---------|
 | `Master` | Production‑ready code. Merges only from `release/*` and `hotfix/*`. |
-| `develop` | Ongoing development. All feature branches are merged here. When ready, a release branch is cut from this. |
+| `development` | Ongoing development. All feature branches are merged here. When ready, a release branch is cut from this. |
 | `feature/<linear-identifier>` | New features, enhancements, or tasks (e.g. implementing UC05, adding new service, etc.). Branch off from `develop`. |
 | `hotfix/<linear-identifier>` | For urgent fixes when the code in `Master` fails in production. Branch off `Master`. |
 | `docs/<linear-identifier>` | Documentation updates. Branch off `development`. |
-| `fix/<linear-identifier>` | for fixes when the code has failed`. |
+| `fix/<linear-identifier>` | For fixes when the code has failed. |
 | `release/<version>` | Prepares a new production release. Branch off `development`. |
 
 Check for more kinds of branches on [Conventional Branches](https://conventional-branch.github.io/)
@@ -29,7 +29,8 @@ Check for more kinds of branches on [Conventional Branches](https://conventional
 
 - Feature branches: feature/<linear-identifier>  
   *Examples: feature/WIN-12 , feature/WIN-232
-- Hotfix branches: hotfix/<linear-identifier>, e.g. hotfix/WIN-52
+- Hotfix branches: hotfix/<linear-identifier>
+  *Examples: hotfix/WIN-52
 
 ### Commit Message Conventions
 Use a consistent style for commit messages to improve clarity. The format we use is:
@@ -38,7 +39,6 @@ Use a consistent style for commit messages to improve clarity. The format we use
 <type>[optional scope]: <description>
 
 [optional body]
-
 
 ```
 
@@ -114,11 +114,11 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
 
 ## Additional Guidelines
 
-- **Always update **documentation** when needed** 
-- **Ensure consistency in naming, file structure, and project layering (UI / Core / Data).**  
-- **Try to write or maintain tests if possible. Even basic ones help.**  
-- **Use descriptive commit messages; avoid “fixed stuff” or “changes” without context.**
-- **Only the creator of a PR may merge the PR**
+- Always update **documentation** when needed.
+- Ensure consistency in naming, file structure, and project layering (UI / Core / Data).
+- Try to write or maintain tests if possible. Even basic ones help.
+- Use descriptive commit messages; avoid “fixed stuff” or “changes” without context.
+- Only the creator of a PR may merge the PR.
 - **In the branch section, it will be feature/<identifier> or fix/<identifier>.** 
 ---
 
