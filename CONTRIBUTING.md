@@ -67,7 +67,7 @@ See [Conventional Commits](https://www.conventionalcommits.org/) for more detail
    ```bash
    git clone <your‑fork‑url>
    cd roeivereniging
-   git checkout develop
+   git checkout development
    ```
 
 2. **Sync** your fork regularly with upstream (the original repo) to keep `development` up to date.
