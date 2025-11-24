@@ -1,0 +1,127 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             x:Class="RoeiVereniging.Views.ReserveBoatView"
+             x:DataType="vm:ReserveBoatViewModel"
+             Title="ReserveBoatView">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- header -->
+        <Image Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="0" Source="logo.png" HorizontalOptions="Start" />
+        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" />
+
+        <!-- Row 1 -->
+        <Entry
+            Text="{Binding Naam}"
+            Placeholder="Voornaam"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+
+        <Entry
+            Text="{Binding Achternaam}"
+            Placeholder="Achternaam"
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+
+        <!-- Row 2 -->
+        <Entry
+            Text="{Binding AantalPersonen}"
+            Placeholder="Aantal personen"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="2"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+
+        <Entry
+            Text="{Binding Email}"
+            Placeholder="E-mail"
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="2"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+
+        <!-- Row 3 -->
+        <DatePicker
+            Date="{Binding Datum}"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="3"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+
+        <TimePicker
+            Time="{Binding Tijd}"
+            Format="HH:mm"
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="3"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+
+        <!-- Row 4 -->
+        <Picker 
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Grid.Row="4" 
+            Margin="40, 0" 
+            Title="Klik op onderstaand pijltje om een boot te selecteren:"
+            ItemsSource="{Binding Boats}"
+            SelectedItem="{Binding Boat, Mode=TwoWay}" 
+            SelectedIndexChanged="Picker_SelectedIndexChanged"
+            BackgroundColor="{StaticResource Primary}"
+                TextColor="{StaticResource Secondary}">
+                    </Picker>
+
+        <!-- Row 5 -->
+        <Button
+            Text="Reserveren"
+            Command="{Binding ReserveerBootCommand}"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Grid.Row="5"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0" />
+    </Grid>
+</ContentPage>

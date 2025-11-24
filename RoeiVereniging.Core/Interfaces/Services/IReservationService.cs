@@ -9,9 +9,8 @@ namespace RoeiVereniging.Core.Interfaces.Services
 {
     public interface IReservationService
     {
-        public Reservation? Get(string name);
         public Reservation? Get(int id);
-        public List<Boat> GetAll();
+        public List<Reservation> GetAll();
         public Reservation? Set(Reservation reservation);
     }
 }

@@ -9,9 +9,8 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
 {
     public interface IReservationRepository
     {
-        public Reservation? Get(string name);
         public Reservation? Get(int id);
-        public List<Boat> GetAll();
+        public List<Reservation> GetAll();
         public Reservation? Set(Reservation reservation);
     }
 }

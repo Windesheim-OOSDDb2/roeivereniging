@@ -9,7 +9,7 @@ namespace RoeiVereniging.Core.Models
     public partial class Reservation : Model
     {
         public int PassengerCount { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public DateTime DateTime { get; set; }
         public int UserId { get; set; }
         public int BoatId { get; set; }
 

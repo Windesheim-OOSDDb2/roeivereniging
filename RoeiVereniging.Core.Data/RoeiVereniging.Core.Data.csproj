@@ -17,6 +17,12 @@
 	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
   </ItemGroup>
 
+	<ItemGroup>
+		<MauiAsset Include="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiAsset>
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\RoeiVereniging.Core\RoeiVereniging.Core.csproj" />
   </ItemGroup>
