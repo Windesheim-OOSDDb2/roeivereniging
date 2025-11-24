@@ -59,6 +59,11 @@ namespace RoeiVereniging.ViewModels
                 // Handle validation error (e.g., show a message to the user)
                 return;
             }
+            if (!int.TryParse(AantalPersonen, out int passengerCount))
+            {
+                // TODO: handle invalid input for number
+                return;
+            }
             var reservation = new Reservation(
                 0, // id
                 "filler", // name
