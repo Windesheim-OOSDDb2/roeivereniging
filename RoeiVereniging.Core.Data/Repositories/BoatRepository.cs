@@ -10,7 +10,8 @@ namespace RoeiVereniging.Core.Data.Repositories
         public BoatRepository()
         {
             boatList = [
-                new Boat(1, "ZwarteParel", 4, false, 1, BoatStatus.Working, BoatType.Roeiboot)
+                new Boat(1, "Zwarte Parel", 4, false, 1, BoatStatus.Working, BoatType.Roeiboot),
+                new Boat(2, "Blauwe Dolfijn", 2, true, 2, BoatStatus.Fixing, BoatType.Kano),
                 ];
         }
 
