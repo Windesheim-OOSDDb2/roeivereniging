@@ -1,18 +1,42 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoeiVereniging.Core.Data.Repositories;
+using RoeiVereniging.Core.Interfaces.Services;
+using RoeiVereniging.Core.Models;
+using RoeiVereniging.Core.Repositories;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace RoeiVereniging.ViewModels
 {
-    public partial class ReservationViewModel : ObservableObject
+    public partial class ReservationViewModel : BaseViewModel
     {
-        public ReservationViewModel()
+        public ObservableCollection<Reservation> MyReservations { get; } = new();
+
+        private readonly IReservationService _reservationService;
+        private readonly UserRepository _userRepo;
+        private readonly BoatRepository _boatRepo;
+
+        public ReservationViewModel(IReservationService reservationService)
         {
-            // TODO: Add constructor logic here
-            return;
+            _reservationService = reservationService;
+            _userRepo = new UserRepository();
+            _boatRepo = new BoatRepository();
+
+            LoadForDummyUser();
+        }
+
+        private void LoadForDummyUser()
+        {
+            var user = _userRepo.GetById(1);
+            if (user == null) return;
+
+            var Reservations = _reservationService.GetByUser(user.UserId);
+            foreach (var reservation in Reservations)
+            {
+                Debug.WriteLine($"Reservation: {reservation.Id}, Boat ID: {reservation.BoatId}");
+            }
+
+            MyReservations.Clear();
+            foreach (var reservation in Reservations) MyReservations.Add(reservation);
         }
     }
 }

@@ -23,5 +23,10 @@ namespace RoeiVereniging.Core.Services
         {
             return _reservationRepository.Set(reservation);
         }
+
+        public List<Reservation> GetByUser(int userId)
+        {
+            return _reservationRepository.GetByUserId(userId);
+        }
     }
 }

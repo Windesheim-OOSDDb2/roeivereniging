@@ -1,16 +1,12 @@
 ﻿using RoeiVereniging.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Interfaces.Repositories
 {
     public interface IReservationRepository
     {
-        public Reservation? Get(int id);
-        public List<Reservation> GetAll();
+        public List<Reservation> GetByUserId(int id);
         public Reservation? Set(Reservation reservation);
+        public List<Reservation> GetAll();
+        public Reservation? Get(int id);
     }
 }

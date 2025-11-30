@@ -20,16 +20,16 @@ namespace RoeiVereniging.ViewModels
         private readonly IBoatService _boatService;
 
         [ObservableProperty]
-        private string naam;
+        private string naam = string.Empty;
 
         [ObservableProperty]
-        private string achternaam;
+        private string achternaam = string.Empty;
 
         [ObservableProperty]
-        private string aantalPersonen;
+        private string aantalPersonen = string.Empty;
 
         [ObservableProperty]
-        private string email;
+        private string email = string.Empty;
 
         [ObservableProperty]
         private DateTime datum = DateTime.Now.AddDays(7);
@@ -38,14 +38,14 @@ namespace RoeiVereniging.ViewModels
         private TimeSpan tijd = DateTime.Now.TimeOfDay;
 
         [ObservableProperty]
-        private Boat boat;
+        private Boat boat = null!;
 
         public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
         {
             _reservationService = reservationService;
             _boatService = boatService;
             Reservations = new(_reservationService.GetAll());
-            Boats = new(_boatService.GetAll());
+            Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
         }
 
         [RelayCommand]
@@ -62,10 +62,10 @@ namespace RoeiVereniging.ViewModels
             }
             var reservation = new Reservation(
                 0, // id
-                "filler", // name
-                int.Parse(AantalPersonen), // passengerCount
-                new DateTime(Datum.Year, Datum.Month, Datum.Day, Tijd.Hours, Tijd.Minutes, 0), // dateTime
-                1, // userId (should be replaced with actual user ID)
+                1, // user id
+                new DateTime(Datum.Year, Datum.Month, Datum.Day, Tijd.Hours, Tijd.Minutes, 0), // startTime
+                new DateTime(Datum.Year, Datum.Month, Datum.Day, Tijd.Hours, Tijd.Minutes, 0), // endTime
+                DateTime.Now, // createdAt
                 Boat.Id // boatId
             );
 
