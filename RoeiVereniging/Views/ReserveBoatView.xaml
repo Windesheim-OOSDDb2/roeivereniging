@@ -124,7 +124,7 @@
             FontSize="25"
             Margin="40, 0" />
         <Button 
-            Text="Go to my reservations" 
+            Text="Naar reserveringen ->" 
             Command="{Binding GoToReservationsCommand}" 
             Grid.Column="1"
             Grid.ColumnSpan="2"
@@ -132,6 +132,8 @@
             VerticalOptions="Center"
             HorizontalOptions="Fill"
             FontSize="25"
-            Margin="40, 0"/>
+            Margin="40, 0"
+            BackgroundColor="#DEE6F8"
+            TextColor="#082757"/>
     </Grid>
 </ContentPage>
