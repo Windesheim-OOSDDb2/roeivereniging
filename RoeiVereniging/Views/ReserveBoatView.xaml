@@ -123,5 +123,15 @@
             HorizontalOptions="Fill"
             FontSize="25"
             Margin="40, 0" />
+        <Button 
+            Text="Go to my reservations" 
+            Command="{Binding GoToReservationsCommand}" 
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="6"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            FontSize="25"
+            Margin="40, 0"/>
     </Grid>
 </ContentPage>

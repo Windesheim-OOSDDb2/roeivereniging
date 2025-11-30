@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -84,6 +85,12 @@ namespace RoeiVereniging.ViewModels
         public void NewSelectedBoat(Boat product)
         {
             boat = product;
+        }
+
+        [RelayCommand]
+        public async Task GoToReservations()
+        {
+            await Shell.Current.GoToAsync(nameof(ReservationView));
         }
     }
 }
