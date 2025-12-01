@@ -13,12 +13,25 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:Reservation">
                     <Frame Padding="10" Margin="5" BackgroundColor="#0854D1">
-                        <VerticalStackLayout>
-                            <Label Text="Reservering" FontAttributes="Bold" BackgroundColor="#5FA6E8" TextColor="#000000"/>
-                            <Label Text="{Binding StartTime, StringFormat='Start: {0:yyyy-MM-dd HH:mm}'}" BackgroundColor="#5FA6E8" TextColor="#000000"/>
-                            <Label Text="{Binding EndTime, StringFormat='End: {0:yyyy-MM-dd HH:mm}'}" BackgroundColor="#5FA6E8" TextColor="#000000"/>
-                            <Label Text="{Binding BoatId, StringFormat='Boat Id: {0}'}" BackgroundColor="#5FA6E8" TextColor="#000000"/>
-                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="*, *, *" RowDefinitions="Auto">
+                            <Label Grid.ColumnSpan="3" 
+                                   Text="Reservering" 
+                                   FontAttributes="Bold" 
+                                   BackgroundColor="#5FA6E8" 
+                                   TextColor="#000000"/>
+                            <Label Grid.Row="1" Grid.Column="1" 
+                                   Text="{Binding StartTime, StringFormat='Start: {0:yyyy-MM-dd HH:mm}'}" 
+                                   BackgroundColor="#5FA6E8" 
+                                   TextColor="#000000"/>
+                            <Label Grid.Row="1" Grid.Column="2" 
+                                   Text="{Binding EndTime, StringFormat='End: {0:yyyy-MM-dd HH:mm}'}" 
+                                   BackgroundColor="#5FA6E8" 
+                                   TextColor="#000000"/>
+                            <Label Grid.Row="1" Grid.Column="0" 
+                                   Text="{Binding BoatId, StringFormat='Boat Id: {0}'}" 
+                                   BackgroundColor="#5FA6E8" 
+                                   TextColor="#000000"/>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
 
