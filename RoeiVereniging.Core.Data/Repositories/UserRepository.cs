@@ -9,6 +9,7 @@ namespace RoeiVereniging.Core.Repositories
     {
         public UserRepository()
         {
+            // For login -> table is like ERD
             CreateTable(@"
                 CREATE TABLE IF NOT EXISTS user (
                     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,5 +40,7 @@ namespace RoeiVereniging.Core.Repositories
             CloseConnection();
             return user;
         }
+
+        // Add authentication method here (and create if needed)
     }
 }
