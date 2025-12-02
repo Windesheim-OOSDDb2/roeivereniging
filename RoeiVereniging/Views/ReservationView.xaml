@@ -15,20 +15,20 @@
         <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
         <CollectionView ItemsSource="{Binding MyReservations}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:Reservation">
+                <DataTemplate x:DataType="vm:ReservationViewDTO">
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
 
                             <!-- boatname -->
                             <Label Grid.Column="0"
-                               Text="{Binding BoatId}"
+                               Text="{Binding BoatName}"
                                TextColor="#000000"
                                StyleClass="cell-left" 
                             />
 
                             <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding UserId}"
+                               Text="{Binding UserName}"
                                StyleClass="cell" 
                                TextColor="#000000"
                             /> 

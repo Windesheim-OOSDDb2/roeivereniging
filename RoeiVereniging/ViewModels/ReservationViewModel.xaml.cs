@@ -9,7 +9,7 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class ReservationViewModel : BaseViewModel
     {
-        public ObservableCollection<Reservation> MyReservations { get; } = new();
+        public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
 
         private readonly IReservationService _reservationService;
         private readonly UserRepository _userRepo;
@@ -24,19 +24,39 @@ namespace RoeiVereniging.ViewModels
             LoadForDummyUser();
         }
 
+        // load resevations for dummy user (because no session control yet)
         private void LoadForDummyUser()
         {
-            var user = _userRepo.GetById(1);
+            // check if there's an active session with a user (currently using dummy user)
+            User? user = _userRepo.GetById(1);
             if (user == null) return;
 
-            var Reservations = _reservationService.GetByUser(user.UserId);
-            foreach (var reservation in Reservations)
-            {
-                Debug.WriteLine($"Reservation: {reservation.Id}, Boat ID: {reservation.BoatId}");
-            }
+            // cache boats in dictionary for faster lookup
+            List<Boat>? boats = _boatRepo.GetAll();
+            var boatById = boats.ToDictionary(b => b.BoatId, b => b.Name);
+
+            List<Reservation> reservations = _reservationService.GetByUser(user.UserId);
 
             MyReservations.Clear();
-            foreach (var reservation in Reservations) MyReservations.Add(reservation);
+
+            foreach (var reservation in reservations)
+            {
+                string boatName = boatById.TryGetValue(reservation.BoatId, out var bn) ? bn : $"Boat {reservation.BoatId}";
+                string userName = user.Name;
+
+                //I used a DTO to store reservation data AND username / boat name for UI binding purposes
+                var reservationsList = new ReservationViewDTO(
+                    reservation.Id,
+                    reservation.UserId,
+                    userName,
+                    reservation.BoatId,
+                    boatName,
+                    reservation.StartTime,
+                    reservation.EndTime
+                );
+
+                MyReservations.Add(reservationsList);
+            }
         }
     }
 }
