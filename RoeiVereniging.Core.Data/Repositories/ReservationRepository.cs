@@ -38,7 +38,7 @@ namespace RoeiVereniging.Core.Data.Repositories
             var list = new List<Reservation>();
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT reservation_id, user_id, start_time, end_time, created_at, boat_id FROM Reservation WHERE user_id = @u";
+            cmd.CommandText = "SELECT * FROM Reservation WHERE user_id = @u";
             cmd.Parameters.AddWithValue("@u", userId);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
