@@ -1,0 +1,26 @@
+﻿.title {
+    color: white;
+    font-size: 22;
+    font-weight: Bold;
+    padding: 12;
+    border-radius: 8;
+    margin-bottom: 10;
+}
+
+.row-card {
+    margin-bottom: 6;
+    padding: 10;
+    border-radius: 0;
+}
+
+.cell-left {
+    font-size: 16;
+    font-weight: Bold;
+    vertical-align: center;
+}
+
+.cell {
+    font-size: 15;
+    text-align: center;
+    vertical-align: center;
+}

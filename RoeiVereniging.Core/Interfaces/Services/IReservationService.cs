@@ -12,5 +12,6 @@ namespace RoeiVereniging.Core.Interfaces.Services
         public Reservation? Get(int id);
         public List<Reservation> GetAll();
         public Reservation? Set(Reservation reservation);
+        public List<Reservation> GetByUser(int userId);
     }
 }

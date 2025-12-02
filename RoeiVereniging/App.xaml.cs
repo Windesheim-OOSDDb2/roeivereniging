@@ -8,8 +8,7 @@ namespace RoeiVereniging
         public App(ReserveBoatViewModel viewModel)
         {
             InitializeComponent();
-
-            MainPage = new ReserveBoatView(viewModel);
+            MainPage = new AppShell();
         }
     }
 }
