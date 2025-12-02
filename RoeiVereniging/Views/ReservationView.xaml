@@ -6,31 +6,46 @@
              x:Class="RoeiVereniging.Views.ReservationView"
              x:DataType="vm:ReservationViewModel"
              Title="My Reservations">
+    <ContentPage.Resources>
+        <StyleSheet Source="/Resources/Styles/reservations.css" />
+    </ContentPage.Resources>
+
 
     <VerticalStackLayout Padding="20" Spacing="10">
-        <Label Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
+        <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
         <CollectionView ItemsSource="{Binding MyReservations}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:Reservation">
-                    <Frame Padding="10" Margin="5" BackgroundColor="#0854D1">
-                        <Grid ColumnDefinitions="*, *, *" RowDefinitions="Auto">
-                            <Label Grid.ColumnSpan="3" 
-                                   Text="Reservering" 
-                                   FontAttributes="Bold" 
-                                   BackgroundColor="#5FA6E8" 
-                                   TextColor="#000000"/>
-                            <Label Grid.Row="1" Grid.Column="1" 
-                                   Text="{Binding StartTime, StringFormat='Start: {0:yyyy-MM-dd HH:mm}'}" 
-                                   BackgroundColor="#5FA6E8" 
-                                   TextColor="#000000"/>
-                            <Label Grid.Row="1" Grid.Column="2" 
-                                   Text="{Binding EndTime, StringFormat='End: {0:yyyy-MM-dd HH:mm}'}" 
-                                   BackgroundColor="#5FA6E8" 
-                                   TextColor="#000000"/>
-                            <Label Grid.Row="1" Grid.Column="0" 
-                                   Text="{Binding BoatId, StringFormat='Boat Id: {0}'}" 
-                                   BackgroundColor="#5FA6E8" 
-                                   TextColor="#000000"/>
+                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
+                        <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
+
+                            <!-- boatname -->
+                            <Label Grid.Column="0"
+                               Text="{Binding BoatId}"
+                               TextColor="#000000"
+                               StyleClass="cell-left" 
+                            />
+
+                            <!-- skill Level -->
+                            <Label Grid.Column="1"
+                               Text="{Binding UserId}"
+                               StyleClass="cell" 
+                               TextColor="#000000"
+                            /> 
+
+                            <!-- start date -->
+                            <Label Grid.Column="2"
+                               Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}"
+                               StyleClass="cell" 
+                               TextColor="#000000"
+                            />         
+
+                            <!-- time -->
+                            <Label Grid.Column="3"
+                               Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
+                               StyleClass="cell"                               
+                               TextColor="#000000"
+                            />
                         </Grid>
                     </Frame>
                 </DataTemplate>

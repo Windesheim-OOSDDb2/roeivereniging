@@ -57,6 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiCss Remove="Resources\Styles\Reservering.css" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<MauiAsset Include="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiAsset>
@@ -73,6 +77,12 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\RoeiVereniging.Core.Data\RoeiVereniging.Core.Data.csproj" />
 	  <ProjectReference Include="..\RoeiVereniging.Core\RoeiVereniging.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiCss Update="Resources\Styles\reservations.css">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </MauiCss>
 	</ItemGroup>
 
 	<ItemGroup>
