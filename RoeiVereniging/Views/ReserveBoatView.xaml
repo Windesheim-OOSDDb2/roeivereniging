@@ -76,7 +76,6 @@
             Title="Klik op onderstaand pijltje om een boot te selecteren:"
             ItemsSource="{Binding boatTypes}"
             SelectedItem="{Binding Type, Mode=TwoWay}" 
-            SelectedIndexChanged="TypePicker_SelectedIndexChanged"
             BackgroundColor="{StaticResource Primary}"
                 TextColor="{StaticResource Secondary}">
                     </Picker>
