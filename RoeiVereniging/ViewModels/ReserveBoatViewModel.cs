@@ -92,5 +92,11 @@ namespace RoeiVereniging.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(ReservationView));
         }
+
+        [RelayCommand]
+        public async Task GoToWeatherPage()
+        {
+            await Shell.Current.GoToAsync(nameof(WeatherView));
+        }
     }
 }
