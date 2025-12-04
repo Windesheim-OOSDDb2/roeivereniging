@@ -40,7 +40,6 @@
                         />
 
                         <Label Text="Tijd"
-                           FontAttributes="Bold"
                            StyleClass="cell" 
                            TextColor="#000000"
                            Grid.Column="3"
