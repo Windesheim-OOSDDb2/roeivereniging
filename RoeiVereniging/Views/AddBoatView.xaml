@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             x:Class="RoeiVereniging.Views.AddBoatView"
+             x:DataType="vm:AddBoatViewModel"
+             Title="AddBoatView">
+    <StackLayout Padding="20" VerticalOptions="Center">
+        <Label Text="Add New" FontSize="24" HorizontalOptions="Center" />
+
+        <Label Text="Naam"/>
+        <Entry Placeholder="Naam" Text="{Binding Name}" />
+        <Label Text="Stuur" IsVisible="{Binding IsVisible}" />
+        <CheckBox IsChecked="{Binding SteeringWheelPosition}" IsEnabled="false" IsVisible="{Binding IsVisible}"/>
+        <Label Text="Hoeveelheid passagiers"/>
+        <Picker ItemsSource="{Binding Maxpassenger}" SelectedItem="{Binding MaxPassengers, Mode=TwoWay}" PropertyChanged="SteeringWheelCheck" />
+        <Label Text="Minimaal niveau:"/>
+        <Picker ItemsSource="{Binding Minlevels}" SelectedItem="{Binding MinLevel, Mode=TwoWay}" PropertyChanged="SteeringWheelCheck" />
+        <Label Text="Boot soort"/>
+        <Picker ItemsSource="{Binding BoatTypes}" SelectedItem="{Binding BoatType, Mode=TwoWay}" PropertyChanged="SteeringWheelCheck" />
+
+        <Button Text="Add Product" Command="{Binding AddBoatCommand}" />
+    </StackLayout>
+</ContentPage>

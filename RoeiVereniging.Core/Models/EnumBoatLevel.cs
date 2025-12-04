@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Models
 {
-    public enum BoatType : ushort
+    public enum BoatLevel : ushort
     {
-        C,
-        Scull,
-        Boord,
-        Liteboat,
+        Basis,
+        Gevorderd,
+        Expert,
+        Stuurman
+
+
     }
 }

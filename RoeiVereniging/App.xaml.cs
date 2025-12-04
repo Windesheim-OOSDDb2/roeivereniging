@@ -5,11 +5,11 @@ namespace RoeiVereniging
 {
     public partial class App : Application
     {
-        public App(ReserveBoatViewModel viewModel)
+        public App(AddBoatViewModel viewModel)
         {
             InitializeComponent();
 
-            MainPage = new ReserveBoatView(viewModel);
+            MainPage = new AddBoatView(viewModel);
         }
     }
 }
