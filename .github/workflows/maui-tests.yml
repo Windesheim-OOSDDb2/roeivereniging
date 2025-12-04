@@ -20,20 +20,29 @@ on:
 jobs:
   test:
     runs-on: windows-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
+      - name: Setup .NET 8 SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 8.0.416
+          cache: false
+
+      - name: Force DOTNET_ROOT and PATH
+        shell: pwsh
+        run: |
+          $env:DOTNET_ROOT = "$env:ProgramFiles\dotnet"
+          $env:PATH = "$env:DOTNET_ROOT;$env:PATH"
+          dotnet --info
 
       - name: Install MAUI workloads
-        run: dotnet workload install maui-android
+        run: dotnet workload install maui-android --skip-sign-check
 
       - name: Restore dependencies
-        run: dotnet restore --verbosity normal || true
+        run: dotnet restore RoeiVereniging/RoeiVereniging.csproj --verbosity normal
 
       - name: Build the application
         run: dotnet build RoeiVereniging/RoeiVereniging.csproj -f net8.0-android --configuration Release --no-restore
