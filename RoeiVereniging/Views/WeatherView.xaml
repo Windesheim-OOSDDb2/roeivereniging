@@ -2,11 +2,63 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RoeiVereniging.Views.WeatherView"
-             Title="WeatherView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Weersverwachting">
+
+    <ContentPage.Resources>
+        <Color x:Key="DarkBlue">#0047AB</Color>
+        <Color x:Key="LightBlue">#5C9BE5</Color>
+        <Color x:Key="HeaderColor">#0D2E60</Color>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *" Padding="20,10">
+        <Grid Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="15">
+
+            <Border Grid.Column="0" 
+                    BackgroundColor="{StaticResource DarkBlue}"
+                    StrokeThickness="0">
+                <Grid RowDefinitions="Auto, *">
+                    <Label Grid.Row="0"
+                           Text="Vandaag"
+                           TextColor="White"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,30,0,0"/>
+
+                    <HorizontalStackLayout Grid.Row="1" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center"
+                                           Spacing="10">
+                        <Image Source="sun_large.png" 
+                               HeightRequest="80" 
+                               WidthRequest="80">
+                            <Image.Source>
+                                <FontImageSource Glyph="☀" Color="White" Size="80"/>
+                            </Image.Source>
+                        </Image>
+
+                        <Label Text="{Binding Temp}"
+                               TextColor="White"
+                               FontSize="50"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="4">
+
+                <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="60" Padding="15,0">
+                    <Image Grid.Column="0" Source="sun_small.png" VerticalOptions="Center" HeightRequest="30">
+                        <Image.Source>
+                            <FontImageSource Glyph="☀" Color="White" Size="30"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Grid.Column="1" Text="Aantal graden" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                    <Label Grid.Column="2" Text="Weekdag" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>

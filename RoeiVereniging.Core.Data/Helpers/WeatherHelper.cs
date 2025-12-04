@@ -64,5 +64,17 @@ namespace RoeiVereniging.Core.Data.Helpers
 
         [JsonPropertyName("windkmh")]
         public double WindKmH { get; set; }
+
+        [JsonPropertyName("windbft")]
+        public int WindBft { get; set; }
+
+        [JsonPropertyName("sup")]
+        public string Sup { get; set; }
+
+        [JsonPropertyName("sunder")]
+        public string Sunder { get; set; }
+
+        [JsonPropertyName("image")]
+        public string Image { get; set; }
     }
 }
