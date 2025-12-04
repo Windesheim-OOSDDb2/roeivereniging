@@ -41,7 +41,7 @@ namespace RoeiVereniging.ViewModels
 
             foreach (var reservation in reservations)
             {
-                string boatName = boatById.TryGetValue(reservation.BoatId, out var bn) ? bn : $"Boat {reservation.BoatId}"; // 🗿
+                string boatName = boatById.TryGetValue(reservation.BoatId, out var bn) ? bn : $"Boat {reservation.BoatId}";
                 string userName = user.Name;
 
                 // I used a DTO to store reservation data AND username / boat name for UI binding purposes
