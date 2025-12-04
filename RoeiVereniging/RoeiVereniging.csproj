@@ -57,10 +57,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiCss Remove="Resources\Styles\Reservering.css" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<MauiAsset Include="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiAsset>
@@ -81,7 +77,7 @@
 
 	<ItemGroup>
 		<MauiCss Update="Resources\Styles\global.css">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</MauiCss>
 	</ItemGroup>
 
