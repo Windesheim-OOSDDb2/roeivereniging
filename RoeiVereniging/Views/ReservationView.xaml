@@ -25,7 +25,7 @@
                            Grid.Column="0"
                         />
 
-                        <Label Text="Niveau"
+                        <Label Text="Naam gebruiker"
                            FontAttributes="Bold"
                            TextColor="#000000"
                            StyleClass="cell" 
