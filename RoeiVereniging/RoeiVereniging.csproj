@@ -80,12 +80,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiCss Update="Resources\Styles\reservations.css">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </MauiCss>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Views\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

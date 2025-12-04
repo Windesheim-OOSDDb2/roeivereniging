@@ -7,7 +7,7 @@
              x:DataType="vm:ReservationViewModel"
              Title="My Reservations">
     <ContentPage.Resources>
-        <StyleSheet Source="/Resources/Styles/reservations.css" />
+        <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
 

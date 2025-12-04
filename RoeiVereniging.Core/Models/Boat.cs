@@ -12,11 +12,11 @@ namespace RoeiVereniging.Core.Models
         public int BoatId { get; set; }
         public int Level { get; set; }
         public int SeatsAmount { get; set; }
-        public bool SteeringWheelPosition {  get; set; }
+        public string SteeringWheelPosition {  get; set; }
         public BoatType BoatType { get; set; } = BoatType.Roeiboot;
         public BoatStatus BoatStatus { get; set; } = BoatStatus.Working;
 
-        public Boat(int id, string name, int seatsAmount, bool steeringWheelPosition, int level, BoatStatus boatStatus, BoatType boat)
+        public Boat(int id, string name, int seatsAmount, string steeringWheelPosition, int level, BoatStatus boatStatus, BoatType boat)
             : base(id, name)
         {
             BoatId = id;

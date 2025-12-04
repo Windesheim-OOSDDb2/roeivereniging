@@ -1,12 +1,8 @@
 ﻿.title {
-    color: white;
-    font-size: 22;
-    font-weight: Bold;
-    padding: 12;
-    border-radius: 8;
     margin-bottom: 10;
 }
 
+/* for tables */
 .row-card {
     margin-bottom: 6;
     padding: 10;
