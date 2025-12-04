@@ -25,7 +25,7 @@
                            Grid.Column="0"
                         />
 
-                        <Label Text="Naam gebruiker"
+                        <Label Text="Niveau"
                            FontAttributes="Bold"
                            TextColor="#000000"
                            StyleClass="cell" 
@@ -48,7 +48,7 @@
                 </Frame>
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:ReservationViewDTO">
+                <DataTemplate x:DataType="m:ReservationViewDTO">
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
 
@@ -61,7 +61,7 @@
 
                             <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding UserName}"
+                               Text="{Binding BoatLevel}"
                                StyleClass="cell" 
                                TextColor="#000000"
                             /> 

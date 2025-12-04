@@ -19,14 +19,14 @@ namespace RoeiVereniging.Core.Data.Repositories
                     level INTEGER NOT NULL,
                     status TEXT NOT NULL,
                     seats_amount INTEGER NOT NULL,
-                    SteeringwheelPosition TEXT NOT NULL CHECK(SteeringwheelPosition IN ('rechts', 'links', 'midden'))
+                    SteeringwheelPosition BOOLEAN NOT NULL
                 );
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel','wedstrijd',1,'available',4, 'rechts')",
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Zwarte Parel 2','training',1,'available',2, 'links')",
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Zwarte Parel 3','recreatie',1,'available',1, 'rechts')"
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel','wedstrijd',1,'available',4, 1)",
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Zwarte Parel 2','training',1,'available',2, 0)",
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Zwarte Parel 3','recreatie',1,'available',1, 1)"
             });
             LoadBoats();
         }
@@ -50,7 +50,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                 int level = reader.GetInt32(3);
                 string status = reader.GetString(4);
                 int seats = reader.GetInt32(5);
-                string steering = reader.GetString(6);
+                bool steering = reader.GetBoolean(6);
 
                 // Create Boat model based on values in db
                 var boat = new Boat(
