@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
-using System.Diagnostics;
 
 namespace RoeiVereniging.Core.Data.Repositories
 {

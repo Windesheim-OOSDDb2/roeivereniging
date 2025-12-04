@@ -41,8 +41,6 @@ namespace RoeiVereniging.ViewModels
 
             foreach (var reservation in reservations)
             {
-                Debug.WriteLine($"Boat count loaded: {_boatRepo.GetAll().Count}");
-
                 string boatName = boatById.TryGetValue(reservation.BoatId, out var bn) ? bn : $"Boat {reservation.BoatId}"; // 🗿
                 string userName = user.Name;
 

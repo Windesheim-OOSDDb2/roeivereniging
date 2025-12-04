@@ -3,6 +3,11 @@
 }
 
 /* for tables */
+.row-header {
+    padding: 10;
+    border-radius: 0;
+}
+
 .row-card {
     margin-bottom: 6;
     padding: 10;

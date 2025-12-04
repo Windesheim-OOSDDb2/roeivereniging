@@ -14,6 +14,40 @@
     <VerticalStackLayout Padding="20" Spacing="10">
         <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
         <CollectionView ItemsSource="{Binding MyReservations}">
+            <CollectionView.Header>
+                <Frame StyleClass="row-header" BackgroundColor="#0854d1">
+                    <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
+
+                        <Label Text="Boot naam"
+                           FontAttributes="Bold"
+                           TextColor="#000000"
+                           StyleClass="cell-left" 
+                           Grid.Column="0"
+                        />
+
+                        <Label Text="Niveau"
+                           FontAttributes="Bold"
+                           TextColor="#000000"
+                           StyleClass="cell" 
+                           Grid.Column="1"
+                        />
+
+                        <Label Text="Start datum"
+                           FontAttributes="Bold"
+                           StyleClass="cell" 
+                           TextColor="#000000"
+                           Grid.Column="2"
+                        />
+
+                        <Label Text="Tijd"
+                           FontAttributes="Bold"
+                           StyleClass="cell" 
+                           TextColor="#000000"
+                           Grid.Column="3"
+                        />
+                    </Grid>
+                </Frame>
+            </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ReservationViewDTO">
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
