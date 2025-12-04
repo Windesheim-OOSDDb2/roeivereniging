@@ -14,15 +14,9 @@ public partial class ReserveBoatView : ContentPage
         _viewModel = viewModel;
     }
 
-    //private void TypePicker_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    var picker = (Picker)sender;
-    //    int selectedIndex = picker.SelectedIndex;
-
-    //    if (selectedIndex != -1)
-    //    {
-    //        BoatType Type = (BoatType)picker.SelectedItem;
-    //        _viewModel.NewSelectedBoat(Type);
-    //    }
-    //}
+    private void AttributeChanged(object sender, EventArgs e)
+    {
+        if (_viewModel == null) return;
+        _viewModel.AttributeChanged();
+    }
 }
