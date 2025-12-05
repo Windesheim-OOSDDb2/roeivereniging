@@ -27,25 +27,30 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
-
+          dotnet-version: 8.0.4xx
+        
       - name: Install MAUI workloads
         run: dotnet workload install maui
 
-      - name: Restore dependencies
-        run: dotnet restore --verbosity normal || true
+      - name: Restore Core projects
+        run: |
+          dotnet restore RoeiVereniging.Core/RoeiVereniging.Core.csproj
+          dotnet restore RoeiVereniging.Core.Data/RoeiVereniging.Core.Data.csproj
+          dotnet restore TestCore/TestCore.csproj
 
-      - name: Build the application
-        run: dotnet build RoeiVereniging/RoeiVereniging.csproj -f net8.0-android --configuration Release --no-restore
+      - name: Build Core
+        run: |
+          dotnet build RoeiVereniging.Core/RoeiVereniging.Core.csproj -c Release
+          dotnet build RoeiVereniging.Core.Data/RoeiVereniging.Core.Data.csproj -c Release
 
       - name: Run unit tests
-        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" || true
+        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --logger "trx;LogFileName=test-results.trx"
 
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Maui unit tests
-          path: "**/test-results.trx"                                    
+          path: "**/test-results.trx"
           reporter: dotnet-trx
           fail-on-error: true
