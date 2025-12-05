@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -20,7 +21,7 @@ namespace RoeiVereniging.Core.Data.Helpers
         /// </summary>
         /// <param name="locatie">Location name or "lat,lon".</param>
         /// <param name="apiKey">API key for weerlive.nl</param>
-        public static async Task<LiveWeerV2?> GetWeatherAsync(string locatie, string apiKey, CancellationToken cancellationToken = default)
+        public static async Task<WeerLiveV2Response?> GetWeatherAsync(string locatie, string apiKey, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(locatie)) throw new ArgumentException("locatie is required", nameof(locatie));
             if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentException("apiKey is required", nameof(apiKey));
@@ -32,7 +33,11 @@ namespace RoeiVereniging.Core.Data.Helpers
 
             var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
             var data = JsonSerializer.Deserialize<WeerLiveV2Response>(json, _jsonOptions);
-            return data?.LiveWeer is { Length: > 0 } ? data.LiveWeer[0] : null;
+
+            // show output in debugger
+            Debug.WriteLine(JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true }));
+
+            return data;
         }
     }
 
@@ -40,12 +45,18 @@ namespace RoeiVereniging.Core.Data.Helpers
     {
         [JsonPropertyName("liveweer")]
         public LiveWeerV2[] LiveWeer { get; set; } = Array.Empty<LiveWeerV2>();
+
+        [JsonPropertyName("wk_verw")]
+        public WkVerw[] WkVerw { get; set; } = Array.Empty<WkVerw>();
+
+        //[JsonPropertyName("uur_verw")]
+        //public UurVerw[] UurVerw { get; set; } = Array.Empty<UurVerw>();
     }
 
     public class LiveWeerV2
     {
         [JsonPropertyName("plaats")]
-        public string Plaats { get; set; } = string.Empty;
+        public string Plaats { get; set; }
 
         [JsonPropertyName("temp")]
         public double Temp { get; set; }
@@ -54,13 +65,13 @@ namespace RoeiVereniging.Core.Data.Helpers
         public double GTemp { get; set; }
 
         [JsonPropertyName("samenv")]
-        public string Samenv { get; set; } = string.Empty;
+        public string Samenv { get; set; }
 
         [JsonPropertyName("lv")]
         public int LV { get; set; }
 
         [JsonPropertyName("windr")]
-        public string WindR { get; set; } = string.Empty;
+        public string WindR { get; set; }
 
         [JsonPropertyName("windkmh")]
         public double WindKmH { get; set; }
@@ -77,4 +88,82 @@ namespace RoeiVereniging.Core.Data.Helpers
         [JsonPropertyName("image")]
         public string Image { get; set; }
     }
+
+    public class WkVerw
+    {
+        [JsonPropertyName("dag")]
+        public string Dag { get; set; }
+
+        [JsonPropertyName("image")]
+        public string Image { get; set; }
+
+        [JsonPropertyName("max_temp")]
+        public double MaxTemp { get; set; }
+
+        [JsonPropertyName("min_temp")]
+        public double MinTemp { get; set; }
+
+        [JsonPropertyName("windbft")]
+        public int WindBft { get; set; }
+
+        [JsonPropertyName("windkmh")]
+        public double WindKmH { get; set; }
+
+        [JsonPropertyName("windknp")]
+        public int WindKnp { get; set; }
+
+        [JsonPropertyName("windms")]
+        public double WindMs { get; set; }
+
+        [JsonPropertyName("windrgr")]
+        public int WindRGr { get; set; }
+
+        [JsonPropertyName("windr")]
+        public string WindR { get; set; }
+
+        [JsonPropertyName("neersl_perc_dag")]
+        public int NeerslPercDag { get; set; }
+
+        [JsonPropertyName("zond_perc_dag")]
+        public int ZondPercDag { get; set; }
+    }
+
+    //public class UurVerw
+    //{
+    //    [JsonPropertyName("uur")]
+    //    public string Uur { get; set; }
+
+    //    [JsonPropertyName("timestamp")]
+    //    public long Timestamp { get; set; }
+
+    //    [JsonPropertyName("image")]
+    //    public string Image { get; set; }
+
+    //    [JsonPropertyName("temp")]
+    //    public double Temp { get; set; }
+
+    //    [JsonPropertyName("windbft")]
+    //    public int WindBft { get; set; }
+
+    //    [JsonPropertyName("windkmh")]
+    //    public double WindKmH { get; set; }
+
+    //    [JsonPropertyName("windknp")]
+    //    public int WindKnp { get; set; }
+
+    //    [JsonPropertyName("windms")]
+    //    public double WindMs { get; set; }
+
+    //    [JsonPropertyName("windrgr")]
+    //    public int WindRGr { get; set; }
+
+    //    [JsonPropertyName("windr")]
+    //    public string WindR { get; set; }
+
+    //    [JsonPropertyName("neersl")]
+    //    public double Neersl { get; set; }
+
+    //    [JsonPropertyName("gr")]
+    //    public int Gr { get; set; }
+    //}
 }
