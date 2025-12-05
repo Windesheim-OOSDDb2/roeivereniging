@@ -32,9 +32,6 @@ jobs:
       - name: Install MAUI workloads
         run: dotnet workload install maui
 
-      - name: Verify SDK
-        run: dotnet --info
-
       - name: Restore Core projects
         run: |
           dotnet restore RoeiVereniging.Core/RoeiVereniging.Core.csproj
