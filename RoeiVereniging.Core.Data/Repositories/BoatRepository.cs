@@ -27,6 +27,24 @@ namespace RoeiVereniging.Core.Data.Repositories
             return boat;
         }
 
+        public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
+        {
+            // Parse difficulty to minLevel (assuming difficulty is string representation of minLevel)
+            if (!int.TryParse(difficulty, out int minLevel))
+            {
+                // If parsing fails, return the first boat as fallback
+                return boatList.FirstOrDefault();
+            }
+
+            var boat = boatList.FirstOrDefault(b =>
+                b.MaxPassengers == amount &&
+                b.SteeringWheelPosition == steeringwheelposition &&
+                b.MinLevel == minLevel &&
+                b.BoatType == type);
+
+            return boat ?? boatList.FirstOrDefault();
+        }
+
         public List<Boat> GetAll()
         {
             return boatList;

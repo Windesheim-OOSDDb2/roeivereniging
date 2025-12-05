@@ -15,12 +15,13 @@ namespace RoeiVereniging.Core.Models
         public BoatType BoatType { get; set; } = BoatType.Roeiboot;
         public BoatStatus BoatStatus { get; set; } = BoatStatus.Working;
 
-        public Boat(int id, string name, int maxPassengers, bool steeringWheelPosition, int minLevel, BoatStatus boatStatus, BoatType boat) : base(id, name)
+        public Boat(int id, string name, int maxPassengers, bool steeringWheelPosition, int minLevel, BoatStatus boatStatus, BoatType boatType) : base(id, name)
         {
             MaxPassengers = maxPassengers;
             SteeringWheelPosition = steeringWheelPosition;
             MinLevel = minLevel;
             BoatStatus = boatStatus;
+            BoatType = boatType;
         }
         public override string? ToString()
         {

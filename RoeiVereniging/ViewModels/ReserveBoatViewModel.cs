@@ -61,7 +61,36 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public void ReserveBoat()
         {
-            
+            if(!ValidateInputs()) return;
+            Boat BoatToAssign = GetBoat();
+            DateTime ReservationDateTime = date.Date + time;
+            _reservationService.Set(new Reservation(1, "reservation", Amount, ReservationDateTime, 1, BoatToAssign.Id ));
+        }
+
+        public bool ValidateInputs()
+        {
+            // Check if the reservation date and time is now or later
+            DateTime reservationDateTime = date.Date + time;
+            if (reservationDateTime < DateTime.Now)
+                return false;
+
+            // Check if difficulty can be parsed to an int
+            if (!int.TryParse(Difficulty, out _))
+            {
+                Difficulty = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        public Boat? GetBoat()
+        {
+            if (Type is BoatType boatType)
+            {
+                return _boatService.Get(Amount, true, Difficulty, boatType);
+            }
+            return null;
         }
 
         [RelayCommand]
