@@ -33,7 +33,6 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         private void LoadBoats()
         {
-            // clear inmemory list (no duplicates)
             boatList.Clear();
 
             string sql = "SELECT * FROM boat";
@@ -52,7 +51,6 @@ namespace RoeiVereniging.Core.Data.Repositories
                 int seats = reader.GetInt32(5);
                 bool steering = reader.GetBoolean(6);
 
-                // Create Boat model based on values in db
                 var boat = new Boat(
                     id,
                     name,
@@ -63,7 +61,6 @@ namespace RoeiVereniging.Core.Data.Repositories
                     BoatType.Roeiboot
                 );
 
-                // add to cache
                 boatList.Add(boat);
             }
 
