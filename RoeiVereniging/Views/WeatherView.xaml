@@ -37,7 +37,7 @@
                             </Image.Source>
                         </Image>
 
-                        <Label Text="{Binding Temp}"
+                        <Label Text="{Binding LiveWeather.Temp}"
                                TextColor="White"
                                FontSize="50"
                                FontAttributes="Bold"
