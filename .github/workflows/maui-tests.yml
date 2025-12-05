@@ -29,7 +29,6 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      # Change: Install 'maui' instead of 'maui-android' to get iOS workloads too
       - name: Install MAUI workloads
         run: dotnet workload install maui
 
