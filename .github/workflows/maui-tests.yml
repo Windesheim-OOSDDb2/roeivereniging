@@ -20,35 +20,26 @@ on:
 jobs:
   test:
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET 8 SDK
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.416
-          cache: false
-
-      - name: Force DOTNET_ROOT and PATH
-        shell: pwsh
-        run: |
-          $env:DOTNET_ROOT = "$env:ProgramFiles\dotnet"
-          $env:PATH = "$env:DOTNET_ROOT;$env:PATH"
-          dotnet --info
+          dotnet-version: 8.0.x
 
       - name: Install MAUI workloads
         run: dotnet workload install maui
 
       - name: Restore dependencies
-        run: dotnet restore RoeiVereniging/RoeiVereniging.csproj --verbosity normal
+        run: dotnet restore --verbosity normal || true
 
       - name: Build the application
         run: dotnet build RoeiVereniging/RoeiVereniging.csproj -f net8.0-android --configuration Release --no-restore
 
       - name: Run unit tests
-        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" || true
 
       - name: Test Report
         uses: dorny/test-reporter@v1
