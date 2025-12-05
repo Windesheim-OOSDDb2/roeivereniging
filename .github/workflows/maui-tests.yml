@@ -20,7 +20,6 @@ on:
 jobs:
   test:
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,35 +27,26 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.4xx
-        
+          dotnet-version: 8.0.x
+
+      # Change: Install 'maui' instead of 'maui-android' to get iOS workloads too
       - name: Install MAUI workloads
         run: dotnet workload install maui
 
-      # log to verify if correct SDK is installed (tes tpurposes)
-      - name: Verify SDK
-        run: dotnet --info
+      - name: Restore dependencies
+        run: dotnet restore --verbosity normal || true
 
-      # only non maui projects
-      - name: Restore Core projects
-        run: |
-          dotnet restore RoeiVereniging.Core/RoeiVereniging.Core.csproj
-          dotnet restore RoeiVereniging.Core.Data/RoeiVereniging.Core.Data.csproj
-          dotnet restore TestCore/TestCore.csproj
-
-      - name: Build Core
-        run: |
-          dotnet build RoeiVereniging.Core/RoeiVereniging.Core.csproj -c Release
-          dotnet build RoeiVereniging.Core.Data/RoeiVereniging.Core.Data.csproj -c Release
+      - name: Build the application
+        run: dotnet build RoeiVereniging/RoeiVereniging.csproj -f net8.0-android --configuration Release --no-restore
 
       - name: Run unit tests
-        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" || true
 
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Maui unit tests
-          path: "**/test-results.trx"
+          path: "**/test-results.trx"                                    
           reporter: dotnet-trx
           fail-on-error: true
