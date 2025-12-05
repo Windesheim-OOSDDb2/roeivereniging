@@ -1,4 +1,5 @@
-﻿using RoeiVereniging.Core.Interfaces.Repositories;
+﻿using Microsoft.Data.Sqlite;
+using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
 
 namespace RoeiVereniging.Core.Data.Repositories
@@ -18,15 +19,52 @@ namespace RoeiVereniging.Core.Data.Repositories
                     level INTEGER NOT NULL,
                     status TEXT NOT NULL,
                     seats_amount INTEGER NOT NULL,
-                    SteeringwheelPosition TEXT NOT NULL CHECK(SteeringwheelPosition IN ('rechts', 'links', 'midden'))
+                    SteeringwheelPosition BOOLEAN NOT NULL
                 );
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount) VALUES(1,'Zwarte Parel','wedstrijd',1,'available',4, 'rechts')",
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount) VALUES(2,'Zwarte Parel 2','training',1,'available',2, 'links')",
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount) VALUES(3,'Zwarte Parel 3','recreatie',1,'available',1, 'rechts')"
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel','wedstrijd',1,'available',4, 1)",
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Zwarte Parel 2','training',1,'available',2, 0)",
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Zwarte Parel 3','recreatie',1,'available',1, 1)"
             });
+            LoadBoats();
+        }
+
+        private void LoadBoats()
+        {
+            boatList.Clear();
+
+            string sql = "SELECT * FROM boat";
+
+            OpenConnection();
+            using var command = new SqliteCommand(sql, Connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                string name = reader.GetString(1);
+                string type = reader.GetString(2);
+                int level = reader.GetInt32(3);
+                string status = reader.GetString(4);
+                int seats = reader.GetInt32(5);
+                bool steering = reader.GetBoolean(6);
+
+                var boat = new Boat(
+                    id,
+                    name,
+                    seats,
+                    steering,
+                    level,
+                    BoatStatus.Working,
+                    BoatType.Roeiboot
+                );
+
+                boatList.Add(boat);
+            }
+
+            CloseConnection();
         }
 
         public Boat? Get(string name)
@@ -37,7 +75,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public Boat? Get(int id)
         {
-            Boat? boat = boatList.FirstOrDefault(b => b.Id.Equals(id));
+            Boat? boat = boatList.FirstOrDefault(b => b.BoatId.Equals(id));
             return boat;
         }
 

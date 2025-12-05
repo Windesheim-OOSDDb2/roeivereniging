@@ -1,10 +1,11 @@
 ﻿.title {
-    color: white;
-    font-size: 22;
-    font-weight: Bold;
-    padding: 12;
-    border-radius: 8;
     margin-bottom: 10;
+}
+
+/* for tables */
+.row-header {
+    padding: 10;
+    border-radius: 0;
 }
 
 .row-card {
@@ -15,7 +16,6 @@
 
 .cell-left {
     font-size: 16;
-    font-weight: Bold;
     vertical-align: center;
 }
 
