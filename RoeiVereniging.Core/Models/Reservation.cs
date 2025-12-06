@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace RoeiVereniging.Core.Models
 {
     public partial class Reservation : Model
     {
-        public int PassengerCount { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
         public int BoatId { get; set; }
 
-        public Reservation(int id, string name, int passengerCount, DateTime dateTime, int userId, int boatId) : base(id, name)
+        public Reservation(int id, int userId, DateTime startTime, DateTime endTime, DateTime createdAt, int boatId)
+            : base(id, "reservering")
         {
-            PassengerCount = passengerCount;
-            DateTime = dateTime;
+            StartTime = startTime;
+            EndTime = endTime;
+            CreatedAt = createdAt;
             UserId = userId;
             BoatId = boatId;
         }

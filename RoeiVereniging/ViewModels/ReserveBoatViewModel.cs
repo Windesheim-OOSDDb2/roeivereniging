@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -55,16 +56,25 @@ namespace RoeiVereniging.ViewModels
             _reservationService = reservationService;
             _boatService = boatService;
             Reservations = new(_reservationService.GetAll());
-            Boats = new(_boatService.GetAll());
+            Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
         }
 
         [RelayCommand]
         public void ReserveBoat()
         {
             if(!ValidateInputs()) return;
-            Boat BoatToAssign = GetBoat();
             DateTime ReservationDateTime = date.Date + time;
-            _reservationService.Set(new Reservation(1, "reservation", Amount, ReservationDateTime, 1, BoatToAssign.Id ));
+            _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, GetBoat().Id));
+            ResetInputs();
+        }
+
+        public void ResetInputs()
+        {
+            Amount = 0;
+            Date = DateTime.Now.AddDays(7);
+            Time = DateTime.Now.TimeOfDay;
+            Difficulty = null;
+            Type = null;
         }
 
         public bool ValidateInputs()
@@ -116,6 +126,12 @@ namespace RoeiVereniging.ViewModels
             {
                 Pickerlabel = false;
             }
+        }
+
+        [RelayCommand]
+        public async Task GoToReservations()
+        {
+            await Shell.Current.GoToAsync(nameof(ReservationView));
         }
     }
 }

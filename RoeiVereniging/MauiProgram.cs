@@ -6,6 +6,7 @@ using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Data.Repositories;
 using CommunityToolkit.Maui;
+using RoeiVereniging.Core.Repositories;
 
 namespace RoeiVereniging
 {
@@ -39,6 +40,7 @@ namespace RoeiVereniging
             // Views and ViewModels
             builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
+            builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
             return builder.Build();
         }
     }

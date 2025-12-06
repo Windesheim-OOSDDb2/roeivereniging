@@ -3,16 +3,31 @@ using RoeiVereniging.Core.Models;
 
 namespace RoeiVereniging.Core.Data.Repositories
 {
-    public class BoatRepository : IBoatRepository
+    public class BoatRepository : DatabaseConnection, IBoatRepository
     {
-        private readonly List<Boat> boatList;
+        private readonly List<Boat> boatList = [];
 
         public BoatRepository()
         {
-            boatList = [
-                new Boat(1, "Zwarte Parel", 4, false, 1, BoatStatus.Working, BoatType.Roeiboot),
-                new Boat(2, "Blauwe Dolfijn", 2, true, 2, BoatStatus.Fixing, BoatType.Kano),
-                ];
+            CreateTable(@"
+                CREATE TABLE IF NOT EXISTS boat (
+                    boat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    type INTEGER NOT NULL,
+                    level INTEGER NOT NULL,
+                    boat_status INTEGER NOT NULL,
+                    seats_amount INTEGER NOT NULL,
+                    SteeringwheelPosition BOOL NOT NULL
+                );
+            ");
+
+            InsertMultipleWithTransaction(new List<string> {
+                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, boat_status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Roeiboot},1,{(int)BoatStatus.Working},4, true)",
+                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, boat_status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Kano},2,{(int)BoatStatus.Working},2, true)",
+                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, boat_status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Kano},1,{(int)BoatStatus.Working},1, true)"
+            });
+
+            GetAllFromDB();
         }
 
         public Boat? Get(string name)
@@ -29,17 +44,15 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
         {
-            // Parse difficulty to minLevel (assuming difficulty is string representation of minLevel)
             if (!int.TryParse(difficulty, out int minLevel))
             {
-                // If parsing fails, return the first boat as fallback
                 return boatList.FirstOrDefault();
             }
 
             var boat = boatList.FirstOrDefault(b =>
-                b.MaxPassengers == amount &&
+                b.SeatsAmount == amount &&
                 b.SteeringWheelPosition == steeringwheelposition &&
-                b.MinLevel == minLevel &&
+                b.Level == minLevel &&
                 b.BoatType == type);
 
             return boat ?? boatList.FirstOrDefault();
@@ -48,6 +61,29 @@ namespace RoeiVereniging.Core.Data.Repositories
         public List<Boat> GetAll()
         {
             return boatList;
+        }
+
+        public void GetAllFromDB()
+        {
+            boatList.Clear();
+            OpenConnection();
+            using var command = Connection.CreateCommand();
+            command.CommandText = "SELECT boat_id, name, seats_amount, SteeringwheelPosition, level, boat_status, type FROM boat";
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                string name = reader.GetString(1);
+                int seatsAmount = reader.GetInt32(2);
+                bool steeringWheelPosition = reader.GetBoolean(3);
+                int level = reader.GetInt32(4);
+                BoatStatus boatStatus = (BoatStatus)reader.GetInt32(5);
+                BoatType boatType = (BoatType)reader.GetInt32(6);
+
+                var boat = new Boat(id, name, seatsAmount, steeringWheelPosition, level, boatStatus, boatType);
+                boatList.Add(boat);
+            }
+            CloseConnection();
         }
     }
 }

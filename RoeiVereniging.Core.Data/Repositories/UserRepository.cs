@@ -1,38 +1,48 @@
-﻿using RoeiVereniging.Core.Interfaces.Repositories;
+﻿using Microsoft.Data.Sqlite;
+using RoeiVereniging.Core.Data;
+using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
 
-namespace RoeiVereniging.Core.Data.Repositories
+namespace RoeiVereniging.Core.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : DatabaseConnection, IUserRepository
     {
         private readonly List<User> UserList;
 
         public UserRepository()
         {
-            User admin = new(3, "A.J. Kwak", "user3@mail.com", "sxnIcZdYt8wC8MYWcQVQjQ==.FKd5Z/jwxPv3a63lX+uvQ0+P7EuNYZybvkmdhbnkIHA=");
-            admin.Role = Role.Admin;
-            UserList = [
-                new User(1, "M.J. Curie", "user1@mail.com", "IunRhDKa+fWo8+4/Qfj7Pg==.kDxZnUQHCZun6gLIE6d9oeULLRIuRmxmH2QKJv2IM08="),
-                new User(2, "H.H. Hermans", "user2@mail.com", "dOk+X+wt+MA9uIniRGKDFg==.QLvy72hdG8nWj1FyL75KoKeu4DUgu5B/HAHqTD2UFLU="),
-                admin
-            ];
+            // For login -> table is like ERD
+            CreateTable(@"
+                CREATE TABLE IF NOT EXISTS user (
+                    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    password TEXT NOT NULL,
+                    role TEXT NOT NULL,
+                    level INTEGER NOT NULL
+                );
+            ");
+
+            // seed 1 user (use OR IGNORE so repeated runs won't duplicate)
+            InsertMultipleWithTransaction(new List<string> {
+                @"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl','1234','member',1)"
+            });
         }
 
-        public User? Get(string email)
+        public User? GetById(int id)
         {
-            User? User = UserList.FirstOrDefault(c => c.EmailAddress.Equals(email));
-            return User;
+            OpenConnection();
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE user_id = @id";
+            cmd.Parameters.AddWithValue("@id", id);
+            using var reader = cmd.ExecuteReader();
+            User? user = null;
+            if (reader.Read())
+                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+            CloseConnection();
+            return user;
         }
 
-        public User? Get(int id)
-        {
-            User? User = UserList.FirstOrDefault(c => c.Id == id);
-            return User;
-        }
-
-        public List<User> GetAll()
-        {
-            return UserList;
-        }
+        // Add authentication method here (and create if needed)
     }
 }
