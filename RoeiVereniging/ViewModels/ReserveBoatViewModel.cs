@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
@@ -16,29 +17,39 @@ namespace RoeiVereniging.ViewModels
     {
         public ObservableCollection<Reservation> Reservations { get; set; }
         public ObservableCollection<Boat> Boats { get; set; }
+        public ObservableCollection<int> PassengerCounts { get; } = new ObservableCollection<int> { 1, 2, 3, 4, 6, 8 };
+
         private readonly IReservationService _reservationService;
         private readonly IBoatService _boatService;
+        public ObservableCollection<BoatType> boatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
+        
 
         [ObservableProperty]
-        private string naam = string.Empty;
+        private DateTime date = DateTime.Now.AddDays(7);
 
         [ObservableProperty]
-        private string achternaam = string.Empty;
+        private TimeSpan time = DateTime.Now.TimeOfDay;
 
         [ObservableProperty]
-        private string aantalPersonen = string.Empty;
+        private String displayTime = "00 : 00";
 
         [ObservableProperty]
-        private string email = string.Empty;
+        private String displayDate = "00 - 00 - 1999";
 
         [ObservableProperty]
-        private DateTime datum = DateTime.Now.AddDays(7);
+        private int amount = 0;
 
         [ObservableProperty]
-        private TimeSpan tijd = DateTime.Now.TimeOfDay;
+        private string? difficulty = null;
 
         [ObservableProperty]
-        private Boat boat = null!;
+        private BoatType? type = null;
+
+        [ObservableProperty]
+        private bool pickerlabel = true;
+
+        private TimeSpan OldTime = DateTime.Now.TimeOfDay;
+        private DateTime OldDate = DateTime.Now;
 
         public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
         {
@@ -49,42 +60,72 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        public void ReserveerBoot()
+        public void ReserveBoat()
         {
-            if (string.IsNullOrWhiteSpace(Naam) ||
-                string.IsNullOrWhiteSpace(Achternaam) ||
-                string.IsNullOrWhiteSpace(AantalPersonen) ||
-                string.IsNullOrWhiteSpace(Email) ||
-                Boat == null)
-            {
-                // Handle validation error (e.g., show a message to the user)
-                return;
-            }
-            var reservation = new Reservation(
-                0, // id
-                1, // user id
-                new DateTime(Datum.Year, Datum.Month, Datum.Day, Tijd.Hours, Tijd.Minutes, 0), // startTime
-                new DateTime(Datum.Year, Datum.Month, Datum.Day, Tijd.Hours, Tijd.Minutes, 0), // endTime
-                DateTime.Now, // createdAt
-                Boat.Id // boatId
-            );
+            if(!ValidateInputs()) return;
+            DateTime ReservationDateTime = date.Date + time;
+            _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, GetBoat().Id));
+            ResetInputs();
+        }
 
-            _reservationService.Set(reservation);
-            Reservations.Add(reservation);
-            //Clear input fields after reservation
-           Naam = string.Empty;
-            Achternaam = string.Empty;
-            AantalPersonen = string.Empty;
-            Email = string.Empty;
-            Datum = DateTime.Now.AddDays(7);
-            Tijd = DateTime.Now.TimeOfDay;
-            Boat = null;
+        public void ResetInputs()
+        {
+            Amount = 0;
+            Date = DateTime.Now.AddDays(7);
+            Time = DateTime.Now.TimeOfDay;
+            Difficulty = null;
+            Type = null;
+        }
+
+        public bool ValidateInputs()
+        {
+            // Check if the reservation date and time is now or later
+            DateTime reservationDateTime = date.Date + time;
+            if (reservationDateTime < DateTime.Now)
+                return false;
+
+            // Check if difficulty can be parsed to an int
+            if (!int.TryParse(Difficulty, out _))
+            {
+                Difficulty = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        public Boat? GetBoat()
+        {
+            if (Type is BoatType boatType)
+            {
+                return _boatService.Get(Amount, true, Difficulty, boatType);
+            }
+            return null;
         }
 
         [RelayCommand]
-        public void NewSelectedBoat(Boat product)
+        public void NewSelectedBoat(BoatType type)
         {
-            boat = product;
+            Type = type;
+        }
+
+        [RelayCommand]
+        public void AttributeChanged()
+        {
+            if (OldTime != time)
+            {
+                DisplayTime = $"{time.Hours.ToString("D2")} : {time.Minutes.ToString("D2")}";
+                OldTime = time;
+            }
+            if (OldDate != date)
+            {
+                DisplayDate = $"{date.Day.ToString("d2")} - {date.Month.ToString("D2")} - {date.Year.ToString("D2")}";
+                OldDate = date;
+            }
+            if (Type != null)
+            {
+                Pickerlabel = false;
+            }
         }
 
         [RelayCommand]

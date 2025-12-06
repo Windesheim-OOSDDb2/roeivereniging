@@ -35,7 +35,7 @@ namespace RoeiVereniging.ViewModels
             List<Boat>? boats = _boatRepo.GetAll();
             var boatById = boats.ToDictionary(b => b.BoatId, b => b.Name);
 
-            List<Reservation> reservations = _reservationService.GetByUser(user.UserId);
+            List<Reservation> reservations = _reservationService.GetByUser(user.Id);
 
             MyReservations.Clear();
 
