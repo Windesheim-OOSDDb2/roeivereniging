@@ -9,15 +9,49 @@
     <ContentPage.Resources>
         <StyleSheet Source="/Resources/Styles/reservations.css" />
     </ContentPage.Resources>
+    
+    
+        
+
+    
 
 
     <VerticalStackLayout Padding="20" Spacing="10">
         <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
+
+        <Frame BackgroundColor="#0854D1" Padding="10" CornerRadius="10">
+            <Grid ColumnDefinitions="2*, *, *, *, *" ColumnSpacing="12">
+
+                <Picker Grid.Column="0"
+                Title="Bootnaam"
+                ItemsSource="{Binding BoatNames}"
+                SelectedItem="{Binding SelectedBoatName}" />
+
+                <Picker Grid.Column="1"
+                Title="Gebruiker"
+                ItemsSource="{Binding UserNames}"
+                SelectedItem="{Binding SelectedUserName}" />
+
+                <Picker Grid.Column="2"
+                Title="Startdatum"
+                ItemsSource="{Binding AvailableDates}"
+                SelectedItem="{Binding SelectedDate}" />
+
+                <Picker Grid.Column="3"
+                Title="Tijd"
+                ItemsSource="{Binding AvailableTimes}"
+                SelectedItem="{Binding SelectedTime}" />
+
+            </Grid>
+        </Frame>
+        
         <CollectionView ItemsSource="{Binding MyReservations}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ReservationViewDTO">
+                   
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
+                            
 
                             <!-- boatname -->
                             <Label Grid.Column="0"
