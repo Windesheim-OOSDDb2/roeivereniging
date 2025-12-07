@@ -15,16 +15,16 @@ namespace RoeiVereniging.Core.Data.Repositories
                     name TEXT NOT NULL,
                     type INTEGER NOT NULL,
                     level INTEGER NOT NULL,
-                    boat_status INTEGER NOT NULL,
+                    status INTEGER NOT NULL,
                     seats_amount INTEGER NOT NULL,
                     SteeringwheelPosition BOOL NOT NULL
                 );
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, boat_status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Roeiboot},1,{(int)BoatStatus.Working},4, true)",
-                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, boat_status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Kano},2,{(int)BoatStatus.Working},2, true)",
-                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, boat_status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Kano},1,{(int)BoatStatus.Working},1, true)"
+                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Roeiboot},1,{(int)BoatStatus.Working},4, true)",
+                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Kano},2,{(int)BoatStatus.Working},2, true)",
+                $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Kano},1,{(int)BoatStatus.Working},1, true)"
             });
 
             GetAllFromDB();
@@ -68,7 +68,7 @@ namespace RoeiVereniging.Core.Data.Repositories
             boatList.Clear();
             OpenConnection();
             using var command = Connection.CreateCommand();
-            command.CommandText = "SELECT boat_id, name, seats_amount, SteeringwheelPosition, level, boat_status, type FROM boat";
+            command.CommandText = "SELECT boat_id, name, seats_amount, SteeringwheelPosition, level, status, type FROM boat";
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
