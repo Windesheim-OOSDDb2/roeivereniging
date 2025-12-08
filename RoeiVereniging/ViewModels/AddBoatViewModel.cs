@@ -37,7 +37,6 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty] private bool levelsEnabled = true;
         [ObservableProperty] private bool maxPassengersEnabled;
         [ObservableProperty] private string errorMessage;
-        [ObservableProperty] private string workMessage;
         [ObservableProperty] private bool addProductEnabled;
 
         public AddBoatViewModel(IBoatService boatService)
@@ -69,7 +68,6 @@ namespace RoeiVereniging.ViewModels
             {
                 var boat = new Boat(1, name, maxPassengers, steeringWheelPosition, level, boatStatus, boatType);
                 _boatService.Add(boat);
-                WorkMessage = $"boot is:naam: {boat.name}, zetels: {boat.SeatsAmount}, stuur:{boat.SteeringWheelPosition}, niveau: {boat.Level}, status: {boat.BoatStatus}, type: {boat.BoatType}";
                 ErrorMessage = "";
             }
             else

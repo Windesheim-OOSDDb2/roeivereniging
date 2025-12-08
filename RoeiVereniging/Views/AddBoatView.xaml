@@ -4,8 +4,7 @@
              xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.AddBoatView"
-             x:DataType="vm:AddBoatViewModel"
-             Title="AddBoatView">
+             x:DataType="vm:AddBoatViewModel">
 
     <Grid BackgroundColor="White">
         <Grid.ColumnDefinitions>
@@ -23,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <Image Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Source="logo.png" HorizontalOptions="Start" />
-        <Label TextColor="#082757" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="24" />
+        <Label TextColor="#082757" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Text="Boot Toevoegen" HorizontalOptions="Center" VerticalOptions="Center" FontSize="24" />
 
 
         <VerticalStackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0">
@@ -69,8 +68,8 @@
         <VerticalStackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Margin="5,0,5,0">
             <Label TextColor="#082757" Text="Stuur" IsVisible="{Binding IsVisible}" />
             <CheckBox IsChecked="{Binding SteeringWheelPosition}" IsEnabled="{Binding SteeringModeEnabled}" IsVisible="True"/>
-            <Button 
-                Text="Add Product" 
+                <Button 
+                Text="Boot Toevoegen" 
                 Command="{Binding AddBoatCommand}" 
                 IsEnabled="{Binding AddProductEnabled}" 
                 HorizontalOptions="FillAndExpand"
@@ -78,7 +77,6 @@
                 TextColor="#DEE6F8"/>
 
             <Label Text="{Binding ErrorMessage}" TextColor="Red" />
-            <Label Text="{Binding WorkMessage}"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

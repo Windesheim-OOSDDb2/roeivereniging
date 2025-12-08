@@ -133,5 +133,11 @@ namespace RoeiVereniging.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(ReservationView));
         }
+
+        [RelayCommand]
+        public async Task GoToAddBoats()
+        {
+            await Shell.Current.GoToAsync(nameof(AddBoatView));
+        }
     }
 }

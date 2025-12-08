@@ -9,7 +9,7 @@ namespace RoeiVereniging
         {
             InitializeComponent();
 
-            MainPage = new AddBoatView(viewModel);
+            MainPage = new AppShell();
         }
     }
 }
