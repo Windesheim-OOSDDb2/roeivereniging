@@ -100,7 +100,7 @@ namespace RoeiVereniging.ViewModels
 
             // populate dropdown lists
             BoatNames = _allReservations.Select(r => r.BoatName).Distinct().ToList();
-            BoatNames.Insert(0, "Alles"); 
+            BoatNames.Insert(0, "Bootnaam"); 
             Levels = _allReservations.Select(r => r.Level).Distinct().ToList();
             Levels.Insert(0, 0);
             AvailableDates = _allReservations.Select(r => r.StartTime.Date).Distinct().ToList();
@@ -137,7 +137,7 @@ namespace RoeiVereniging.ViewModels
         {
             IEnumerable<ReservationViewDTO> filtered = _allReservations;
 
-            if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Alles")
+            if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Bootnaam")
                 filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
 
             if (SelectedLevel!=null&&SelectedLevel>0 && SelectedLevel != 0)
