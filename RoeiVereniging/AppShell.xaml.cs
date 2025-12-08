@@ -9,6 +9,7 @@ namespace RoeiVereniging
             InitializeComponent();
             Routing.RegisterRoute(nameof(ReservationView), typeof(ReservationView));
             Routing.RegisterRoute(nameof(ReserveBoatView), typeof(ReserveBoatView));
+            Routing.RegisterRoute(nameof(WeatherView), typeof(WeatherView));
         }
     }
 }
