@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
-using System.Globalization;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -24,6 +23,10 @@ namespace RoeiVereniging.ViewModels
         
         [ObservableProperty]
         public string liveWeatherIcon = string.Empty;
+
+        // New: message line shown to the user when data cannot be loaded
+        [ObservableProperty]
+        public string liveWeatherMessage = string.Empty;
 
         // Settings for weather evaluation
         public double ColdThreshold { get; set; } = 10.0;
@@ -57,11 +60,37 @@ namespace RoeiVereniging.ViewModels
 
                 UpdateBackgroundForWeather(LiveWeather);
                 LiveWeatherIcon = MapToImageFile(LiveWeather?.Image);
+
+                // Clear any previous error message when data loaded successfully
+                liveWeatherMessage = string.Empty;
+            }
+            else
+            {
+                // Inform UI that weather could not be loaded
+                LiveWeather = null;
+                WkVerw = Array.Empty<WkVerwUi>();
+                LiveWeatherIcon = string.Empty;
+                LiveBackgroundColor = Color.FromRgba("#D7263D");
+                LiveWeatherMessage = "Could not load weather data. Please check your network connection.";
+            }
+
+            // If API returned an empty live-weather array, show a message as well
+            if (live != null && (live.LiveWeer == null || live.LiveWeer.Length == 0))
+            {
+                LiveWeather = null;
+                LiveWeatherMessage = "No live weather data available for the selected location.";
+                LiveBackgroundColor = Color.FromRgba("#D7263D");
             }
         }
 
         partial void OnLiveWeatherChanged(LiveWeerV2? value)
         {
+            // Clear message when valid data appears; otherwise show a simple unavailable message
+            if (value is null)
+                LiveWeatherMessage = "Weather data unavailable.";
+            else
+                LiveWeatherMessage = string.Empty;
+
             UpdateBackgroundForWeather(value);
             LiveWeatherIcon = MapToImageFile(value?.Image);
         }

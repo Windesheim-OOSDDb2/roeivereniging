@@ -23,18 +23,26 @@ namespace RoeiVereniging.Core.Data.Helpers
         /// <param name="apiKey">API key for weerlive.nl</param>
         public static async Task<WeerLiveV2Response?> GetWeatherAsync(string locatie, string apiKey, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(locatie)) throw new ArgumentException("locatie is required", nameof(locatie));
-            if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentException("apiKey is required", nameof(apiKey));
+            try
+            {
+                if (string.IsNullOrWhiteSpace(locatie)) throw new ArgumentException("locatie is required", nameof(locatie));
+                if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentException("apiKey is required", nameof(apiKey));
 
-            string endpoint = $"api/weerlive_api_v2.php?key={Uri.EscapeDataString(apiKey)}&locatie={Uri.EscapeDataString(locatie)}";
+                string endpoint = $"api/weerlive_api_v2.php?key={Uri.EscapeDataString(apiKey)}&locatie={Uri.EscapeDataString(locatie)}";
 
-            using var response = await _httpClient.GetAsync(endpoint, cancellationToken).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
+                using var response = await _httpClient.GetAsync(endpoint, cancellationToken).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-            var data = JsonSerializer.Deserialize<WeerLiveV2Response>(json, _jsonOptions);
+                var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                var data = JsonSerializer.Deserialize<WeerLiveV2Response>(json, _jsonOptions);
 
-            return data;
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching weather data: {ex.Message}");
+                return null;
+            }
         }
     }
 
