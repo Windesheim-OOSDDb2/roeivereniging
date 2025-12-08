@@ -40,6 +40,7 @@ namespace RoeiVereniging
             // Views and ViewModels
             builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
+            builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
             builder.Services.AddTransient<AddBoatView>().AddTransient<AddBoatViewModel>();
             return builder.Build();
         }
