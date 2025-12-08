@@ -34,9 +34,6 @@ namespace RoeiVereniging.Core.Data.Helpers
             var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
             var data = JsonSerializer.Deserialize<WeerLiveV2Response>(json, _jsonOptions);
 
-            // show output in debugger
-            Debug.WriteLine(JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true }));
-
             return data;
         }
     }
