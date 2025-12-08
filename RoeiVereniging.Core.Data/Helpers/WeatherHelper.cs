@@ -53,9 +53,6 @@ namespace RoeiVereniging.Core.Data.Helpers
 
         [JsonPropertyName("wk_verw")]
         public WkVerw[] WkVerw { get; set; } = Array.Empty<WkVerw>();
-
-        //[JsonPropertyName("uur_verw")]
-        //public UurVerw[] UurVerw { get; set; } = Array.Empty<UurVerw>();
     }
 
     public class LiveWeerV2
@@ -132,43 +129,4 @@ namespace RoeiVereniging.Core.Data.Helpers
         [JsonPropertyName("zond_perc_dag")]
         public int ZondPercDag { get; set; }
     }
-
-    //public class UurVerw
-    //{
-    //    [JsonPropertyName("uur")]
-    //    public string Uur { get; set; }
-
-    //    [JsonPropertyName("timestamp")]
-    //    public long Timestamp { get; set; }
-
-    //    [JsonPropertyName("image")]
-    //    public string Image { get; set; }
-
-    //    [JsonPropertyName("temp")]
-    //    public double Temp { get; set; }
-
-    //    [JsonPropertyName("windbft")]
-    //    public int WindBft { get; set; }
-
-    //    [JsonPropertyName("windkmh")]
-    //    public double WindKmH { get; set; }
-
-    //    [JsonPropertyName("windknp")]
-    //    public int WindKnp { get; set; }
-
-    //    [JsonPropertyName("windms")]
-    //    public double WindMs { get; set; }
-
-    //    [JsonPropertyName("windrgr")]
-    //    public int WindRGr { get; set; }
-
-    //    [JsonPropertyName("windr")]
-    //    public string WindR { get; set; }
-
-    //    [JsonPropertyName("neersl")]
-    //    public double Neersl { get; set; }
-
-    //    [JsonPropertyName("gr")]
-    //    public int Gr { get; set; }
-    //}
 }
