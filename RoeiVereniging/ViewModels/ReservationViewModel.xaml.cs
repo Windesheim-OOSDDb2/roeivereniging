@@ -29,26 +29,27 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private int? selectedLevel;
 
-        private string? _selectedUserName;
-        public string? SelectedUserName
-        {
-            get => _selectedUserName;
-            set { _selectedUserName = value; Filter(); OnPropertyChanged(); }
-        }
+        [ObservableProperty]
+        private string? selectedUserName;
 
-        private DateTime? _selectedDate;
-        public DateTime? SelectedDate
-        {
-            get => _selectedDate;
-            set { _selectedDate = value; Filter(); OnPropertyChanged(); }
-        }
+        [ObservableProperty]
+        private bool? selectedDate = null;
 
-        private TimeSpan? _selectedTime;
-        public TimeSpan? SelectedTime
-        {
-            get => _selectedTime;
-            set { _selectedTime = value; Filter(); OnPropertyChanged(); }
-        }
+        [ObservableProperty]
+        private bool? selectedTime = null;
+
+        [ObservableProperty]
+        private string dateSortText = @"Datum \/";
+
+        [ObservableProperty]
+        private string timeSortText = @"Tijd \/";
+
+        [ObservableProperty]
+        private bool niveau = true;
+
+        [ObservableProperty]
+        private bool namen = true;
+
 
         private readonly IReservationService _reservationService;
         private readonly UserRepository _userRepo;
@@ -99,7 +100,9 @@ namespace RoeiVereniging.ViewModels
 
             // populate dropdown lists
             BoatNames = _allReservations.Select(r => r.BoatName).Distinct().ToList();
+            BoatNames.Insert(0, "Alles"); 
             Levels = _allReservations.Select(r => r.Level).Distinct().ToList();
+            Levels.Insert(0, 0);
             AvailableDates = _allReservations.Select(r => r.StartTime.Date).Distinct().ToList();
             AvailableTimes = _allReservations.Select(r => r.StartTime.TimeOfDay).Distinct().ToList();
 
@@ -109,10 +112,24 @@ namespace RoeiVereniging.ViewModels
         partial void OnSelectedBoatNameChanged(string? selectedBoatName)
         {
             Filter();
+            Namen = false;
         }
 
         partial void OnSelectedLevelChanged(int? selectedlevel)
         {
+            Filter();
+            Niveau = false;
+        }
+
+        partial void OnSelectedDateChanged(bool? value)
+        {
+            SelectedTime = null;
+            Filter();
+        }
+
+        partial void OnSelectedTimeChanged(bool? value)
+        {
+            SelectedDate = null;
             Filter();
         }
 
@@ -120,17 +137,35 @@ namespace RoeiVereniging.ViewModels
         {
             IEnumerable<ReservationViewDTO> filtered = _allReservations;
 
-            if (!string.IsNullOrWhiteSpace(SelectedBoatName))
+            if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Alles")
                 filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
 
-            if (SelectedLevel!=null&&SelectedLevel>0)
+            if (SelectedLevel!=null&&SelectedLevel>0 && SelectedLevel != 0)
                 filtered = filtered.Where(r => r.Level == SelectedLevel);
 
-            if (SelectedDate != null)
-                filtered = filtered.Where(r => r.StartTime.Date == SelectedDate.Value.Date);
+            if (SelectedDate is not null)
+                if (SelectedDate.Value)
+                {
+                    filtered = filtered.OrderBy(r => r.StartTime);
+                    DateSortText = @"Datum /\";
+                }
+                else
+                {
+                    filtered = filtered.OrderByDescending(r => r.StartTime);
+                    DateSortText = @"Datum \/";
+                }
 
-            if (SelectedTime != null)
-                filtered = filtered.Where(r => r.StartTime.TimeOfDay == SelectedTime.Value);
+            if (SelectedTime is not null)
+                if (SelectedTime.Value)
+                {
+                    filtered = filtered.OrderBy(r => r.StartTime.TimeOfDay);
+                    TimeSortText = @"Tijd /\";
+                }
+                else
+                {
+                    filtered = filtered.OrderByDescending(r => r.StartTime.TimeOfDay);
+                    TimeSortText = @"Tijd \/";
+                }
 
             MyReservations.Clear();
             foreach (var res in filtered)
