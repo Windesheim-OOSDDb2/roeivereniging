@@ -15,6 +15,9 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         public WkVerwUi[] wkVerw = Array.Empty<WkVerwUi>();
 
+        [ObservableProperty]
+        public string liveWeatherIcon = string.Empty;
+
         public WeatherViewModel()
         {
             _ = InitializeAsync();
@@ -32,15 +35,49 @@ namespace RoeiVereniging.ViewModels
                     ? live.WkVerw.Select(w => new WkVerwUi(w)).ToArray()
                     : Array.Empty<WkVerwUi>();
 
+                LiveWeatherIcon = MapToImageFile(LiveWeather?.Image);
+
                 Debug.WriteLine($"Weather data loaded: {LiveWeather?.Temp}");
                 if (WkVerw.Length > 0)
                     Debug.WriteLine($"Forecast days: {WkVerw[0].Dag}");
             }
         }
+        partial void OnLiveWeatherChanged(LiveWeerV2? value)
+        {
+            LiveWeatherIcon = MapToImageFile(value?.Image);
+        }
+
+        private static string MapToImageFile(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                return $"bewolkt.png";
+
+            var k = key.Trim().ToLowerInvariant();
+            string filename = k switch
+            {
+                "zonnig" => "zonnig.png",
+                "bliksem" => "bliksem.png",
+                "regen" => "regen.png",
+                "buien" => "buien.png",
+                "hagel" => "hagel.png",
+                "mist" => "mist.png",
+                "sneeuw" => "sneeuw.png",
+                "bewolkt" => "bewolkt.png",
+                "lichtbewolkt" => "lichtbewolkt.png",
+                "halfbewolkt" => "halfbewolkt.png",
+                "halfbewolkt_regen" => "halfbewolkt_regen.png",
+                "zwaarbewolkt" => "zwaarbewolkt.png",
+                "nachtmist" => "nachtmist.png",
+                "helderenacht" => "helderenacht.png",
+                "nachtbewolkt" => "nachtbewolkt.png",
+                _ => $"{k}.png"
+            };
+
+            return $"{filename}";
+        }
 
         public class WkVerwUi
         {
-            private const string IconsSubFolder = "WeatherIcons";
             private static readonly string FallbackImage = "bewolkt.png";
 
             private readonly WkVerw _dto;
@@ -53,7 +90,6 @@ namespace RoeiVereniging.ViewModels
 
             public string TempRange => $"{MinTemp:0.#} / {MaxTemp:0.#} °C";
 
-            // The DTO's `Image` value (e.g. "zonnig", "regen", "lichtbewolkt", ...)
             public string ImageKey => _dto.Image ?? string.Empty;
 
             public string IconImage => MapToImageFile(ImageKey);
@@ -61,7 +97,7 @@ namespace RoeiVereniging.ViewModels
             private static string MapToImageFile(string key)
             {
                 if (string.IsNullOrWhiteSpace(key))
-                    return FallbackImage;
+                    return $"{FallbackImage}";
 
                 var k = key.Trim().ToLowerInvariant();
 
@@ -85,7 +121,7 @@ namespace RoeiVereniging.ViewModels
                     _ => $"{k}.png"
                 };
 
-                return $"{IconsSubFolder}/{filename}";
+                return $"{filename}";
             }
         }
     }

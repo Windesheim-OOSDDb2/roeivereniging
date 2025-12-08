@@ -29,9 +29,11 @@
                                            HorizontalOptions="Center" 
                                            VerticalOptions="Center"
                                            Spacing="10">
-                        <Image Source="{Binding IconImage}"
-                               HeightRequest="34"
-                               WidthRequest="34"/>
+                        <Image Source="bewolkt.png" 
+                               HeightRequest="100" 
+                               WidthRequest="100" 
+                               VerticalOptions="Center" 
+                               Aspect="AspectFit"/>
 
                         <Label Text="{Binding LiveWeather.Temp}"
                                TextColor="White"
