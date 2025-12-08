@@ -29,13 +29,9 @@
                                            HorizontalOptions="Center" 
                                            VerticalOptions="Center"
                                            Spacing="10">
-                        <Image Source="sun_large.png" 
-                               HeightRequest="80" 
-                               WidthRequest="80">
-                            <Image.Source>
-                                <FontImageSource Glyph="☀" Color="White" Size="80"/>
-                            </Image.Source>
-                        </Image>
+                        <Image Source="{Binding IconImage}"
+                               HeightRequest="34"
+                               WidthRequest="34"/>
 
                         <Label Text="{Binding LiveWeather.Temp}"
                                TextColor="White"
@@ -46,19 +42,19 @@
                 </Grid>
             </Border>
 
-            <!-- <VerticalStackLayout Grid.Column="1" Spacing="4">
-                <CollectionView ItemsSource="{Binding Forecasts}" SelectionMode="None">
+            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                <CollectionView ItemsSource="{Binding WkVerw}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="60" Padding="15,0" Margin="0,0,0,6">
-                                <Label Grid.Column="0" Text="{Binding Icon}" TextColor="White" FontSize="30" VerticalOptions="Center"/>
-                                <Label Grid.Column="1" Text="{Binding Temp}" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
-                                <Label Grid.Column="2" Text="{Binding Day}" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                <Image Grid.Column="0" Source="{Binding IconImage}" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                <Label Grid.Column="1" Text="{Binding TempRange}" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                <Label Grid.Column="2" Text="{Binding Dag}" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </VerticalStackLayout>-->
+            </VerticalStackLayout>
         </Grid>
     </Grid>
 </ContentPage>
