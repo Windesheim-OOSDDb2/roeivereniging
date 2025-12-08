@@ -5,14 +5,14 @@
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.ReservationView"
              x:DataType="vm:ReservationViewModel"
-             Title="My Reservations">
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
     <ContentPage.Resources>
         <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
-
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
+    <VerticalStackLayout Spacing="0">
+        <components:PageHeader PageTitle="Mijn reserveringen"/>
         <CollectionView ItemsSource="{Binding MyReservations}">
             <CollectionView.Header>
                 <Frame StyleClass="row-header" BackgroundColor="#0854d1">
