@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Models
 {
-    public enum BoatLevel : ushort
+    public enum Role : ushort
     {
-        Beginner = 0,
-        Gemiddeld = 1,
-        Gevorderd = 2,
-        Expert = 3
+        None = 0,
+        Admin = 1
     }
 }

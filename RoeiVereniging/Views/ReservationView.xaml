@@ -5,17 +5,50 @@
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.ReservationView"
              x:DataType="vm:ReservationViewModel"
-             Title="My Reservations">
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
     <ContentPage.Resources>
-        <StyleSheet Source="/Resources/Styles/reservations.css" />
+        <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
-
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
+    <VerticalStackLayout Spacing="0">
+        <components:PageHeader PageTitle="Mijn reserveringen"/>
         <CollectionView ItemsSource="{Binding MyReservations}">
+            <CollectionView.Header>
+                <Frame StyleClass="row-header" BackgroundColor="#0854d1">
+                    <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
+
+                        <Label Text="Boot naam"
+                           FontAttributes="Bold"
+                           TextColor="#000000"
+                           StyleClass="cell-left" 
+                           Grid.Column="0"
+                        />
+
+                        <Label Text="Niveau"
+                           FontAttributes="Bold"
+                           TextColor="#000000"
+                           StyleClass="cell" 
+                           Grid.Column="1"
+                        />
+
+                        <Label Text="Start datum"
+                           FontAttributes="Bold"
+                           StyleClass="cell" 
+                           TextColor="#000000"
+                           Grid.Column="2"
+                        />
+
+                        <Label Text="Tijd"
+                           StyleClass="cell" 
+                           TextColor="#000000"
+                           Grid.Column="3"
+                        />
+                    </Grid>
+                </Frame>
+            </CollectionView.Header>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:ReservationViewDTO">
+                <DataTemplate x:DataType="m:ReservationViewDTO">
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
 
@@ -28,7 +61,7 @@
 
                             <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding UserName}"
+                               Text="{Binding BoatLevelText}"
                                StyleClass="cell" 
                                TextColor="#000000"
                             /> 

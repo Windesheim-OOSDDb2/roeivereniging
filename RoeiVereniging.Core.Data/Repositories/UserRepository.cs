@@ -7,6 +7,8 @@ namespace RoeiVereniging.Core.Repositories
 {
     public class UserRepository : DatabaseConnection, IUserRepository
     {
+        private readonly List<User> UserList = [];
+
         public UserRepository()
         {
             // For login -> table is like ERD
@@ -31,12 +33,12 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email FROM user WHERE user_id = @id";
+            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE user_id = @id";
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
             User? user = null;
             if (reader.Read())
-                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
             CloseConnection();
             return user;
         }
