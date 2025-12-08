@@ -33,7 +33,7 @@ namespace RoeiVereniging.ViewModels
 
             // cache boats in dictionary for faster lookup
             List<Boat>? boats = _boatRepo.GetAll();
-            var boatById = boats.ToDictionary(b => b.BoatId, b => b.Name);
+            var boatById = boats.ToDictionary(b => b.BoatId, b => b);
 
             List<Reservation> reservations = _reservationService.GetByUser(user.Id);
 
@@ -41,21 +41,25 @@ namespace RoeiVereniging.ViewModels
 
             foreach (var reservation in reservations)
             {
-                string boatName = boatById.TryGetValue(reservation.BoatId, out var bn) ? bn : $"Boat {reservation.BoatId}";
-                string userName = user.Name;
+                if (boatById.TryGetValue(reservation.BoatId, out var boat))
+                {
+                    BoatLevel boatLevel = boat.Level;
+                    string boatName = boat.Name;
 
-                //I used a DTO to store reservation data AND username / boat name for UI binding purposes
-                var reservationsList = new ReservationViewDTO(
-                    reservation.Id,
-                    reservation.UserId,
-                    userName,
-                    reservation.BoatId,
-                    boatName,
-                    reservation.StartTime,
-                    reservation.EndTime
-                );
+                    // I used a DTO to store reservation data AND boat level / boat name for UI binding purposes
+                    var reservationsList = new ReservationViewDTO(
+                        reservation.Id,
+                        reservation.UserId,
+                        boatLevel,
+                        reservation.BoatId,
+                        boatName,
+                        reservation.StartTime,
+                        reservation.EndTime
+                    );
 
-                MyReservations.Add(reservationsList);
+                    // Add to observable collection so ui updates
+                    MyReservations.Add(reservationsList);
+                }
             }
         }
     }
