@@ -43,7 +43,7 @@ namespace RoeiVereniging.ViewModels
             {
                 if (boatById.TryGetValue(reservation.BoatId, out var boat))
                 {
-                    string boatLevel = boat.Level.ToString();
+                    BoatLevel boatLevel = boat.Level;
                     string boatName = boat.Name;
 
                     // I used a DTO to store reservation data AND boat level / boat name for UI binding purposes

@@ -23,9 +23,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel','wedstrijd',1,'available',4, 1)",
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Zwarte Parel 2','training',1,'available',2, 0)",
-                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Zwarte Parel 3','recreatie',1,'available',1, 1)"
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Roeiboot},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Kano},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Kano},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
             });
             LoadBoats();
         }
@@ -44,9 +44,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             {
                 int id = reader.GetInt32(0);
                 string name = reader.GetString(1);
-                string type = reader.GetString(2);
+                int type = reader.GetInt32(2);
                 int level = reader.GetInt32(3);
-                string status = reader.GetString(4);
+                int status = reader.GetInt32(4);
                 int seats = reader.GetInt32(5);
                 bool steering = reader.GetBoolean(6);
 
@@ -55,9 +55,9 @@ namespace RoeiVereniging.Core.Data.Repositories
                     name,
                     seats,
                     steering,
-                    level,
-                    BoatStatus.Working,
-                    BoatType.Roeiboot
+                    (BoatLevel)level,
+                    (BoatStatus)status,
+                    (BoatType)type
                 );
 
                 boatList.Add(boat);
@@ -80,7 +80,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
         {
-            if (!int.TryParse(difficulty, out int minLevel))
+            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var minLevel))
             {
                 return boatList.FirstOrDefault();
             }
@@ -97,29 +97,6 @@ namespace RoeiVereniging.Core.Data.Repositories
         public List<Boat> GetAll()
         {
             return boatList;
-        }
-
-        public void GetAllFromDB()
-        {
-            boatList.Clear();
-            OpenConnection();
-            using var command = Connection.CreateCommand();
-            command.CommandText = "SELECT boat_id, name, seats_amount, SteeringwheelPosition, level, status, type FROM boat";
-            using var reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                int id = reader.GetInt32(0);
-                string name = reader.GetString(1);
-                int seatsAmount = reader.GetInt32(2);
-                bool steeringWheelPosition = reader.GetBoolean(3);
-                int level = reader.GetInt32(4);
-                BoatStatus boatStatus = (BoatStatus)reader.GetInt32(5);
-                BoatType boatType = (BoatType)reader.GetInt32(6);
-
-                var boat = new Boat(id, name, seatsAmount, steeringWheelPosition, level, boatStatus, boatType);
-                boatList.Add(boat);
-            }
-            CloseConnection();
         }
     }
 }

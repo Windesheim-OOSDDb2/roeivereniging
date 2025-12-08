@@ -7,7 +7,7 @@ namespace RoeiVereniging.Core.Repositories
 {
     public class UserRepository : DatabaseConnection, IUserRepository
     {
-        private readonly List<User> UserList;
+        private readonly List<User> UserList = [];
 
         public UserRepository()
         {

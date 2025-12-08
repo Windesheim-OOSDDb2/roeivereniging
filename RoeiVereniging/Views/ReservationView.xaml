@@ -61,7 +61,7 @@
 
                             <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding BoatLevel}"
+                               Text="{Binding BoatLevelText}"
                                StyleClass="cell" 
                                TextColor="#000000"
                             /> 
