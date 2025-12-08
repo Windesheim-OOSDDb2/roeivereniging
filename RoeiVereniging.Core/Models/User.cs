@@ -1,18 +1,21 @@
-﻿namespace RoeiVereniging.Core.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RoeiVereniging.Core.Models
 {
-    public class User
+    public partial class User : Model
     {
-
-        // FOR LOGIN -> add password and role
-        public int UserId { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-
-        public User(int userId, string name, string email)
+        public string EmailAddress { get; set; }
+        public string Password { get; set; }
+        public Role Role { get; set; } = Role.None;
+        public User(int id, string name, string emailAddress, string password) : base(id, name)
         {
-            UserId = userId;
-            Name = name;
-            Email = email;
+            EmailAddress = emailAddress;
+            Password = password;
         }
     }
 }
