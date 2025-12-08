@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
+using RoeiVereniging.Core.Models;
+using RoeiVereniging.Core.Helpers;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -58,7 +60,7 @@ namespace RoeiVereniging.ViewModels
                     : Array.Empty<WkVerwUi>();
 
                 UpdateBackgroundForWeather(LiveWeather);
-                LiveWeatherIcon = MapToImageFile(LiveWeather?.Image);
+                LiveWeatherIcon = WeatherImageFileMapperHelper.MapToImageFile(LiveWeather?.Image);
                 liveWeatherMessage = string.Empty;
             }
             else
@@ -88,7 +90,7 @@ namespace RoeiVereniging.ViewModels
                 LiveWeatherMessage = string.Empty;
 
             UpdateBackgroundForWeather(value);
-            LiveWeatherIcon = MapToImageFile(value?.Image);
+            LiveWeatherIcon = WeatherImageFileMapperHelper.MapToImageFile(value?.Image);
         }
 
         private void UpdateBackgroundForWeather(LiveWeerV2? weather)
@@ -130,52 +132,6 @@ namespace RoeiVereniging.ViewModels
             }
 
             LiveBackgroundColor = temp < ColdThreshold ? Color.FromRgba("#D7263D") : Color.FromRgba("#0854D1");
-        }
-
-        private static string MapToImageFile(string? key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                return $"bewolkt.png";
-
-            var k = key.Trim().ToLowerInvariant();
-            string filename = k switch
-            {
-                "zonnig" => "zonnig.png",
-                "bliksem" => "bliksem.png",
-                "regen" => "regen.png",
-                "buien" => "buien.png",
-                "hagel" => "hagel.png",
-                "mist" => "mist.png",
-                "sneeuw" => "sneeuw.png",
-                "bewolkt" => "bewolkt.png",
-                "lichtbewolkt" => "lichtbewolkt.png",
-                "halfbewolkt" => "halfbewolkt.png",
-                "halfbewolkt_regen" => "halfbewolkt_regen.png",
-                "zwaarbewolkt" => "zwaarbewolkt.png",
-                "nachtmist" => "nachtmist.png",
-                "helderenacht" => "helderenacht.png",
-                "nachtbewolkt" => "nachtbewolkt.png",
-                _ => $"{k}.png"
-            };
-
-            return $"{filename}";
-        }
-
-        public class WkVerwUi
-        {
-            private readonly WkVerw _dto;
-
-            public WkVerwUi(WkVerw dto) => _dto = dto ?? throw new ArgumentNullException(nameof(dto));
-
-            public string Dag => _dto.Dag ?? string.Empty;
-            public double MinTemp => _dto.MinTemp;
-            public double MaxTemp => _dto.MaxTemp;
-
-            public string TempRange => $"{MinTemp:0.#} / {MaxTemp:0.#} °C";
-
-            public string ImageKey => _dto.Image ?? string.Empty;
-
-            public string IconImage => MapToImageFile(ImageKey);
         }
     }
 }
