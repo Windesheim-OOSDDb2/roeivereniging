@@ -77,7 +77,7 @@
                         <CollectionView Grid.Row="1"
                             ItemsSource="{Binding WkVerw}"
                             SelectionMode="None"
-                            BackgroundColor="Transparent"
+                            BackgroundColor="Transparent">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
                             </CollectionView.ItemsLayout>
