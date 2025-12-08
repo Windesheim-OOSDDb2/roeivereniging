@@ -10,10 +10,11 @@
         public DateTime EndTime { get; set; }
         public int BoatId { get; set; }
         public int UserId { get; set; }
+        public int Level { get; set; }
 
         public ReservationViewDTO() { }
 
-        public ReservationViewDTO(int reservationId, int userId, string userName, int boatId, string boatName, DateTime start, DateTime end)
+        public ReservationViewDTO(int reservationId, int userId, string userName, int boatId, string boatName, DateTime start, DateTime end, int level)
         {
             ReservationId = reservationId;
             UserId = userId;
@@ -22,6 +23,7 @@
             BoatName = boatName;
             StartTime = start;
             EndTime = end;
+            Level = level;
         }
     }
 }

@@ -25,12 +25,12 @@
                 <Picker Grid.Column="0"
                 Title="Bootnaam"
                 ItemsSource="{Binding BoatNames}"
-                SelectedItem="{Binding SelectedBoatName}" />
+                SelectedItem="{Binding SelectedBoatName, Mode=TwoWay}" />
 
                 <Picker Grid.Column="1"
-                Title="Gebruiker"
-                ItemsSource="{Binding UserNames}"
-                SelectedItem="{Binding SelectedUserName}" />
+                Title="Niveau"
+                ItemsSource="{Binding Levels}"
+                SelectedItem="{Binding SelectedLevel}" />
 
                 <Picker Grid.Column="2"
                 Title="Startdatum"
@@ -51,8 +51,7 @@
                    
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
-                            
-
+                        
                             <!-- boatname -->
                             <Label Grid.Column="0"
                                Text="{Binding BoatName}"
@@ -62,7 +61,7 @@
 
                             <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding UserName}"
+                               Text="{Binding Level}"
                                StyleClass="cell" 
                                TextColor="#000000"
                             /> 
