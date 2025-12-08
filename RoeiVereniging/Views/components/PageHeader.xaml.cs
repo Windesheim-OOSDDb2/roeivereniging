@@ -34,17 +34,14 @@ public partial class PageHeader : ContentView
         await Shell.Current.GoToAsync(nameof(ReserveBoatView));
     }
 
-    // Handle back button click, check if there is a target else go to last page
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        // If target exists, go there
         if (!string.IsNullOrWhiteSpace(BackTarget))
         {
             await Shell.Current.GoToAsync(BackTarget);
             return;
         }
 
-        // Otherwise just go back
         if (Shell.Current.Navigation.NavigationStack.Count > 1)
         {
             await Shell.Current.GoToAsync("..");
