@@ -57,10 +57,6 @@ namespace RoeiVereniging.ViewModels
 
                 UpdateBackgroundForWeather(LiveWeather);
                 LiveWeatherIcon = MapToImageFile(LiveWeather?.Image);
-
-                Debug.WriteLine($"Weather data loaded: {LiveWeather?.Temp}");
-                if (WkVerw.Length > 0)
-                    Debug.WriteLine($"Forecast days: {WkVerw[0].Dag}");
             }
         }
 
@@ -142,8 +138,6 @@ namespace RoeiVereniging.ViewModels
 
         public class WkVerwUi
         {
-            private static readonly string FallbackImage = "bewolkt.png";
-
             private readonly WkVerw _dto;
 
             public WkVerwUi(WkVerw dto) => _dto = dto ?? throw new ArgumentNullException(nameof(dto));
