@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.Maui.Controls.Internals.Profile;
+using System.Text.RegularExpressions;
+
 
 namespace RoeiVereniging.ViewModels
 {
@@ -18,7 +20,7 @@ namespace RoeiVereniging.ViewModels
     {
         private readonly IBoatService _boatService;
 
-        [ObservableProperty] public ObservableCollection<BoatLevel> minlevels = new ObservableCollection<BoatLevel>() { BoatLevel.Basis, BoatLevel.Gevorderd, BoatLevel.Expert };
+        [ObservableProperty] public ObservableCollection<BoatLevel> levels = new ObservableCollection<BoatLevel>() { BoatLevel.Basis, BoatLevel.Gevorderd, BoatLevel.Expert };
         [ObservableProperty] public ObservableCollection<BoatType> boatTypes = new ObservableCollection<BoatType>() { BoatType.Boord, BoatType.Scull, BoatType.C, BoatType.Liteboat };
         [ObservableProperty] public ObservableCollection<int> maxpassenger = new ObservableCollection<int>() { 1, 2, 3, 4, 8 };
 
@@ -26,15 +28,16 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty] private string name;
         [ObservableProperty] private bool steeringWheelPosition;
         [ObservableProperty] private int maxPassengers;
-        [ObservableProperty] private BoatLevel minLevel;
+        [ObservableProperty] private BoatLevel level;
         [ObservableProperty] private BoatStatus boatStatus;
         [ObservableProperty] private BoatType boatType;
         [ObservableProperty] private bool isVisible = true;
         [ObservableProperty] private bool canHaveSteering;
         [ObservableProperty] private bool steeringModeEnabled;
-        [ObservableProperty] private bool minLevelsEnabled = true;
+        [ObservableProperty] private bool levelsEnabled = true;
         [ObservableProperty] private bool maxPassengersEnabled;
         [ObservableProperty] private string errorMessage;
+        [ObservableProperty] private string workMessage;
         [ObservableProperty] private bool addProductEnabled;
 
         public AddBoatViewModel(IBoatService boatService)
@@ -62,15 +65,18 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public void AddBoat()
         {
-            var boat = new Boat(1, name, maxPassengers, steeringWheelPosition, minLevel, boatStatus, boatType);
-            _boatService.Add(boat);
+            if (!string.IsNullOrWhiteSpace(name) && Regex.IsMatch(name, @"^[a-zA-Z0-9À-ž ]+$"))
+            {
+                var boat = new Boat(1, name, maxPassengers, steeringWheelPosition, level, boatStatus, boatType);
+                _boatService.Add(boat);
+                WorkMessage = $"boot is:naam: {boat.name}, zetels: {boat.SeatsAmount}, stuur:{boat.SteeringWheelPosition}, niveau: {boat.Level}, status: {boat.BoatStatus}, type: {boat.BoatType}";
+                ErrorMessage = "";
+            }
+            else
+            {
+                ErrorMessage = "geen bijzondere karakters";
+            }
 
-            name = string.Empty;
-            steeringWheelPosition = false;
-            maxPassengers = 0;
-            minLevel = BoatLevel.Basis;
-            boatStatus = BoatStatus.Working;
-            boatType = BoatType.C;
         }
 
 
@@ -101,7 +107,7 @@ namespace RoeiVereniging.ViewModels
                         mode = SteeringMode.Optional;
                     else if (MaxPassengers == 8)
                         mode = SteeringMode.Required;
-                    else if (MinLevel == BoatLevel.Basis)
+                    else if (Level == BoatLevel.Basis)
                         error = true;
 
                     break;
@@ -112,7 +118,7 @@ namespace RoeiVereniging.ViewModels
                         mode = SteeringMode.Optional;
                     else if (MaxPassengers == 8)
                         mode = SteeringMode.Required;
-                    else if(MaxPassengers == 1 || MaxPassengers== 3||MinLevel == BoatLevel.Basis||MinLevel == BoatLevel.Gevorderd) 
+                    else if(MaxPassengers == 1 || MaxPassengers== 3||Level == BoatLevel.Basis||Level == BoatLevel.Gevorderd) 
                         error = true;
                     break;
 
@@ -124,7 +130,7 @@ namespace RoeiVereniging.ViewModels
                     break;
 
                 default:
-                    MinLevelsEnabled = true;
+                    LevelsEnabled = true;
                     MaxPassengersEnabled = true;
                     AddProductEnabled = true;
                     ErrorMessage = "";

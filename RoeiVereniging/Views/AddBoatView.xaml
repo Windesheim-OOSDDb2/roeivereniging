@@ -7,27 +7,78 @@
              x:DataType="vm:AddBoatViewModel"
              Title="AddBoatView">
 
+    <Grid BackgroundColor="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="Add New" FontSize="24" HorizontalOptions="Center" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Label Text="Naam"/>
-        <Entry Placeholder="Naam" Text="{Binding Name}" />
-        <Label Text="Stuur" IsVisible="{Binding IsVisible}" />
-        <CheckBox 
-    IsChecked="{Binding SteeringWheelPosition}" 
-    IsEnabled="{Binding SteeringModeEnabled}" 
-    IsVisible="True"/>
+        <Image Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Source="logo.png" HorizontalOptions="Start" />
+        <Label TextColor="#082757" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="24" />
 
 
-        <Label Text="Hoeveelheid passagiers"/>
-        <Picker ItemsSource="{Binding Maxpassenger}" SelectedItem="{Binding MaxPassengers, Mode=TwoWay}" IsEnabled="{Binding MaxPassengersEnabled}"/>
-        <Label Text="Minimaal niveau:"/>
-        <Picker ItemsSource="{Binding Minlevels}" SelectedItem="{Binding MinLevel, Mode=TwoWay}" IsEnabled="{Binding MinLevelsEnabled}"  />
-        <Label Text="Boot soort"/>
-        <Picker ItemsSource="{Binding BoatTypes}" SelectedItem="{Binding BoatType, Mode=TwoWay}"/>
+        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Naam"/>
+            <Border Stroke="Black" StrokeThickness="0.5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Entry TextColor="#082757" Placeholder="Naam" Text="{Binding Name}" Visual="Default" />
+            </Border>
+        </VerticalStackLayout>
 
-        <Button Text="Add Product" Command="{Binding AddBoatCommand}" IsEnabled="{Binding AddProductEnabled}" />
-        <Label Text="{Binding ErrorMessage}" TextColor="Red" />
-    </StackLayout>
+
+        <VerticalStackLayout Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Hoeveelheid passagiers"/>
+            <Border Stroke="#DEE6F8"
+        StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Picker BackgroundColor="#DEE6F8" TextColor="#082757" ItemsSource="{Binding Maxpassenger}" SelectedItem="{Binding MaxPassengers, Mode=TwoWay}" IsEnabled="{Binding MaxPassengersEnabled}"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Minimaal niveau:"/>
+            <Border Stroke="#DEE6F8" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Picker BackgroundColor="#DEE6F8" TextColor="#082757" ItemsSource="{Binding Levels}" SelectedItem="{Binding Level, Mode=TwoWay}" IsEnabled="{Binding LevelsEnabled}"  />
+            </Border>
+        </VerticalStackLayout>
+
+
+        <VerticalStackLayout Grid.Column="2"  Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Boot soort"/>
+            <Border Stroke="#DEE6F8" StrokeThickness="0">
+                <Picker BackgroundColor="#DEE6F8" TextColor="#082757" ItemsSource="{Binding BoatTypes}" SelectedItem="{Binding BoatType, Mode=TwoWay}"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Stuur" IsVisible="{Binding IsVisible}" />
+            <CheckBox IsChecked="{Binding SteeringWheelPosition}" IsEnabled="{Binding SteeringModeEnabled}" IsVisible="True"/>
+            <Button 
+                Text="Add Product" 
+                Command="{Binding AddBoatCommand}" 
+                IsEnabled="{Binding AddProductEnabled}" 
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="#082757"
+                TextColor="#DEE6F8"/>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+            <Label Text="{Binding WorkMessage}"/>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>
