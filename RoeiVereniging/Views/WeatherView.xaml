@@ -2,19 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RoeiVereniging.Views.WeatherView"
-             Title="Weersverwachting">
+             Title="Weersverwachting"
+             BackgroundColor="White">
 
     <ContentPage.Resources>
         <Color x:Key="DarkBlue">#0047AB</Color>
         <Color x:Key="LightBlue">#5C9BE5</Color>
         <Color x:Key="HeaderColor">#0D2E60</Color>
+        <Color x:Key="LiveBackgroundColor">#D7263D</Color>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto, *" Padding="20,10">
         <Grid Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="15">
 
             <Border Grid.Column="0" 
-                    BackgroundColor="{StaticResource DarkBlue}"
+                    BackgroundColor="{Binding LiveBackgroundColor}"
                     StrokeThickness="0">
                 <Grid RowDefinitions="Auto, *">
                     <Label Grid.Row="0"
@@ -29,7 +31,7 @@
                                            HorizontalOptions="Center" 
                                            VerticalOptions="Center"
                                            Spacing="10">
-                        <Image Source="bewolkt.png" 
+                        <Image Source="{Binding LiveWeatherIcon}" 
                                HeightRequest="100" 
                                WidthRequest="100" 
                                VerticalOptions="Center" 
