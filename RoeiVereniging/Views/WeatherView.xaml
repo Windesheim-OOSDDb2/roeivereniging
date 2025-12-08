@@ -13,11 +13,13 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto, *" Padding="20,10">
-        <Grid Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="15">
+        <Grid Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="140">
 
+            <!-- Left panel (explicitly fill available height) -->
             <Border Grid.Column="0" 
                     BackgroundColor="{Binding LiveBackgroundColor}"
-                    StrokeThickness="0">
+                    StrokeThickness="0"
+                    VerticalOptions="FillAndExpand">
                 <Grid RowDefinitions="Auto, *, Auto">
                     <Label Grid.Row="0"
                            Text="Vandaag"
@@ -65,15 +67,73 @@
                 </Grid>
             </Border>
 
-            <VerticalStackLayout Grid.Column="1" Spacing="4">
-                <Border Grid.Column="0" 
-                    BackgroundColor="{Binding LiveBackgroundColor}"
+            <Border Grid.Column="1"
+                    BackgroundColor="#0854D1"
                     StrokeThickness="0">
-                    <Label Text="{Binding LiveWeatherMessage}"
-                           TextColor="{StaticResource HeaderColor}"
-                           FontSize="14"
-                           HorizontalOptions="Center"
-                           Margin="0,0,0,6">
+                <Grid RowDefinitions="Auto, *, Auto">
+                    <VerticalStackLayout Grid.Column="1">
+                        <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding WkVerw}"
+                            SelectionMode="None"
+                            BackgroundColor="Transparent"
+                            Margin="0"> <!-- add small padding so first/last items don't touch edges -->
+                            <CollectionView.ItemsLayout>
+                                <!-- Increased ItemSpacing so items on the right have visible gaps -->
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto, Auto, *"
+                                        BackgroundColor="{StaticResource LightBlue}"
+                                        HeightRequest="90"
+                                        Padding="15,0"
+                                        Margin="0,0,0,12"> <!-- bottom margin creates clear space between items -->
+                                        <Image Grid.Column="0" Source="{Binding IconImage}" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="{Binding TempRange}" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="{Binding Dag}" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                            <CollectionView.EmptyView>
+                                <StackLayout Spacing="16"> <!-- match the ItemSpacing for consistency -->
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Image Grid.Column="0" Source="zonnig.png" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="19-23°" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="Maandag" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Image Grid.Column="0" Source="zonnig.png" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="19-23°" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="Maandag" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Image Grid.Column="0" Source="zonnig.png" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="19-23°" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="Maandag" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Image Grid.Column="0" Source="zonnig.png" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="19-23°" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="Maandag" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Image Grid.Column="0" Source="zonnig.png" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="19-23°" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="Maandag" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                </StackLayout>
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                    <Label Grid.Row="0"
+                        Text="{Binding LiveWeatherMessage}"
+                        TextColor="White"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        Margin="0,0,0,6">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding LiveWeatherMessage}" Value="">
                                 <Setter Property="IsVisible" Value="False" />
@@ -83,20 +143,8 @@
                             </DataTrigger>
                         </Label.Triggers>
                     </Label>
-
-                    <CollectionView ItemsSource="{Binding WkVerw}" SelectionMode="None">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="60" Padding="15,0" Margin="0,0,0,6">
-                                    <Image Grid.Column="0" Source="{Binding IconImage}" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
-                                    <Label Grid.Column="1" Text="{Binding TempRange}" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
-                                    <Label Grid.Column="2" Text="{Binding Dag}" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Border>
-            </VerticalStackLayout>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </ContentPage>
