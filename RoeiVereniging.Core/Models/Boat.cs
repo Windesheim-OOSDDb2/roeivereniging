@@ -10,7 +10,6 @@ namespace RoeiVereniging.Core.Models
     public partial class Boat : Model
     {
         public int BoatId { get; set; }
-        public int Level { get; set; }
         public int SeatsAmount { get; set; }
         public bool SteeringWheelPosition {  get; set; }
         public BoatLevel Level { get; set; }

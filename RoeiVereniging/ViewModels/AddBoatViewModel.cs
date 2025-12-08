@@ -20,7 +20,7 @@ namespace RoeiVereniging.ViewModels
     {
         private readonly IBoatService _boatService;
 
-        [ObservableProperty] public ObservableCollection<BoatLevel> levels = new ObservableCollection<BoatLevel>() { BoatLevel.Basis, BoatLevel.Gevorderd, BoatLevel.Expert };
+        [ObservableProperty] public ObservableCollection<BoatLevel> levels = new ObservableCollection<BoatLevel>() { BoatLevel.Beginner, BoatLevel.Gemiddeld, BoatLevel.Gevorderd, BoatLevel.Expert  };
         [ObservableProperty] public ObservableCollection<BoatType> boatTypes = new ObservableCollection<BoatType>() { BoatType.Boord, BoatType.Scull, BoatType.C, BoatType.Liteboat };
         [ObservableProperty] public ObservableCollection<int> maxpassenger = new ObservableCollection<int>() { 1, 2, 3, 4, 8 };
 
@@ -107,7 +107,7 @@ namespace RoeiVereniging.ViewModels
                         mode = SteeringMode.Optional;
                     else if (MaxPassengers == 8)
                         mode = SteeringMode.Required;
-                    else if (Level == BoatLevel.Basis)
+                    else if (Level == BoatLevel.Beginner)
                         error = true;
 
                     break;
@@ -118,7 +118,7 @@ namespace RoeiVereniging.ViewModels
                         mode = SteeringMode.Optional;
                     else if (MaxPassengers == 8)
                         mode = SteeringMode.Required;
-                    else if(MaxPassengers == 1 || MaxPassengers== 3||Level == BoatLevel.Basis||Level == BoatLevel.Gevorderd) 
+                    else if(MaxPassengers == 1 || MaxPassengers== 3 ||Level == BoatLevel.Beginner || Level == BoatLevel.Gevorderd || Level == BoatLevel.Gemiddeld) 
                         error = true;
                     break;
 
