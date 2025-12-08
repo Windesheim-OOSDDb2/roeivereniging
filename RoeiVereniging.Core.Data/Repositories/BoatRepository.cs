@@ -10,14 +10,13 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public BoatRepository()
         {
-
             CreateTable(@"
                 CREATE TABLE IF NOT EXISTS boat (
                     boat_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
-                    type TEXT NOT NULL,
+                    type INTEGER NOT NULL,
                     level INTEGER NOT NULL,
-                    status TEXT NOT NULL,
+                    status INTEGER NOT NULL,
                     seats_amount INTEGER NOT NULL,
                     SteeringwheelPosition BOOLEAN NOT NULL
                 );
@@ -79,9 +78,48 @@ namespace RoeiVereniging.Core.Data.Repositories
             return boat;
         }
 
+        public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
+        {
+            if (!int.TryParse(difficulty, out int minLevel))
+            {
+                return boatList.FirstOrDefault();
+            }
+
+            var boat = boatList.FirstOrDefault(b =>
+                b.SeatsAmount == amount &&
+                b.SteeringWheelPosition == steeringwheelposition &&
+                b.Level == minLevel &&
+                b.BoatType == type);
+
+            return boat ?? boatList.FirstOrDefault();
+        }
+
         public List<Boat> GetAll()
         {
             return boatList;
+        }
+
+        public void GetAllFromDB()
+        {
+            boatList.Clear();
+            OpenConnection();
+            using var command = Connection.CreateCommand();
+            command.CommandText = "SELECT boat_id, name, seats_amount, SteeringwheelPosition, level, status, type FROM boat";
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                string name = reader.GetString(1);
+                int seatsAmount = reader.GetInt32(2);
+                bool steeringWheelPosition = reader.GetBoolean(3);
+                int level = reader.GetInt32(4);
+                BoatStatus boatStatus = (BoatStatus)reader.GetInt32(5);
+                BoatType boatType = (BoatType)reader.GetInt32(6);
+
+                var boat = new Boat(id, name, seatsAmount, steeringWheelPosition, level, boatStatus, boatType);
+                boatList.Add(boat);
+            }
+            CloseConnection();
         }
     }
 }
