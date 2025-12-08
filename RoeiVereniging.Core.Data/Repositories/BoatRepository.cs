@@ -6,14 +6,28 @@ namespace RoeiVereniging.Core.Data.Repositories
 {
     public class BoatRepository : DatabaseConnection, IBoatRepository
     {
-        private readonly List<Boat> boatList;
+        private readonly List<Boat> boatList = [];
 
         public BoatRepository()
         {
-            boatList = [
-                new Boat(1, "Zwarte Parel", 4, false, BoatLevel.Basis, BoatStatus.Working, BoatType.C),
-                new Boat(2, "Blauwe Dolfijn", 2, true, BoatLevel.Gevorderd, BoatStatus.Fixing, BoatType.C),
-                ];
+
+            CreateTable(@"
+                CREATE TABLE IF NOT EXISTS boat (
+                    boat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    type TEXT NOT NULL,
+                    level INTEGER NOT NULL,
+                    status TEXT NOT NULL,
+                    seats_amount INTEGER NOT NULL,
+                    SteeringwheelPosition TEXT NOT NULL CHECK(SteeringwheelPosition IN ('rechts', 'links', 'midden'))
+                );
+            ");
+
+            InsertMultipleWithTransaction(new List<string> {
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount) VALUES(1,'Zwarte Parel','wedstrijd',1,'available',4, 'rechts')",
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount) VALUES(2,'Zwarte Parel 2','training',1,'available',2, 'links')",
+                @"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount) VALUES(3,'Zwarte Parel 3','recreatie',1,'available',1, 'rechts')"
+            });
         }
 
         public Boat? Get(string name)
