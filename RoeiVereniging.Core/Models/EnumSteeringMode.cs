@@ -8,9 +8,9 @@ namespace RoeiVereniging.Core.Models
 {
     public enum SteeringMode
     {
-        Disabled,   
-        Optional,   
-        Required    
+        Disabled = 0,   
+        Optional = 1,   
+        Required = 2    
     }
 
 }

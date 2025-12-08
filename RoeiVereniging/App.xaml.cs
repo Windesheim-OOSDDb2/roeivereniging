@@ -8,7 +8,6 @@ namespace RoeiVereniging
         public App(AddBoatViewModel viewModel)
         {
             InitializeComponent();
-
             MainPage = new AppShell();
         }
     }

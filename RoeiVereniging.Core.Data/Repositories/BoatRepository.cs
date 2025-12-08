@@ -22,7 +22,6 @@ namespace RoeiVereniging.Core.Data.Repositories
                 );
             ");
 
-            // INSERT DEFAULT DATA
             InsertMultipleWithTransaction(new List<string> {
                $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.C},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
                $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Scull},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
@@ -102,7 +101,6 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public Boat Add(Boat item)
         {
-            int recordsAffected;
             string insertQuery = $"INSERT INTO boat(name, Steeringwheelposition, seats_amount, level, type, status) VALUES(@Name, @SteeringWheelPosition, @Seats_Amount, @Level, @Type, @Status) Returning RowId;";
             OpenConnection();
             using (SqliteCommand command = new(insertQuery, Connection))
@@ -114,7 +112,6 @@ namespace RoeiVereniging.Core.Data.Repositories
                 command.Parameters.AddWithValue("Type", item.BoatType);
                 command.Parameters.AddWithValue("Status", item.BoatStatus);
 
-                //recordsAffected = command.ExecuteNonQuery();
                 item.Id = Convert.ToInt32(command.ExecuteScalar());
             }
             CloseConnection();

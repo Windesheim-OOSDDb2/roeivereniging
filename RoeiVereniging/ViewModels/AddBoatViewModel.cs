@@ -58,15 +58,12 @@ namespace RoeiVereniging.ViewModels
             SteeringWheelCheck();
         }
 
-
-
-
         [RelayCommand]
         public void AddBoat()
         {
             if (!string.IsNullOrWhiteSpace(name) && Regex.IsMatch(name, @"^[a-zA-Z0-9À-ž ]+$"))
             {
-                var boat = new Boat(1, name, maxPassengers, steeringWheelPosition, level, boatStatus, boatType);
+                var boat = new Boat(1, Name, MaxPassengers, SteeringWheelPosition, Level, BoatStatus, BoatType);
                 _boatService.Add(boat);
                 ErrorMessage = "";
             }
@@ -84,8 +81,6 @@ namespace RoeiVereniging.ViewModels
             var mode = SteeringMode.Disabled;
             var error = false;
 
-
-            // Determine new collections based on BoatType
             switch (BoatType)
             {
                 case BoatType.C:
@@ -135,7 +130,7 @@ namespace RoeiVereniging.ViewModels
                     break;
             }
 
-            // Update steering properties
+
             SteeringModeEnabled = mode == SteeringMode.Optional;
             SteeringWheelPosition = mode switch
             {
@@ -151,6 +146,7 @@ namespace RoeiVereniging.ViewModels
                 true => false
 
             };
+
             ErrorMessage = error switch
             {
                 false => "",

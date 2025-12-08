@@ -8,9 +8,9 @@ namespace RoeiVereniging.Core.Models
 {
     public enum BoatType : ushort
     {
-        C,
-        Scull,
-        Boord,
-        Liteboat,
+        C = 0,
+        Scull = 1,
+        Boord = 2,
+        Liteboat = 3,
     }
 }
