@@ -6,20 +6,28 @@
              x:Class="RoeiVereniging.Views.AddBoatView"
              x:DataType="vm:AddBoatViewModel"
              Title="AddBoatView">
+
+
     <StackLayout Padding="20" VerticalOptions="Center">
         <Label Text="Add New" FontSize="24" HorizontalOptions="Center" />
 
         <Label Text="Naam"/>
         <Entry Placeholder="Naam" Text="{Binding Name}" />
         <Label Text="Stuur" IsVisible="{Binding IsVisible}" />
-        <CheckBox IsChecked="{Binding SteeringWheelPosition}" IsEnabled="false" IsVisible="{Binding IsVisible}"/>
-        <Label Text="Hoeveelheid passagiers"/>
-        <Picker ItemsSource="{Binding Maxpassenger}" SelectedItem="{Binding MaxPassengers, Mode=TwoWay}" PropertyChanged="SteeringWheelCheck" />
-        <Label Text="Minimaal niveau:"/>
-        <Picker ItemsSource="{Binding Minlevels}" SelectedItem="{Binding MinLevel, Mode=TwoWay}" PropertyChanged="SteeringWheelCheck" />
-        <Label Text="Boot soort"/>
-        <Picker ItemsSource="{Binding BoatTypes}" SelectedItem="{Binding BoatType, Mode=TwoWay}" PropertyChanged="SteeringWheelCheck" />
+        <CheckBox 
+    IsChecked="{Binding SteeringWheelPosition}" 
+    IsEnabled="{Binding SteeringModeEnabled}" 
+    IsVisible="True"/>
 
-        <Button Text="Add Product" Command="{Binding AddBoatCommand}" />
+
+        <Label Text="Hoeveelheid passagiers"/>
+        <Picker ItemsSource="{Binding Maxpassenger}" SelectedItem="{Binding MaxPassengers, Mode=TwoWay}" IsEnabled="{Binding MaxPassengersEnabled}"/>
+        <Label Text="Minimaal niveau:"/>
+        <Picker ItemsSource="{Binding Minlevels}" SelectedItem="{Binding MinLevel, Mode=TwoWay}" IsEnabled="{Binding MinLevelsEnabled}"  />
+        <Label Text="Boot soort"/>
+        <Picker ItemsSource="{Binding BoatTypes}" SelectedItem="{Binding BoatType, Mode=TwoWay}"/>
+
+        <Button Text="Add Product" Command="{Binding AddBoatCommand}" IsEnabled="{Binding AddProductEnabled}" />
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" />
     </StackLayout>
 </ContentPage>
