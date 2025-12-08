@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.WeatherView"
-             Title="Weersverwachting"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
 
     <ContentPage.Resources>
@@ -10,9 +12,12 @@
         <Color x:Key="LightBlue">#5C9BE5</Color>
         <Color x:Key="HeaderColor">#0D2E60</Color>
         <Color x:Key="LiveBackgroundColor">#D7263D</Color>
+        <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
+
     <Grid RowDefinitions="Auto, *" Padding="20,10">
+        <components:PageHeader PageTitle="Weersverwachting"/>
         <Grid Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="140">
 
             <!-- Left panel (explicitly fill available height) -->
