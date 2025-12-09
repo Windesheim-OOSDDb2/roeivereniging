@@ -14,6 +14,8 @@ namespace RoeiVereniging.ViewModels
     {
         private string apiKey = "a3ed4a6567";
 
+        MailHelper mailHelper = new();
+
         [ObservableProperty]
         public LiveWeerV2? liveWeather = null;
 
@@ -114,11 +116,17 @@ namespace RoeiVereniging.ViewModels
             foreach (var kw in dangerKeywords)
             {
                 if (imageKey.Contains(kw, StringComparison.OrdinalIgnoreCase))
+                {
+                    mailHelper.SendMail("Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd: {imageKey}");
                     return true;
+                }
             }
 
             if (weather.WindBft >= MaxWindBft)
+            {
+                mailHelper.SendMail("Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd: {imageKey}");
                 return true;
+            }
 
             return false;
         }
