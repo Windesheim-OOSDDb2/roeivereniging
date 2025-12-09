@@ -24,6 +24,16 @@ namespace RoeiVereniging.Core.Services
             return _reservationRepository.Set(reservation);
         }
 
+        public void MarkMessaged(int reservationId)
+        {
+            _reservationRepository.MarkMessaged(reservationId);
+        }
+
+        public List<Reservation> GetUnmessaged()
+        {
+            return _reservationRepository.GetUnmessaged();
+        }
+
         public List<Reservation> GetByUser(int userId)
         {
             return _reservationRepository.GetByUserId(userId);

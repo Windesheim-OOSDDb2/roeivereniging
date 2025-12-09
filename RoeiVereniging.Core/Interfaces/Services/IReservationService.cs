@@ -12,6 +12,8 @@ namespace RoeiVereniging.Core.Interfaces.Services
         public Reservation? Get(int id);
         public List<Reservation> GetAll();
         public Reservation? Set(Reservation reservation);
+        public void MarkMessaged(int reservationId);
+        public List<Reservation> GetUnmessaged();
         public List<Reservation> GetByUser(int userId);
     }
 }

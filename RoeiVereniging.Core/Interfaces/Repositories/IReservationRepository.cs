@@ -6,6 +6,8 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
     {
         public List<Reservation> GetByUserId(int id);
         public Reservation? Set(Reservation reservation);
+        public void MarkMessaged(int reservationId);
+        public List<Reservation> GetUnmessaged();
         public List<Reservation> GetAll();
         public Reservation? Get(int id);
     }
