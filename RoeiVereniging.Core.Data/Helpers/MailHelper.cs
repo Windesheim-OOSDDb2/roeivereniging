@@ -12,7 +12,7 @@ namespace RoeiVereniging.Core.Data.Helpers
 {
     public class MailHelper
     {
-        public void SendMail(string subject, string message)
+        public void SendMail(string userEmail, string subject, string message)
         {
             var styledMessage = $"<div style=\"width: 100%; align-content: center; justify-content:center; background-color:#5FA6E8;\">\r\n <h1 style=\"text-align: center; margin: auto; width: fit-content; font-weight: bold; font-size: 5em; color: red;\">{subject}</h1>" +
                 $"\r\n <p style=\"text-align: center; margin: 50px auto; padding: 1rem; border-radius: 15px; color: white; width: fit-content; font-size: 3em; font-weight:900; background-color: #082757\">{message}</p>\r\n</div>";
@@ -31,7 +31,7 @@ namespace RoeiVereniging.Core.Data.Helpers
                 IsBodyHtml = true
             };
 
-            mailMessage.To.Add("to@example.com");
+            mailMessage.To.Add(userEmail);
 
             client.Send(mailMessage);
             System.Console.WriteLine("Sent");

@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Helpers;
+using RoeiVereniging.Core.Interfaces.Services;
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class WeatherViewModel : BaseViewModel
     {
         private string apiKey = "a3ed4a6567";
+        private readonly IReservationService _reservationService;
+        private readonly IUserService _userService;
 
         MailHelper mailHelper = new();
 
@@ -45,8 +48,10 @@ namespace RoeiVereniging.ViewModels
                 "nachtbewolkt"  // Cloudy at night (EN)
             };
 
-        public WeatherViewModel()
+        public WeatherViewModel(IReservationService reservationService, IUserService userService)
         {
+            _reservationService = reservationService;
+            _userService = userService;
             _ = InitializeAsync();
         }
 
@@ -115,16 +120,28 @@ namespace RoeiVereniging.ViewModels
 
             foreach (var kw in dangerKeywords)
             {
-                if (imageKey.Contains(kw, StringComparison.OrdinalIgnoreCase))
+                if (!imageKey.Contains(kw, StringComparison.OrdinalIgnoreCase))
                 {
-                    mailHelper.SendMail("Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd: {imageKey}");
+                    foreach (Reservation reservation in _reservationService.GetUnmessaged())
+                    {
+                        var user = _userService.Get(reservation.UserId);
+                        string userEmail = user?.EmailAddress ?? "Onbekend";
+                        mailHelper.SendMail(userEmail, "Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd voor uw reservering op {reservation.StartTime}: {imageKey}. Gebruiker: {userEmail}");
+                        _reservationService.MarkMessaged(reservation.Id);
+                    }
                     return true;
                 }
             }
 
             if (weather.WindBft >= MaxWindBft)
             {
-                mailHelper.SendMail("Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd: {imageKey}");
+                foreach (Reservation reservation in _reservationService.GetUnmessaged())
+                {
+                    var user = _userService.Get(reservation.UserId);
+                    string userEmail = user?.EmailAddress ?? "Onbekend";
+                    mailHelper.SendMail(userEmail, "Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd voor uw reservering op {reservation.StartTime}: {imageKey}. Gebruiker: {userEmail}");
+                    _reservationService.MarkMessaged(reservation.Id);
+                }
                 return true;
             }
 
