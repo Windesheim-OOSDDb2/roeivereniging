@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             x:Class="RoeiVereniging.Views.ReservationView"
+             x:DataType="vm:ReservationViewModel"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
+    <ContentPage.Resources>
+        <StyleSheet Source="/Resources/Styles/global.css" />
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Spacing="0">
+        <components:PageHeader PageTitle="Mijn reserveringen"/>
+        <CollectionView ItemsSource="{Binding MyReservations}">
+            <CollectionView.Header>
+                <Frame StyleClass="row-header" BackgroundColor="#0854d1">
+                    <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
+
+                        <Label Text="Boot naam"
+                           FontAttributes="Bold"
+                           TextColor="#000000"
+                           StyleClass="cell-left" 
+                           Grid.Column="0"
+                        />
+
+                        <Label Text="Niveau"
+                           FontAttributes="Bold"
+                           TextColor="#000000"
+                           StyleClass="cell" 
+                           Grid.Column="1"
+                        />
+
+                        <Label Text="Start datum"
+                           FontAttributes="Bold"
+                           StyleClass="cell" 
+                           TextColor="#000000"
+                           Grid.Column="2"
+                        />
+
+                        <Label Text="Tijd"
+                           StyleClass="cell" 
+                           TextColor="#000000"
+                           Grid.Column="3"
+                        />
+                    </Grid>
+                </Frame>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ReservationViewDTO">
+                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
+                        <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
+
+                            <!-- boatname -->
+                            <Label Grid.Column="0"
+                               Text="{Binding BoatName}"
+                               TextColor="#000000"
+                               StyleClass="cell-left" 
+                            />
+
+                            <!-- skill Level -->
+                            <Label Grid.Column="1"
+                               Text="{Binding BoatLevelText}"
+                               StyleClass="cell" 
+                               TextColor="#000000"
+                            /> 
+
+                            <!-- start date -->
+                            <Label Grid.Column="2"
+                               Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}"
+                               StyleClass="cell" 
+                               TextColor="#000000"
+                            />         
+
+                            <!-- time -->
+                            <Label Grid.Column="3"
+                               Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
+                               StyleClass="cell"                               
+                               TextColor="#000000"
+                            />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

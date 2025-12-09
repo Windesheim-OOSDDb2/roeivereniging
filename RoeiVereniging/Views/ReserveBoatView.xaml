@@ -1,10 +1,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.ReserveBoatView"
              x:DataType="vm:ReserveBoatViewModel"
-             Title="ReserveBoatView">
+             Title="ReserveBoatView"
+             BackgroundColor="White" >
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -28,100 +30,217 @@
 
         <!-- header -->
         <Image Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="0" Source="logo.png" HorizontalOptions="Start" />
-        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" />
-
-        <!-- Row 1 -->
-        <Entry
-            Text="{Binding Naam}"
-            Placeholder="Voornaam"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            Grid.Row="1"
-            VerticalOptions="Center"
-            HorizontalOptions="Fill"
-            FontSize="25"
-            Margin="40, 0" />
-
-        <Entry
-            Text="{Binding Achternaam}"
-            Placeholder="Achternaam"
-            Grid.Column="3"
-            Grid.ColumnSpan="2"
-            Grid.Row="1"
-            VerticalOptions="Center"
-            HorizontalOptions="Fill"
-            FontSize="25"
-            Margin="40, 0" />
+        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" FontAttributes="Bold" TextColor="#082757" />
 
         <!-- Row 2 -->
-        <Entry
-            Text="{Binding AantalPersonen}"
-            Placeholder="Aantal personen"
+        
+        <!-- Date picker start-->
+
+        <Border
             Grid.Column="1"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="1"
             Grid.Row="2"
-            VerticalOptions="Center"
+            Margin="15, 10, 15, 10"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            BackgroundColor="#DEE6F8"
             HorizontalOptions="Fill"
-            FontSize="25"
-            Margin="40, 0" />
+            VerticalOptions="Fill" >
+
+            <Label
+                Text="{Binding DisplayDate}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="20"
+                TextColor="#082757"
+                FontAttributes="Bold"
+                Margin="0, 0, 20, 0" />
+        </Border>
+
+        <Image
+            Grid.Column="1"
+            Grid.ColumnSpan="1"
+            Grid.Row="2"
+            HorizontalOptions="End"
+            VerticalOptions="Center"
+            WidthRequest="30"
+            HeightRequest="30"
+            Margin="25"
+            Source="calendar.png" />
+
+        <Grid
+            Grid.Column="1"
+            Grid.ColumnSpan="1"
+            Grid.Row="2"
+            ColumnDefinitions="*">
+
+            <DatePicker
+                Date="{Binding Date}"
+                Format="HH:mm"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                FontSize="200"
+                Opacity="0"
+                PropertyChanged="AttributeChanged">
+            </DatePicker>
+
+        </Grid>
+
+        <!-- Date picker end -->
+
+        <!-- Time picker start -->
+        
+        <Border
+            Grid.Column="2"
+            Grid.ColumnSpan="1"
+            Grid.Row="2"
+            Margin="15, 10, 15, 10"
+            Background="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            BackgroundColor="White">
+
+            <Label
+                Text="{Binding DisplayTime}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="20"
+                TextColor="#082757"
+                FontAttributes="Bold"
+                Margin="0, 10" />
+        </Border>
+
+        <Image
+            Grid.Column="2"
+            Grid.ColumnSpan="1"
+            Grid.Row="2"
+            HorizontalOptions="End"
+            VerticalOptions="Center"
+            WidthRequest="30"
+            HeightRequest="30"
+            Margin="30"
+            Source="time.png" />
+
+        <Grid
+            Grid.Column="2"
+            Grid.Row="2"
+            Margin="0,0"
+            ColumnDefinitions="*">
+
+            <TimePicker
+                Time="{Binding Time}"
+                Format="HH:mm"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                FontSize="55"
+                Opacity="0"
+                PropertyChanged="AttributeChanged"/>
+
+        </Grid>
+
+        <!-- Time picker end -->
+
+        <!-- passenger amount start -->
+
+        <Picker
+            Grid.Column="3"
+            Grid.ColumnSpan="1"
+            Grid.Row="2" 
+            BackgroundColor="#DEE6F8"
+            TextColor="#082757"
+            TitleColor="#082757"
+            FontAttributes="Bold"
+            FontSize="20"
+            Margin="15, 10, 15, 10"
+            ItemsSource="{Binding PassengerCounts}"
+            SelectedItem="{Binding Amount}"/>
+        
+        <!-- passenger amount end-->
 
         <Entry
-            Text="{Binding Email}"
-            Placeholder="E-mail"
-            Grid.Column="3"
-            Grid.ColumnSpan="2"
+            Grid.Column="4"
+            Grid.ColumnSpan="1"
             Grid.Row="2"
-            VerticalOptions="Center"
-            HorizontalOptions="Fill"
-            FontSize="25"
-            Margin="40, 0" />
+            Margin="15, 10, 15, 10"
+            BackgroundColor="#DEE6F8"
+            TextColor="#082757"
+            Text="{Binding Difficulty}"
+            FontSize="20"
+            FontAttributes="Bold"
+            Placeholder="Niveau"
+            PlaceholderColor="#082757" />
+
 
         <!-- Row 3 -->
-        <DatePicker
-            Date="{Binding Datum}"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            Grid.Row="3"
-            VerticalOptions="Center"
-            HorizontalOptions="Fill"
-            FontSize="25"
-            Margin="40, 0" />
 
-        <TimePicker
-            Time="{Binding Tijd}"
-            Format="HH:mm"
-            Grid.Column="3"
-            Grid.ColumnSpan="2"
+        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="4" 
             Grid.Row="3"
+            Margin="0, 20" 
+            StrokeShape="RoundRectangle 10"
+            StrokeThickness="0">
+            <Picker
+                HorizontalTextAlignment="Center"
+                ItemsSource="{Binding boatTypes}"
+                SelectedItem="{Binding Type, Mode=TwoWay}" 
+                BackgroundColor="#5FA6E8"
+                TextColor="#FFFFFF"
+                FontSize="25"
+                FontAttributes="Bold"
+                PropertyChanged="AttributeChanged">
+            </Picker>
+        </Border>
+        
+        
+        <Label
+            Text="Type boot"
+            Grid.Column="1"
+            Grid.ColumnSpan="4" 
+            Grid.Row="3"
+            IsVisible="{Binding Pickerlabel}"
+            InputTransparent="True"
+            HorizontalOptions="Center"
             VerticalOptions="Center"
-            HorizontalOptions="Fill"
-            FontSize="25"
-            Margin="40, 0" />
+            Margin="0, 0"
+            BackgroundColor="Transparent"/>
 
         <!-- Row 4 -->
-        <Picker 
-            Grid.Column="1"
-            Grid.ColumnSpan="4"
-            Grid.Row="4" 
-            Margin="40, 0" 
-            Title="Klik op onderstaand pijltje om een boot te selecteren:"
-            ItemsSource="{Binding Boats}"
-            SelectedItem="{Binding Boat, Mode=TwoWay}" 
-            SelectedIndexChanged="Picker_SelectedIndexChanged"
-            BackgroundColor="{StaticResource Primary}"
-                TextColor="{StaticResource Secondary}">
-                    </Picker>
-
-        <!-- Row 5 -->
+        
         <Button
             Text="Reserveren"
-            Command="{Binding ReserveerBootCommand}"
+            Command="{Binding ReserveBoatCommand}"
             Grid.Column="1"
             Grid.ColumnSpan="4"
-            Grid.Row="5"
+            Grid.Row="4"
+            BackgroundColor="#082757"
+            TextColor="#FFFFFF"
             VerticalOptions="Center"
             HorizontalOptions="Fill"
             FontSize="25"
-            Margin="40, 0" />
+            Margin="0, 0" />
+
+        <Button
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="5"
+            Command="{Binding GoToReservationsCommand}"
+            FontSize="25"
+            FontAttributes="Bold"
+            Margin="0, 20, 20, 20"
+            BackgroundColor="#DEE6F8"
+            TextColor="#082757"
+            Text="Naar reserveringen >"/>
+        <Button 
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="5"
+            Command="{Binding GoToWeatherPageCommand}"
+            FontSize="25"
+            FontAttributes="Bold"
+            Margin="0, 20, 20, 20"
+            BackgroundColor="#DEE6F8"
+            TextColor="#082757"
+            Text="Naar weersverwachting >"/>
     </Grid>
 </ContentPage>
