@@ -70,9 +70,9 @@ namespace RoeiVereniging.ViewModels
             if (user == null) return;
 
             List<Boat>? boats = _boatRepo.GetAll();
-            // removed creation of dict since more data is needed from the boat object and the complete object will now be retrieved later
+            var boatById = boats.ToDictionary(b => b.BoatId, b => b);
 
-            List<Reservation> reservations = _reservationService.GetByUser(user.UserId);
+            List<Reservation> reservations = _reservationService.GetByUser(user.Id);
 
             _allReservations.Clear();
             MyReservations.Clear();

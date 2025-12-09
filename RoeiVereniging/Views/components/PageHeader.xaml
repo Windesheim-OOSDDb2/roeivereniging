@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="RoeiVereniging.Views.Components.PageHeader"
+    x:Name="This"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="White">
+
+    <Grid Padding="20,0" ColumnDefinitions="Auto, *, Auto">
+
+        <ImageButton
+        Grid.Column="0"
+        Source="logo.png"
+        HeightRequest="100"
+        VerticalOptions="Center"
+        Clicked="OnHomeClicked"/>
+
+        <ImageButton
+        Grid.Column="2"
+        Source="back.png"
+        HeightRequest="32"
+        WidthRequest="32"
+        Clicked="OnBackClicked"
+        VerticalOptions="Center"
+        HorizontalOptions="End" />
+
+        <Label
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Text="{Binding PageTitle, Source={x:Reference This}}"
+            FontSize="32"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TextColor="#082757"
+            InputTransparent="True" />
+    </Grid>
+
+</ContentView>
