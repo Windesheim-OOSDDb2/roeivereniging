@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Models
 {
-    public enum BoatType : ushort
+    public enum SteeringMode
     {
-        C = 0,
-        Scull = 1,
-        Boord = 2,
-        Liteboat = 3,
+        Disabled = 0,   
+        Optional = 1,   
+        Required = 2    
     }
+
 }
