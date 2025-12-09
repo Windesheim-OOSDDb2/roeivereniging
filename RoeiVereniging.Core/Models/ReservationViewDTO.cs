@@ -26,7 +26,6 @@
             BoatName = boatName;
             StartTime = start;
             EndTime = end;
-            Level = level;
         }
     }
 }

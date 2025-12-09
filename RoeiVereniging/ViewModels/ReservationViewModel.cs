@@ -5,32 +5,24 @@ using RoeiVereniging.Core.Repositories;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class ReservationViewModel : BaseViewModel
     {
-        
         private List<ReservationViewDTO> _allReservations = new();
 
-        
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
 
-        
         public List<string> BoatNames { get; private set; } = new();
-        public List<int> Levels { get; private set; } = new();
-
-        public List<DateTime> AvailableDates { get; private set; } = new();
-        public List<TimeSpan> AvailableTimes { get; private set; } = new();
+        public List<BoatLevel> Levels { get; private set; } = new();
 
         [ObservableProperty]
         private string? selectedBoatName;
 
         [ObservableProperty]
-        private int? selectedLevel;
-
-        [ObservableProperty]
-        private string? selectedUserName;
+        private BoatLevel? selectedLevel;
 
         [ObservableProperty]
         private bool? selectedDate = null;
@@ -43,13 +35,6 @@ namespace RoeiVereniging.ViewModels
 
         [ObservableProperty]
         private string timeSortText = @"Tijd \/";
-
-        [ObservableProperty]
-        private bool niveau = true;
-
-        [ObservableProperty]
-        private bool namen = true;
-
 
         private readonly IReservationService _reservationService;
         private readonly UserRepository _userRepo;
@@ -69,67 +54,69 @@ namespace RoeiVereniging.ViewModels
             User? user = _userRepo.GetById(1);
             if (user == null) return;
 
-            List<Boat>? boats = _boatRepo.GetAll();
+            var boats = _boatRepo.GetAll();
             var boatById = boats.ToDictionary(b => b.BoatId, b => b);
 
-            List<Reservation> reservations = _reservationService.GetByUser(user.Id);
+            var reservations = _reservationService.GetByUser(user.Id);
 
             _allReservations.Clear();
             MyReservations.Clear();
 
             foreach (var reservation in reservations)
             {
-                // replaced boatname var with boat var wich containt complete boat object so all other value can also be retrieved
-                Boat? boat = boats.FirstOrDefault(x => x.BoatId ==  reservation.BoatId);
-                string userName = user.Name;
+                if (boatById.TryGetValue(reservation.BoatId, out var boat))
+                {
+                    var dto = new ReservationViewDTO(
+                        reservation.Id,
+                        reservation.UserId,
+                        boat.Level,
+                        reservation.BoatId,
+                        boat.Name,
+                        reservation.StartTime,
+                        reservation.EndTime
+                    );
 
-                var dto = new ReservationViewDTO(
-                    reservation.Id,
-                    reservation.UserId,
-                    userName,
-                    reservation.BoatId,
-                    boat.name,
-                    reservation.StartTime,
-                    reservation.EndTime,
-                    boat.Level
-                );
-
-                _allReservations.Add(dto);
-                MyReservations.Add(dto);
+                    _allReservations.Add(dto);
+                    MyReservations.Add(dto);
+                }
             }
 
-            // populate dropdown lists
-            BoatNames = _allReservations.Select(r => r.BoatName).Distinct().ToList();
-            BoatNames.Insert(0, "Bootnaam"); 
-            Levels = _allReservations.Select(r => r.Level).Distinct().ToList();
-            Levels.Insert(0, 0);
-            AvailableDates = _allReservations.Select(r => r.StartTime.Date).Distinct().ToList();
-            AvailableTimes = _allReservations.Select(r => r.StartTime.TimeOfDay).Distinct().ToList();
+            BoatNames = _allReservations
+                .Select(r => r.BoatName)
+                .Distinct()
+                .ToList();
 
-            
+            // I insert a None level to make sure user can reset filter
+            BoatNames.Insert(0, "Bootnaam");
+
+            Levels = _allReservations
+                .Select(r => r.BoatLevel)
+                .Distinct()
+                .ToList();
+
+            // I insert a None level to make sure user can reset filter
+            Levels.Insert(0, BoatLevel.Niks);
+
+            OnPropertyChanged(nameof(BoatNames));
+            OnPropertyChanged(nameof(Levels));
         }
 
-        partial void OnSelectedBoatNameChanged(string? selectedBoatName)
-        {
-            Filter();
-            Namen = false;
-        }
+        partial void OnSelectedBoatNameChanged(string? value) => Filter();
+        partial void OnSelectedLevelChanged(BoatLevel? value) => Filter();
 
-        partial void OnSelectedLevelChanged(int? selectedlevel)
-        {
-            Filter();
-            Niveau = false;
-        }
-
-        partial void OnSelectedDateChanged(bool? value)
+        [RelayCommand]
+        private void ToggleDate()
         {
             SelectedTime = null;
+            SelectedDate = SelectedDate == true ? false : true;
             Filter();
         }
 
-        partial void OnSelectedTimeChanged(bool? value)
+        [RelayCommand]
+        private void ToggleTime()
         {
             SelectedDate = null;
+            SelectedTime = SelectedTime == true ? false : true;
             Filter();
         }
 
@@ -140,10 +127,11 @@ namespace RoeiVereniging.ViewModels
             if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Bootnaam")
                 filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
 
-            if (SelectedLevel!=null&&SelectedLevel>0 && SelectedLevel != 0)
-                filtered = filtered.Where(r => r.Level == SelectedLevel);
+            if (SelectedLevel != null && SelectedLevel != BoatLevel.Niks)
+                filtered = filtered.Where(r => r.BoatLevel == SelectedLevel);
 
             if (SelectedDate is not null)
+            {
                 if (SelectedDate.Value)
                 {
                     filtered = filtered.OrderBy(r => r.StartTime);
@@ -154,8 +142,10 @@ namespace RoeiVereniging.ViewModels
                     filtered = filtered.OrderByDescending(r => r.StartTime);
                     DateSortText = @"Datum \/";
                 }
+            }
 
             if (SelectedTime is not null)
+            {
                 if (SelectedTime.Value)
                 {
                     filtered = filtered.OrderBy(r => r.StartTime.TimeOfDay);
@@ -166,7 +156,7 @@ namespace RoeiVereniging.ViewModels
                     filtered = filtered.OrderByDescending(r => r.StartTime.TimeOfDay);
                     TimeSortText = @"Tijd \/";
                 }
-
+            }
             MyReservations.Clear();
             foreach (var res in filtered)
                 MyReservations.Add(res);
