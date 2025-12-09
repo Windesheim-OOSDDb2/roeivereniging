@@ -5,7 +5,7 @@ namespace RoeiVereniging
 {
     public partial class App : Application
     {
-        public App(ReserveBoatViewModel viewModel)
+        public App()
         {
             InitializeComponent();
             MainPage = new AppShell();
