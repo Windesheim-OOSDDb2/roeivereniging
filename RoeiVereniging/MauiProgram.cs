@@ -41,8 +41,14 @@ namespace RoeiVereniging
             builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
-            builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
-            return builder.Build();
+
+            // Background Services
+            builder.Services.AddSingleton<BadweatherCheckerBackgroundServices>();
+
+            // After building the app, start the backgrouservice
+            var app = builder.Build();
+            app.Services.GetService<BadweatherCheckerBackgroundServices>()?.Start();
+            return app;
         }
     }
 }

@@ -122,26 +122,12 @@ namespace RoeiVereniging.ViewModels
             {
                 if (!imageKey.Contains(kw, StringComparison.OrdinalIgnoreCase))
                 {
-                    foreach (Reservation reservation in _reservationService.GetUnmessaged())
-                    {
-                        var user = _userService.Get(reservation.UserId);
-                        string userEmail = user?.EmailAddress ?? "Onbekend";
-                        mailHelper.SendMail(userEmail, "Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd voor uw reservering op {reservation.StartTime}: {imageKey}. Gebruiker: {userEmail}");
-                        _reservationService.MarkMessaged(reservation.Id);
-                    }
                     return true;
                 }
             }
 
             if (weather.WindBft >= MaxWindBft)
             {
-                foreach (Reservation reservation in _reservationService.GetUnmessaged())
-                {
-                    var user = _userService.Get(reservation.UserId);
-                    string userEmail = user?.EmailAddress ?? "Onbekend";
-                    mailHelper.SendMail(userEmail, "Weer waarschuwing", $"Gevaarlijk weer Gedetecteerd voor uw reservering op {reservation.StartTime}: {imageKey}. Gebruiker: {userEmail}");
-                    _reservationService.MarkMessaged(reservation.Id);
-                }
                 return true;
             }
 
