@@ -51,7 +51,7 @@ namespace RoeiVereniging.ViewModels
 
         private void LoadForDummyUser()
         {
-            User? user = _userRepo.Get(1);
+            User? user = _userRepo.GetById(1);
             if (user == null) return;
 
             var boats = _boatRepo.GetAll();

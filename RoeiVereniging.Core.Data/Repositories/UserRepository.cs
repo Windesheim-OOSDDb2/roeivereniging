@@ -24,32 +24,13 @@ namespace RoeiVereniging.Core.Repositories
                 );
             ");
 
-            string hashedPassword = PasswordHelper.HashPassword("test");
+            // seed 1 user (use OR IGNORE so repeated runs won't duplicate)
             InsertMultipleWithTransaction(new List<string> {
-                $@"INSERT OR REPLACE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', 'member', 1)"
+                @"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl','1234','member',1)"
             });
-
         }
 
-        public User? Get(string email)
-        {
-            OpenConnection();
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE email = @email";
-            cmd.Parameters.AddWithValue("@email", email);
-            using var reader = cmd.ExecuteReader();
-            User? user = null;
-
-            if (reader.Read())
-            {
-                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
-            }
-            CloseConnection();
-
-            return user;
-        }
-
-        public User? Get(int id)
+        public User? GetById(int id)
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
@@ -61,21 +42,6 @@ namespace RoeiVereniging.Core.Repositories
                 user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
             CloseConnection();
             return user;
-        }
-
-        public List<User> GetAll()
-        {
-            OpenConnection();
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user";
-            using var reader = cmd.ExecuteReader();
-            var users = new List<User>();
-            while (reader.Read())
-            {
-                users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)));
-            }
-            CloseConnection();
-            return users;
         }
 
         // Add authentication method here (and create if needed)

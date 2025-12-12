@@ -5,10 +5,10 @@ namespace RoeiVereniging
 {
     public partial class App : Application
     {
-        public App(LoginView viewModel)
+        public App(AddBoatViewModel viewModel)
         {
             InitializeComponent();
-            MainPage = new NavigationPage(viewModel);
+            MainPage = new AppShell();
         }
     }
 }

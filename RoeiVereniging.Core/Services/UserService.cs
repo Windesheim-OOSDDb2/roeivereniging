@@ -1,5 +1,4 @@
-﻿using RoeiVereniging.Core.Interfaces.Repositories;
-using RoeiVereniging.Core.Interfaces.Services;
+﻿using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -11,24 +10,20 @@ namespace RoeiVereniging.Core.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserService _userService;
         public User? Get(string email)
         {
-            return _userRepository.Get(email);
+            return _userService.Get(email);
         }
 
         public User? Get(int id)
         {
-            return _userRepository.Get(id);
+            return _userService.Get(id);
         }
 
         public List<User> GetAll()
         {
-            return _userRepository.GetAll();
+            return _userService.GetAll();
         }
     }
 }
