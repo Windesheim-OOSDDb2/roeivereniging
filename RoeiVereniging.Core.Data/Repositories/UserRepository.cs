@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using RoeiVereniging.Core.Data;
+using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
 
@@ -23,8 +24,9 @@ namespace RoeiVereniging.Core.Repositories
                 );
             ");
 
+            string hashedPassword = PasswordHelper.HashPassword("test");
             InsertMultipleWithTransaction(new List<string> {
-                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl','test','member',1)"
+                $@"INSERT OR REPLACE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', 'member', 1)"
             });
 
         }

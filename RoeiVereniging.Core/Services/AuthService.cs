@@ -1,4 +1,5 @@
-﻿using RoeiVereniging.Core.Interfaces.Repositories;
+﻿using RoeiVereniging.Core.Helpers;
+using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 
@@ -17,8 +18,13 @@ namespace RoeiVereniging.Core.Services
         {
             var user = _userRepo.Get(email);
             if (user == null) return null;
-            
-            return user;
+
+            if (PasswordHelper.VerifyPassword(password, user.Password))
+            {
+                return user;
+            }
+
+            return null;
         }
     }
 }
