@@ -7,9 +7,10 @@ using Microsoft.Maui.Controls.StyleSheets;
 
 public partial class ReservationView : ContentPage
 {
-	public ReservationView()
-	{
-		InitializeComponent();
-        BindingContext = new ReservationViewModel(new ReservationService(new ReservationRepository()));
+    private readonly ReservationViewModel _viewModel;
+    public ReservationView(ReservationViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 }

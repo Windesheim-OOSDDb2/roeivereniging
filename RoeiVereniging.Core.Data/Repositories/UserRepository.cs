@@ -23,9 +23,8 @@ namespace RoeiVereniging.Core.Repositories
                 );
             ");
 
-            // seed 1 user (use OR IGNORE so repeated runs won't duplicate)
             InsertMultipleWithTransaction(new List<string> {
-                @"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl','1234','member',1)"
+                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl','test','member',1)"
             });
         }
 
