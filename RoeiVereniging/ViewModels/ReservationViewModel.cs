@@ -95,7 +95,7 @@ namespace RoeiVereniging.ViewModels
                 .ToList();
 
             // I insert a None level to make sure user can reset filter
-            Levels.Insert(0, BoatLevel.Niks);
+            Levels.Insert(0, BoatLevel.Alles);
 
             OnPropertyChanged(nameof(BoatNames));
             OnPropertyChanged(nameof(Levels));
@@ -127,7 +127,7 @@ namespace RoeiVereniging.ViewModels
             if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Bootnaam")
                 filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
 
-            if (SelectedLevel != null && SelectedLevel != BoatLevel.Niks)
+            if (SelectedLevel != null && SelectedLevel != BoatLevel.Alles)
                 filtered = filtered.Where(r => r.BoatLevel == SelectedLevel);
 
             if (SelectedDate is not null)

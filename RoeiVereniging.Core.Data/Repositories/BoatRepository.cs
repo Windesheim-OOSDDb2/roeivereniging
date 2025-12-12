@@ -24,9 +24,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Roeiboot},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Kano},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Kano},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.C},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Scull},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Liteboat},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
             });
             LoadBoats();
         }
