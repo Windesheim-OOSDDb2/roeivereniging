@@ -5,7 +5,6 @@
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.ReserveBoatView"
              x:DataType="vm:ReserveBoatViewModel"
-             Title="ReserveBoatView"
              BackgroundColor="White" >
     <Grid>
 
@@ -231,6 +230,12 @@
             BackgroundColor="#DEE6F8"
             TextColor="#082757"
             Text="Naar reserveringen >"/>
+        <Button
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="6"
+            Command="{Binding GoToAddBoatsCommand}"
+            Text="Naar boot toevoegen >"/>
         <Button 
             Grid.Column="3"
             Grid.ColumnSpan="2"

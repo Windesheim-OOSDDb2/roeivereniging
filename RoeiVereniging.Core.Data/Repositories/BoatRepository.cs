@@ -100,5 +100,24 @@ namespace RoeiVereniging.Core.Data.Repositories
         {
             return boatList;
         }
+
+        public Boat Add(Boat item)
+        {
+            string insertQuery = $"INSERT INTO boat(name, Steeringwheelposition, seats_amount, level, type, status) VALUES(@Name, @SteeringWheelPosition, @Seats_Amount, @Level, @Type, @Status) Returning RowId;";
+            OpenConnection();
+            using (SqliteCommand command = new(insertQuery, Connection))
+            {
+                command.Parameters.AddWithValue("Name", item.Name);
+                command.Parameters.AddWithValue("SteeringWheelPosition", item.SteeringWheelPosition);
+                command.Parameters.AddWithValue("Seats_Amount", item.SeatsAmount);
+                command.Parameters.AddWithValue("Level", item.Level);
+                command.Parameters.AddWithValue("Type", item.BoatType);
+                command.Parameters.AddWithValue("Status", item.BoatStatus);
+
+                item.Id = Convert.ToInt32(command.ExecuteScalar());
+            }
+            CloseConnection();
+            return item;
+        }
     }
 }

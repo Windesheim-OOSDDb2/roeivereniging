@@ -32,5 +32,10 @@ namespace RoeiVereniging.Core.Services
         {
             return _boatRepository.GetAll();
         }
+
+        public Boat Add(Boat item)
+        {
+            return _boatRepository.Add(item);
+        }
     }
 }
