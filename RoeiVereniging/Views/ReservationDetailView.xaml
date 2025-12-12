@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoeiVereniging.Views.ReservationDetailView"
+             Title="Reservering Details">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Reservering Details" FontAttributes="Bold" FontSize="22" />
+
+            <Label Text="{Binding Reservation.BoatName, StringFormat='Boot: {0}'}" />
+            <Label Text="{Binding Reservation.BoatLevelText, StringFormat='Niveau: {0}'}" />
+            <Label Text="{Binding Reservation.StartTime, StringFormat='Start: {0:dd-MM-yyyy HH:mm}'}" />
+            <Label Text="{Binding Reservation.EndTime, StringFormat='Einde: {0:dd-MM-yyyy HH:mm}'}" />
+            <Label Text="{Binding Reservation.SteeringModeText, StringFormat='Stuurpositie: {0}'}" />
+            <Label Text="{Binding Reservation.SeatsAmount, StringFormat='Aantal roeiers: {0}'}" />
+
+            <Label Text="Schades aan deze boot:" FontAttributes="Bold" Margin="0,20,0,0"/>
+            <CollectionView ItemsSource="{Binding Damages}">
+                <CollectionView.EmptyView>
+                    <Label Text="Geen schades gevonden." TextColor="Gray" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#0854d1" Margin="0,4,0,4">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Description}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Severity}" />
+                                <Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy}'}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
