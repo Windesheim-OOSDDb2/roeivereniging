@@ -1,14 +1,73 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
              x:Class="RoeiVereniging.Views.LoginView"
-             x:DataType="vm:LoginViewModel"
-             Title="Login">
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="Login" FontSize="24" HorizontalOptions="Center"/>
-        <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" />
-        <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" />
-        <Button Text="Login" Command="{Binding LoginCommand}" />
-        <Label Text="{Binding LoginMessage}" TextColor="Red" />
-    </StackLayout>
+             BackgroundColor="White">
+
+    <Grid Padding="20">
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="12">
+            <Image Source="logo.png"
+                   HeightRequest="120"
+                   Aspect="AspectFit"/>
+
+            <Label Text="Welkom bij RoeiMeister"
+                   FontSize="26"
+                   Padding="20"
+                   FontAttributes="Bold"
+                   TextColor="#082757"
+                   HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="40">
+                <Frame Padding="40"
+                       CornerRadius="20"
+                       BackgroundColor="#dee6f8"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       WidthRequest="420">
+
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="Login"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#082757"/>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="E-mail/Gebruikersnaam"
+                                   FontSize="13"
+                                   TextColor="#082757"/>
+                            <Frame BackgroundColor="White"
+                                   CornerRadius="12"
+                                   Padding="14"
+                                   HasShadow="False">
+                                <Entry Text="{Binding Email}"
+                                       TextColor="Black"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="48"/>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <Frame BackgroundColor="White"
+                               CornerRadius="12"
+                               Padding="14"
+                               HasShadow="False">
+                            <Entry Text="{Binding Password}"
+                                   IsPassword="True"
+                                   TextColor="Black"
+                                   Placeholder="Wachtwoord"
+                                   BackgroundColor="Transparent"
+                                   HeightRequest="48"/>
+                        </Frame>
+
+                        <Button Text="Login"
+                                Command="{Binding LoginCommand}"
+                                BackgroundColor="#082757"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="12"
+                                HeightRequest="52"/>
+                    </VerticalStackLayout>
+                </Frame>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>
+
