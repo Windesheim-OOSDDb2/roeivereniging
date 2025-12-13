@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RoeiVereniging.Core.Helpers
+﻿namespace RoeiVereniging.Core.Helpers
 {
     public static class PasswordHelper
     {
-        // maybe move this to .env?
-        private const int saltSize = 10;
+
+        // try and get salt size from environment variable BCRYPT_SALT_SIZE, if not found use default value of 10
+        private static int saltSize = Environment.GetEnvironmentVariable("BCRYPT_SALT_SIZE") != null
+            ? int.Parse(Environment.GetEnvironmentVariable("BCRYPT_SALT_SIZE")!)
+            : 10;
+
 
         // enncrypt the password with bcrypt and returns the hashed password
         public static string HashPassword(string password)
