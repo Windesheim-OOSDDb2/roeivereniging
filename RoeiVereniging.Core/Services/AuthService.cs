@@ -16,7 +16,7 @@ namespace RoeiVereniging.Core.Services
 
         public User? Login(string email, string password)
         {
-            var user = _userRepo.Get(email);
+            User? user = _userRepo.Get(email);
             if (user == null) return null;
 
             if (PasswordHelper.VerifyPassword(password, user.Password))

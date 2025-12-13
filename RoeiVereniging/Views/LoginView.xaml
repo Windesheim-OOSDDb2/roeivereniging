@@ -41,6 +41,7 @@
                                 HasShadow="False">
                             <Entry Text="{Binding Email}"
                                     TextColor="Black"
+                                    Placeholder="Email"
                                     BackgroundColor="Transparent"
                                     HeightRequest="48"/>
                         </Frame>
