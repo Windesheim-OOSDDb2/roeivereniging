@@ -14,45 +14,45 @@
 				<Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
 					<HorizontalStackLayout>
 						<Label Text="Boot Id/Naam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.BoatName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>	
+						<Label Text="{Binding BoatName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>	
 					</HorizontalStackLayout>
 				</Frame>
-				<Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+				<!--<Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
 					<HorizontalStackLayout>
 						<Label Text="Stuurpositie: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 						<Label Text="{Binding Reservation.SteeringModeText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
-				</Frame>
+				</Frame>-->
 				<!-- Row 2 -->
 				<Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
 					<HorizontalStackLayout>
 						<Label Text="Niveau: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.BoatLevelText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding BoatLevelText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
 				</Frame>
-				<Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+				<!--<Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
 					<HorizontalStackLayout>
 						<Label Text="Aantal roeiers: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 						<Label Text="{Binding Reservation.SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
-				</Frame>
+				</Frame>-->
 				<!-- Row 3 -->
 				<Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
 					<HorizontalStackLayout>
 						<Label Text="Datum: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.StartTime, StringFormat='{0:dd-MM-yyyy}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding StartTime, StringFormat='{0:dd-MM-yyyy}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
 				</Frame>
 				<Frame Grid.Row="2" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
 					<HorizontalStackLayout>
 						<Label Text="Tijd: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.StartTime, StringFormat='{0:HH:mm}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.EndTime, StringFormat='{0:HH:mm}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding StartTime, StringFormat='{0:HH:mm}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding EndTime, StringFormat='{0:HH:mm}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
 				</Frame>
 			</Grid>
 
-			<!-- Damage Button -->
+			<!-- Damage -->
 			<Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" Margin="0,20,0,60" WidthRequest="1000">
 				<HorizontalStackLayout VerticalOptions="Center" Spacing="12">
 					<Label Text="Schade:" TextColor="#082757" VerticalOptions="Center"/>
