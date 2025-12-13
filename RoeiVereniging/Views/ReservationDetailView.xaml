@@ -1,37 +1,87 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              x:Class="RoeiVereniging.Views.ReservationDetailView"
-             Title="Reservering Details">
+             BackgroundColor="White">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
-            <Label Text="Reservering Details" FontAttributes="Bold" FontSize="22" />
+        <VerticalStackLayout Padding="20, 0, 20, 16" Spacing="16">
+			<components:PageHeader PageTitle="Reservering details" />
 
-            <Label Text="{Binding Reservation.BoatName, StringFormat='Boot: {0}'}" />
-            <Label Text="{Binding Reservation.BoatLevelText, StringFormat='Niveau: {0}'}" />
-            <Label Text="{Binding Reservation.StartTime, StringFormat='Start: {0:dd-MM-yyyy HH:mm}'}" />
-            <Label Text="{Binding Reservation.EndTime, StringFormat='Einde: {0:dd-MM-yyyy HH:mm}'}" />
-            <Label Text="{Binding Reservation.SteeringModeText, StringFormat='Stuurpositie: {0}'}" />
-            <Label Text="{Binding Reservation.SeatsAmount, StringFormat='Aantal roeiers: {0}'}" />
+			<Grid Margin="0,60,0,0" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="36">
+				<!-- Row 1 -->
+				<Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+					<HorizontalStackLayout>
+						<Label Text="Boot Id/Naam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.BoatName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>	
+					</HorizontalStackLayout>
+				</Frame>
+				<Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+					<HorizontalStackLayout>
+						<Label Text="Stuurpositie: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.SteeringModeText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+					</HorizontalStackLayout>
+				</Frame>
+				<!-- Row 2 -->
+				<Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+					<HorizontalStackLayout>
+						<Label Text="Niveau: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.BoatLevelText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+					</HorizontalStackLayout>
+				</Frame>
+				<Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+					<HorizontalStackLayout>
+						<Label Text="Aantal roeiers: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+					</HorizontalStackLayout>
+				</Frame>
+				<!-- Row 3 -->
+				<Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+					<HorizontalStackLayout>
+						<Label Text="Datum: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.StartTime, StringFormat='{0:dd-MM-yyyy}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+					</HorizontalStackLayout>
+				</Frame>
+				<Frame Grid.Row="2" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+					<HorizontalStackLayout>
+						<Label Text="Tijd: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.StartTime, StringFormat='{0:HH:mm}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding Reservation.EndTime, StringFormat='{0:HH:mm}'}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+					</HorizontalStackLayout>
+				</Frame>
+			</Grid>
 
-            <Label Text="Schades aan deze boot:" FontAttributes="Bold" Margin="0,20,0,0"/>
-            <CollectionView ItemsSource="{Binding Damages}">
-                <CollectionView.EmptyView>
-                    <Label Text="Geen schades gevonden." TextColor="Gray" />
-                </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BorderColor="#0854d1" Margin="0,4,0,4">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding Description}" FontAttributes="Bold"/>
-                                <Label Text="{Binding Severity}" />
-                                <Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy}'}"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+			<!-- Damage Button -->
+			<Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" Margin="0,20,0,60" WidthRequest="1000">
+				<HorizontalStackLayout VerticalOptions="Center" Spacing="12">
+					<Label Text="Schade:" TextColor="#082757" VerticalOptions="Center"/>
+					<CollectionView ItemsSource="{Binding Damages}">
+						<CollectionView.EmptyView>
+							<Label Text="Geen schade gevonden." TextColor="Gray" Margin="16,0,0,0" VerticalOptions="Center" />
+						</CollectionView.EmptyView>
+						<CollectionView.ItemTemplate>
+							<DataTemplate>
+								<Frame BorderColor="#0854d1" Margin="0,4,0,4">
+									<VerticalStackLayout>
+										<Label Text="{Binding Description}" FontAttributes="Bold"/>
+										<Label Text="{Binding Severity}" />
+										<Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy}'}"/>
+									</VerticalStackLayout>
+								</Frame>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</HorizontalStackLayout>
+			</Frame>
+			<Button Text="Schade melden"
+					BackgroundColor="#082757"
+					TextColor="White"
+					FontAttributes="Bold"
+					CornerRadius="8"
+					Margin="0,16,0,0"
+					WidthRequest="1355"/>
+					
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

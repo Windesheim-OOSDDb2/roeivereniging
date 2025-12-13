@@ -26,4 +26,4 @@ public partial class ReservationView : ContentPage
             ((CollectionView)sender).SelectedItem = null;
         }
     }
-}
+} 
