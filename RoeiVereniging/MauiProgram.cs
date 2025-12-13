@@ -31,6 +31,7 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IBoatService, BoatService>();
             builder.Services.AddSingleton<IReservationService, ReservationService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IAuthService, AuthService>();
 
             // Repositories
             builder.Services.AddSingleton<IBoatRepository, BoatRepository>();
@@ -38,6 +39,7 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
             // Views and ViewModels
+            builder.Services.AddTransient<LoginView>().AddTransient<LoginViewModel>();
             builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
