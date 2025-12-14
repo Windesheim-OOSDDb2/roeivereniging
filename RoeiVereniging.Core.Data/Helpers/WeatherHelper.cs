@@ -45,6 +45,36 @@ namespace RoeiVereniging.Core.Data.Helpers
                 return null;
             }
         }
+
+        /// <summary>
+        /// Calls the WeerLive V2 API and returns the weather forecast for the next 3 days for the specified location.
+        /// </summary>
+        /// <param name="locatie">Location name or "lat,lon".</param>
+        /// <param name="apiKey">API key for weerlive.nl</param>
+        public static async Task<WkVerw[]?> GetThreeDayForecastAsync(string locatie, string apiKey, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(locatie)) throw new ArgumentException("locatie is required", nameof(locatie));
+                if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentException("apiKey is required", nameof(apiKey));
+
+                string endpoint = $"api/weerlive_api_v2.php?key={Uri.EscapeDataString(apiKey)}&locatie={Uri.EscapeDataString(locatie)}";
+
+                using var response = await _httpClient.GetAsync(endpoint, cancellationToken).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                var data = JsonSerializer.Deserialize<WeerLiveV2Response>(json, _jsonOptions);
+
+                // Return up to 3 days of forecast if available
+                return data?.WkVerw != null ? data.WkVerw.Length >= 3 ? data.WkVerw[..3] : data.WkVerw : null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching weather forecast: {ex.Message}");
+                return null;
+            }
+        }
     }
 
 }

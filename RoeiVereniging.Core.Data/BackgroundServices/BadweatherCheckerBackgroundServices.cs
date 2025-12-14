@@ -1,6 +1,8 @@
 using RoeiVereniging.Core.Data.Helpers;
 using RoeiVereniging.Core.Interfaces.Services;
+using RoeiVereniging.Core.Models;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
@@ -12,6 +14,18 @@ namespace RoeiVereniging.Core.Services
     {
         private CancellationTokenSource _cts;
         private IEmailService _mailService;
+        private string apiKey = "beb9920c3e";
+        public WkVerwUi[] wkVerw = Array.Empty<WkVerwUi>();
+        public string[] dangerKeywords = new[]
+            {
+                "bliksem",      // lightning (EN)
+                "hagel",        // hail (EN)
+                "mist",         // Fog (EN)
+                "sneeuw",       // Snow (EN)
+                "nachtmist",    // Night Fog (EN)
+                "helderenacht", // Clear night (EN)
+                "nachtbewolkt"  // Cloudy at night (EN)
+            };
 
         public BadweatherCheckerBackgroundServices(IEmailService mailService)
         {
@@ -34,8 +48,24 @@ namespace RoeiVereniging.Core.Services
         {
             while (!token.IsCancellationRequested)
             {
-                _mailService.SendDangerousWeatherMail("11-12-2025", "17:00", "Domme Dolfijn", "test@mail.addr");
-                await Task.Delay(TimeSpan.FromSeconds(5), token);
+                var Response = await WeatherHelper.GetWeatherAsync("zwolle", apiKey);
+
+                wkVerw = Response.WkVerw != null
+                    ? Response.WkVerw.Select(w => new WkVerwUi(w)).ToArray()
+                    : Array.Empty<WkVerwUi>();
+
+                
+
+                // Check the first 3 entries of wkVerw for min temp < 10 or dangerous weather image
+                for (int i = 0; i < Math.Min(3, wkVerw.Length); i++)
+                {
+                    if (wkVerw[i].MinTemp < 10 || dangerKeywords.Any(keyword => string.Equals(wkVerw[i].ImageKey, keyword, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        Debug.WriteLine("Bad weather detected, sending email...");
+                    }
+                }
+
+                await Task.Delay(TimeSpan.FromHours(1), token);
             }
         }
     }
