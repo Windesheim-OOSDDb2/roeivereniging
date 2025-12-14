@@ -47,49 +47,4 @@ namespace RoeiVereniging.Core.Data.Helpers
         }
     }
 
-    public class WeerLiveV2Response
-    {
-        [JsonPropertyName("liveweer")]
-        public LiveWeerV2[] LiveWeer { get; set; } = Array.Empty<LiveWeerV2>();
-
-        [JsonPropertyName("wk_verw")]
-        public WkVerw[] WkVerw { get; set; } = Array.Empty<WkVerw>();
-    }
-
-    public class LiveWeerV2
-    {
-        [JsonPropertyName("plaats")]
-        public string Plaats { get; set; }
-
-        [JsonPropertyName("temp")]
-        public double Temp { get; set; }
-
-        [JsonPropertyName("gtemp")]
-        public double GTemp { get; set; }
-
-        [JsonPropertyName("samenv")]
-        public string Samenv { get; set; }
-
-        [JsonPropertyName("lv")]
-        public int LV { get; set; }
-
-        [JsonPropertyName("windr")]
-        public string WindR { get; set; }
-
-        [JsonPropertyName("windkmh")]
-        public double WindKmH { get; set; }
-
-        [JsonPropertyName("windbft")]
-        public int WindBft { get; set; }
-
-        [JsonPropertyName("sup")]
-        public string Sup { get; set; }
-
-        [JsonPropertyName("sunder")]
-        public string Sunder { get; set; }
-
-        [JsonPropertyName("image")]
-        public string Image { get; set; }
-    }
-
 }
