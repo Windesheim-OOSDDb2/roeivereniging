@@ -27,9 +27,7 @@ public partial class LoginViewModel : BaseViewModel
         User? user = _authService.Login(email, password);
         if (user != null)
         {
-            LoginMessage = $"welkom {user.Name}!";
             _global.user = user;
-            // navigate to AppShell or main page:
             Application.Current.MainPage = new AppShell();
         }
         else
