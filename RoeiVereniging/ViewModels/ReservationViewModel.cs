@@ -54,7 +54,9 @@ namespace RoeiVereniging.ViewModels
                         reservation.BoatId,
                         boatName,
                         reservation.StartTime,
-                        reservation.EndTime
+                        reservation.EndTime,
+                        boat.SeatsAmount,
+                        boat.SteeringWheelPosition ? SteeringMode.Required : SteeringMode.Disabled
                     );
 
                     // Add to observable collection so ui updates

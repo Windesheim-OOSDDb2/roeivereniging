@@ -18,9 +18,9 @@
 					</HorizontalStackLayout>
 				</Frame>
 				<Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
-					<HorizontalStackLayout>
+					<HorizontalStackLayout Spacing="20">
 						<Label Text="Stuurpositie: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.SteeringModeText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding SteeringModeText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
 				</Frame>
 				<!-- Row 2 -->
@@ -31,9 +31,9 @@
 					</HorizontalStackLayout>
 				</Frame>
 				<Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
-					<HorizontalStackLayout>
+					<HorizontalStackLayout Spacing="20">
 						<Label Text="Aantal roeiers: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-						<Label Text="{Binding Reservation.SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+						<Label Text="{Binding SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
 					</HorizontalStackLayout>
 				</Frame>
 				<!-- Row 3 -->

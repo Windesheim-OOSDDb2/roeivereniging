@@ -15,9 +15,12 @@
         public int BoatId { get; set; }
         public int UserId { get; set; }
 
+        public int SeatsAmount { get; set; }
+        public SteeringMode SteeringMode { get; set; }
+
         public ReservationViewDTO() { }
 
-        public ReservationViewDTO(int reservationId, int userId, BoatLevel boatLevel, int boatId, string boatName, DateTime start, DateTime end)
+        public ReservationViewDTO(int reservationId, int userId, BoatLevel boatLevel, int boatId, string boatName, DateTime start, DateTime end, int seatsAmount, SteeringMode steeringMode)
         {
             ReservationId = reservationId;
             UserId = userId;
@@ -26,6 +29,8 @@
             BoatName = boatName;
             StartTime = start;
             EndTime = end;
+            SeatsAmount = seatsAmount;
+            SteeringMode = steeringMode;
         }
     }
 }

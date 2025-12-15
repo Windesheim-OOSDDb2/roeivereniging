@@ -15,8 +15,8 @@ namespace RoeiVereniging.ViewModels
 
         public string BoatName => Reservation?.BoatName ?? "";
         public string BoatLevelText => Reservation?.BoatLevelText ?? "";
-        //public string SteeringModeText => Reservation?.SteeringModeText ?? "";  Not implemented in ReservationViewDTO
-        //public int SeatsAmount => Reservation?.SeatsAmount ?? 0; Not implemented in ReservationViewDTO
+        public string SteeringModeText => Reservation != null ? Reservation.SteeringMode.ToString() : "";
+        public int SeatsAmount => Reservation?.SeatsAmount ?? 0;
         public DateTime StartTime => Reservation?.StartTime ?? DateTime.MinValue;
         public DateTime EndTime => Reservation?.EndTime ?? DateTime.MinValue;
 
