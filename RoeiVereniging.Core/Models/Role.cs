@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Models
 {
-    public enum BoatType : ushort
+    public enum Role : ushort
     {
-        C = 0,
-        Scull = 1,
-        Boord = 2,
-        Liteboat = 3,
+        None = 0,
+        Admin = 1
     }
 }

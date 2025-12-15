@@ -4,31 +4,38 @@
              xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              x:Class="RoeiVereniging.Views.ReservationView"
-             x:DataType="vm:ReservationViewModel">
+             x:DataType="vm:ReservationViewModel"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
+
     <ContentPage.Resources>
-        <StyleSheet Source="/Resources/Styles/reservations.css" />
+        <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
     <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White">
-        <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
 
-        <Frame BackgroundColor="#0854D1" Padding="5" CornerRadius="0" HeightRequest="50">
-            <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12" HeightRequest="50"> 
+        <Frame BackgroundColor="#0854D1" Padding="10" CornerRadius="10">
+            <Grid ColumnDefinitions="2*, *, *, *, *" ColumnSpacing="12"> 
 
+        <CollectionView ItemsSource="{Binding MyReservations}">
 
-                <Grid Grid.Column="0">
-                <Picker
-                 TextColor="Black"
-                 ItemsSource="{Binding BoatNames}"
-                 SelectedItem="{Binding SelectedBoatName, Mode=TwoWay}" />
+            <CollectionView.Header>
+                <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
+                    <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
+
+                        <Picker
+                            Grid.Column="0"
+                            TextColor="Black"
+                            ItemsSource="{Binding BoatNames}"
+                            SelectedItem="{Binding SelectedBoatName}"
+                            Title="Bootnaam"/>
 
                 <Label Text="Bootnaam"
                  TextColor="Black"
                  HorizontalOptions="Start"
                  VerticalOptions="Center"
-                 VerticalTextAlignment="Center"
                  Grid.Column="1"
-                 Margin="10,-10,0,0"
+                 Margin="10,0"
                  IsVisible="{Binding Namen}" />
                 </Grid>
 
@@ -42,83 +49,75 @@
                  TextColor="Black"
                  HorizontalOptions="Start"
                  VerticalOptions="Center"
-                 VerticalTextAlignment="Center"
                  Grid.Column="1"
-                 Margin="10,-10,0,0"
+                 Margin="10"
                  IsVisible="{Binding Niveau}"/>
 
+                        <Grid Grid.Column="2">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleDateCommand}"
+                                />
+                             </Grid.GestureRecognizers>
 
-            <Label Grid.Column="2"
-                   Text="{Binding DateSortText}"
-                   TextColor="Black"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
+                            <Label
+                                Text="{Binding DateSortText}"
+                                TextColor="Black"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
 
-                <CheckBox Grid.Column="2"
-                    IsChecked="{Binding SelectedDate}" 
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    WidthRequest="200"
-                    HeightRequest="50"
-                    Opacity="0" />
+                        <Grid Grid.Column="3">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleTimeCommand}"
+                                />
+                            </Grid.GestureRecognizers>
 
-                
-                <Label Grid.Column="3"
-                   Text="{Binding TimeSortText}"
-                   TextColor="Black"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
+                            <Label
+                                Text="{Binding TimeSortText}"
+                                TextColor="Black"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
 
-                <CheckBox Grid.Column="3"
-                    IsChecked="{Binding SelectedTime}" 
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    WidthRequest="200"
-                    HeightRequest="50"
-                    Opacity="0" />
 
-            </Grid>
-        </Frame>
-        
-        <CollectionView ItemsSource="{Binding MyReservations}">
+                    </Grid>
+                </Frame>
+            </CollectionView.Header>
+
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:ReservationViewDTO">
-                   
+                <DataTemplate x:DataType="m:ReservationViewDTO">
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
-                        
-                            <!-- boatname -->
+
                             <Label Grid.Column="0"
-                               Text="{Binding BoatName}"
-                               TextColor="#000000"
-                               StyleClass="cell-left" 
-                            />
+                                   Text="{Binding BoatName}"
+                                   TextColor="#000000"
+                                   StyleClass="cell-left"/>
 
-                            <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding Level}"
-                               StyleClass="cell" 
-                               TextColor="#000000"
-                            /> 
+                                   Text="{Binding BoatLevelText}"
+                                   StyleClass="cell"
+                                   TextColor="#000000"/>
 
-                            <!-- start date -->
                             <Label Grid.Column="2"
-                               Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}"
-                               StyleClass="cell" 
-                               TextColor="#000000"
-                            />         
+                                   Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}"
+                                   StyleClass="cell"
+                                   TextColor="#000000"/>
 
-                            <!-- time -->
                             <Label Grid.Column="3"
-                               Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
-                               StyleClass="cell"                               
-                               TextColor="#000000"
-                            />
+                                   Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
+                                   StyleClass="cell"
+                                   TextColor="#000000"/>
+
                         </Grid>
                     </Frame>
                 </DataTemplate>
-
             </CollectionView.ItemTemplate>
+
         </CollectionView>
+
     </VerticalStackLayout>
+
 </ContentPage>
