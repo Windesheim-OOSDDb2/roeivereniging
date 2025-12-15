@@ -8,15 +8,17 @@ using RoeiVereniging.ViewModels;
 namespace RoeiVereniging.ViewModels;
 public partial class LoginViewModel : BaseViewModel
 {
+    private readonly GlobalViewModel _global;
     private readonly IAuthService _authService;
 
     [ObservableProperty] private string email;
     [ObservableProperty] private string password;
     [ObservableProperty] private string loginMessage;
 
-    public LoginViewModel(IAuthService authService)
+    public LoginViewModel(IAuthService authService, GlobalViewModel global)
     {
         _authService = authService;
+        _global = global;
     }
 
     [RelayCommand]
@@ -25,6 +27,9 @@ public partial class LoginViewModel : BaseViewModel
         User? user = _authService.Login(email, password);
         if (user != null)
         {
+            LoginMessage = $"welkom {user.Name}!";
+            _global.user = user;
+            // navigate to AppShell or main page:
             Application.Current.MainPage = new AppShell();
         }
         else
