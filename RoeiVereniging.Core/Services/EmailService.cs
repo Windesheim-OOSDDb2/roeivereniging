@@ -9,6 +9,8 @@ namespace RoeiVereniging.Core.Services
     {
         private readonly string _username;
         private readonly string _password;
+        private readonly string _host;
+        private readonly int _port;
 
         public EmailService()
         {
@@ -16,6 +18,8 @@ namespace RoeiVereniging.Core.Services
             IConfigurationSection section = config.GetSection("MailServerStrings");
             _username = section.GetValue<string>("username");
             _password = section.GetValue<string>("password");
+            _host = section.GetValue<string>("host");
+            _port = section.GetValue<int>("port");
         }
 
         public void SendDangerousWeatherMail(DateTime dateTime, string boatName, string recipient)
@@ -61,7 +65,7 @@ namespace RoeiVereniging.Core.Services
 
         public void SendMail(string htmlBody, string subject, string recipient)
         {
-            var client = new SmtpClient("sandbox.smtp.mailtrap.io", 2525)
+            var client = new SmtpClient(_host, _port)
             {
                 Credentials = new NetworkCredential(_username, _password),
                 EnableSsl = true
