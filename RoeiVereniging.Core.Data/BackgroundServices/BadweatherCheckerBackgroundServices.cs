@@ -62,24 +62,54 @@ namespace RoeiVereniging.Core.Services
                     : Array.Empty<WkVerwUi>();
 
                 
-
-                // Check the first 3 entries of wkVerw for min temp < 10 or dangerous weather image
-                for (int i = 0; i < Math.Min(3, wkVerw.Length); i++)
+                foreach (var weather in wkVerw.Take(3))
                 {
-                    // check if temp is below 10 or imagekey contains dangerous weather since imagekey is identical to a weather description
-                    if (wkVerw[i].MinTemp < 10 || dangerKeywords.Any(keyword => string.Equals(wkVerw[i].ImageKey, keyword, StringComparison.OrdinalIgnoreCase)))
+                    if (weather.MinTemp < 10 || dangerKeywords.Any(keyword => string.Equals(weather.ImageKey, keyword, StringComparison.OrdinalIgnoreCase)))
                     {
-                        List<Reservation> reservations = _reservationService.GetByDate(DateTime.Parse(wkVerw[i].Datum));
-                        foreach (Reservation reservation in reservations.Where(r => r.Messaged == 0))
+                        var reservations = _reservationService.GetByDate(DateTime.Parse(weather.Datum))
+                            .Where(r => r.Messaged == 0);
+
+                        foreach (var reservation in reservations)
                         {
                             try
                             {
-                                _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.GetById(reservation.UserId).EmailAddress);
-                                _reservationService.MarkMessaged(reservation.Id);
+                                var boat = _boatService.GetById(reservation.BoatId);
+                                var user = _userService.GetById(reservation.UserId);
+
+                                if (boat != null && user != null)
+                                {
+                                    _mailService.SendDangerousWeatherMail(reservation.StartTime, boat.name, user.EmailAddress);
+                                    _reservationService.MarkMessaged(reservation.Id);
+                                }
                             }
                             catch (Exception ex)
                             {
                                 Debug.WriteLine($"Error sending dangerous weather mail: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+                // check if array is not empty before looping  
+                if (wkVerw.Length > 0)
+                {
+                    // Check the first 3 entries of wkVerw for min temp < 10 or dangerous weather image  
+                    for (int i = 0; i < Math.Min(3, wkVerw.Length); i++)
+                    {
+                        // check if temp is below 10 or imagekey contains dangerous weather since imagekey is identical to a weather description  
+                        if (wkVerw[i].MinTemp < 10 || dangerKeywords.Any(keyword => string.Equals(wkVerw[i].ImageKey, keyword, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            List<Reservation> reservations = _reservationService.GetByDate(DateTime.Parse(wkVerw[i].Datum));
+                            foreach (Reservation reservation in reservations.Where(r => r.Messaged == 0))
+                            {
+                                try
+                                {
+                                    _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.GetById(reservation.UserId).EmailAddress);
+                                    _reservationService.MarkMessaged(reservation.Id);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine($"Error sending dangerous weather mail: {ex.Message}");
+                                }
                             }
                         }
                     }
