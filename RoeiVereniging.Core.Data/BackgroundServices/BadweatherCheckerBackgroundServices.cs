@@ -1,6 +1,7 @@
 using RoeiVereniging.Core.Data.Helpers;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Core.Repositories;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -14,6 +15,9 @@ namespace RoeiVereniging.Core.Services
     {
         private CancellationTokenSource _cts;
         private IEmailService _mailService;
+        private readonly IReservationService _reservationService;
+        private readonly IUserService _userService;
+        private readonly IBoatService _boatService;
         private string apiKey = "beb9920c3e";
         public WkVerwUi[] wkVerw = Array.Empty<WkVerwUi>();
         public string[] dangerKeywords = new[]
@@ -27,9 +31,12 @@ namespace RoeiVereniging.Core.Services
                 "nachtbewolkt"  // Cloudy at night (EN)
             };
 
-        public BadweatherCheckerBackgroundServices(IEmailService mailService)
+        public BadweatherCheckerBackgroundServices(IEmailService mailService, IReservationService reservationService, IUserService userService, IBoatService boatService)
         {
             _mailService = mailService;
+            _reservationService = reservationService;
+            _userService = userService;
+            _boatService = boatService;
         }
 
         public void Start()
@@ -59,11 +66,19 @@ namespace RoeiVereniging.Core.Services
                 // Check the first 3 entries of wkVerw for min temp < 10 or dangerous weather image
                 for (int i = 0; i < Math.Min(3, wkVerw.Length); i++)
                 {
+                    // check if temp is below 10 or imagekey contains dangerous weather since imagekey is identical to a weather description
                     if (wkVerw[i].MinTemp < 10 || dangerKeywords.Any(keyword => string.Equals(wkVerw[i].ImageKey, keyword, StringComparison.OrdinalIgnoreCase)))
                     {
-                        Debug.WriteLine("Bad weather detected, sending email...");
+                        List<Reservation> reservations = _reservationService.GetByDate(DateTime.Parse(wkVerw[i].Datum));
+                        foreach (Reservation reservation in reservations.Where(r => r.Messaged == 0))
+                        {
+                            _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.GetById(reservation.UserId).EmailAddress);
+                            _reservationService.MarkMessaged(reservation.Id);
+                        }
                     }
                 }
+
+                _reservationService.GetAll();
 
                 await Task.Delay(TimeSpan.FromHours(1), token);
             }

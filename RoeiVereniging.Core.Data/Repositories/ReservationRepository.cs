@@ -51,7 +51,8 @@ namespace RoeiVereniging.Core.Data.Repositories
                     DateTime.Parse(reader.GetString(2)),
                     DateTime.Parse(reader.GetString(3)),
                     DateTime.Parse(reader.GetString(4)),
-                    reader.GetInt32(5)
+                    reader.GetInt32(5),
+                    reader.GetInt32(6)
                 ));
             }
             CloseConnection();
@@ -73,6 +74,8 @@ namespace RoeiVereniging.Core.Data.Repositories
             cmd.Parameters.AddWithValue("@boat", reservation.BoatId);
             cmd.ExecuteNonQuery();
             CloseConnection();
+
+            GetAll();
 
             return reservation;
         }
@@ -123,7 +126,7 @@ namespace RoeiVereniging.Core.Data.Repositories
             if (reservationList.Count > 0)
                 reservationList.Clear();
 
-            string selectQuery = "SELECT reservation_id, user_id, start_time, end_time, created_at, boat_id FROM Reservation";
+            string selectQuery = "SELECT reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged FROM Reservation";
             OpenConnection();
             using (SqliteCommand command = new(selectQuery, Connection))
             {
@@ -137,18 +140,22 @@ namespace RoeiVereniging.Core.Data.Repositories
                     DateTime endTime = DateTime.Parse(reader.GetString(3));
                     DateTime createdAt = DateTime.Parse(reader.GetString(4));
                     int boatId = reader.GetInt32(5);
-                    reservationList.Add(new Reservation(id, userId, startTime, endTime, createdAt, boatId));
+                    int messaged = reader.GetInt32(6);
+                    reservationList.Add(new Reservation(id, userId, startTime, endTime, createdAt, boatId, messaged));
                 }
             }
             CloseConnection();
             return reservationList;
         }
 
-
-
         public Reservation? Get(int id)
         {
             return reservationList.FirstOrDefault(r => r.Id == id);
+        }
+
+        public List<Reservation> GetByDate(DateTime date)
+        {
+            return reservationList.Where(r => r.StartTime.Date == date.Date).ToList();
         }
     }
 }

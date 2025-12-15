@@ -10,5 +10,6 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
         public List<Reservation> GetUnmessaged();
         public List<Reservation> GetAll();
         public Reservation? Get(int id);
+        public List<Reservation> GetByDate(DateTime date);
     }
 }

@@ -9,6 +9,7 @@ namespace RoeiVereniging.Core.Models
 {
     public class WkVerw
     {
+
         [JsonPropertyName("dag")]
         public string Dag { get; set; }
 

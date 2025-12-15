@@ -18,7 +18,7 @@ namespace RoeiVereniging.Core.Services
             _password = section.GetValue<string>("password");
         }
 
-        public void SendDangerousWeatherMail(string date, string time, string boatName, string recipient)
+        public void SendDangerousWeatherMail(DateTime dateTime, string boatName, string recipient)
         {
             string styledMessage = $@"
                 <table width=""100%"" cellspacing=""0"" cellpadding=""0"" style=""max-width:600px; margin:auto; background:#ffffff; border-radius:12px; padding:0;"">
@@ -33,7 +33,7 @@ namespace RoeiVereniging.Core.Services
                     <td style=""background:#E7ECFB; padding:25px; border-radius:12px; font-family:Arial, sans-serif;"">
                       <h3 style=""margin:0 0 10px 0; color:#0A2A52;"">Weer waarschuwing</h3>
                       <p style=""margin:0; font-size:15px; color:#0A2A52;"">
-                        <strong>Reservering:</strong> {date} - {time}
+                        <strong>Reservering:</strong> {dateTime.ToShortDateString()} - {dateTime.Hour} : {dateTime.Minute}
                       </p>
                       <p style=""margin:5px 0 15px; font-size:15px; color:#0A2A52;"">
                         <strong>Boot:</strong> {boatName}

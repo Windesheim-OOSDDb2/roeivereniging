@@ -15,5 +15,6 @@ namespace RoeiVereniging.Core.Interfaces.Services
         public void MarkMessaged(int reservationId);
         public List<Reservation> GetUnmessaged();
         public List<Reservation> GetByUser(int userId);
+        public List<Reservation> GetByDate(DateTime date);
     }
 }

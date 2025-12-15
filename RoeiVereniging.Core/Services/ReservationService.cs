@@ -38,5 +38,10 @@ namespace RoeiVereniging.Core.Services
         {
             return _reservationRepository.GetByUserId(userId);
         }
+
+        public List<Reservation> GetByDate(DateTime date)
+        {
+            return _reservationRepository.GetByDate(date);
+        }
     }
 }

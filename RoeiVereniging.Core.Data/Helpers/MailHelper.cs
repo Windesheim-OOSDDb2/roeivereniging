@@ -26,7 +26,7 @@ namespace RoeiVereniging.Core.Data.Helpers
             Password = section.GetValue<string>("password");
         }
 
-        public void SendDangerousWeatherMail(string date, string time, string boatName, string recipient)
+        public void SendDangerousWeatherMail(DateTime date, TimeSpan time, string boatName, string recipient)
         {
             string styledMessage = $@"
                 <table width=""100%"" cellspacing=""0"" cellpadding=""0"" style=""max-width:600px; margin:auto; background:#ffffff; border-radius:12px; padding:0;"">
