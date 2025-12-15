@@ -80,7 +80,8 @@
 					FontAttributes="Bold"
 					CornerRadius="8"
 					Margin="0,16,0,0"
-					WidthRequest="1355"/>
+					WidthRequest="1355"
+                    Command="{Binding NavigateToReportDamageCommand}" />
 					
         </VerticalStackLayout>
     </ScrollView>

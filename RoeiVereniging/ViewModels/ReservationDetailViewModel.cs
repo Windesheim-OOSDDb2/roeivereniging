@@ -1,10 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using RoeiVereniging.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -13,6 +15,8 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private ReservationViewDTO reservation;
 
+        public int BoatId => Reservation?.BoatId ?? 0;
+
         public string BoatName => Reservation?.BoatName ?? "";
         public string BoatLevelText => Reservation?.BoatLevelText ?? "";
         public string SteeringModeText => Reservation != null ? Reservation.SteeringMode.ToString() : "";
@@ -20,10 +24,16 @@ namespace RoeiVereniging.ViewModels
         public DateTime StartTime => Reservation?.StartTime ?? DateTime.MinValue;
         public DateTime EndTime => Reservation?.EndTime ?? DateTime.MinValue;
 
-
         public ReservationDetailViewModel(ReservationViewDTO reservation)
         {
             Reservation = reservation;
         }
+
+        [RelayCommand]
+        private async Task NavigateToReportDamage()
+        {
+            await Shell.Current.GoToAsync($"{nameof(ReportDamageView)}?boatId={BoatId}");
+        }
+
     }
 }

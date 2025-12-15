@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoeiVereniging.Views.ReportDamageView">
+    <StackLayout Padding="20">
+        <Label Text="Beschrijf de schade:" />
+        <Editor Text="{Binding Description}" />
+
+        <Label Text="Selecteer de ernst van de schade:" />
+        <Picker ItemsSource="{Binding SeverityLevels}" SelectedItem="{Binding Severity}" />
+
+        <Button Text="Verzend Rapport" Command="{Binding SubmitReport}" />
+
+        <Label Text="{Binding FeedbackMessage}" IsVisible="{Binding FeedbackMessage, Converter={StaticResource StringToBoolConverter}}" />
+    </StackLayout>
+</ContentPage>
