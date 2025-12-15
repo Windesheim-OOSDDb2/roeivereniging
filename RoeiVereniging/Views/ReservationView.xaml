@@ -12,8 +12,8 @@
     <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White">
         <Label StyleClass="title" Text="Reserveringen" FontSize="22" HorizontalOptions="Center"/>
 
-        <Frame BackgroundColor="#0854D1" Padding="10" CornerRadius="10">
-            <Grid ColumnDefinitions="2*, *, *, *, *" ColumnSpacing="12"> 
+        <Frame BackgroundColor="#0854D1" Padding="5" CornerRadius="0" HeightRequest="50">
+            <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12" HeightRequest="50"> 
 
 
                 <Grid Grid.Column="0">
@@ -26,8 +26,9 @@
                  TextColor="Black"
                  HorizontalOptions="Start"
                  VerticalOptions="Center"
+                 VerticalTextAlignment="Center"
                  Grid.Column="1"
-                 Margin="10,0"
+                 Margin="10,-10,0,0"
                  IsVisible="{Binding Namen}" />
                 </Grid>
 
@@ -41,8 +42,9 @@
                  TextColor="Black"
                  HorizontalOptions="Start"
                  VerticalOptions="Center"
+                 VerticalTextAlignment="Center"
                  Grid.Column="1"
-                 Margin="10"
+                 Margin="10,-10,0,0"
                  IsVisible="{Binding Niveau}"/>
 
 
