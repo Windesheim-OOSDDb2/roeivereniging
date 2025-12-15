@@ -72,8 +72,15 @@ namespace RoeiVereniging.Core.Services
                         List<Reservation> reservations = _reservationService.GetByDate(DateTime.Parse(wkVerw[i].Datum));
                         foreach (Reservation reservation in reservations.Where(r => r.Messaged == 0))
                         {
-                            _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.GetById(reservation.UserId).EmailAddress);
-                            _reservationService.MarkMessaged(reservation.Id);
+                            try
+                            {
+                                _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.GetById(reservation.UserId).EmailAddress);
+                                _reservationService.MarkMessaged(reservation.Id);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"Error sending dangerous weather mail: {ex.Message}");
+                            }
                         }
                     }
                 }
