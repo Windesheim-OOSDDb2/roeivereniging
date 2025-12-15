@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Models
 {
-    public enum DamageSeverity
+    public enum EnumDamageSeverity
     {
-        Minor,
-        Moderate,
-        Severe
+        Licht,
+        Gematigd,
+        Ernstig
     }
 }

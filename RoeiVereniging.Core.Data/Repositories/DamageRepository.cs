@@ -54,7 +54,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                     reader.GetInt32(1),
                     reader.GetString(2),
                     DateTime.Parse(reader.GetString(3)),
-                    (DamageSeverity)reader.GetInt32(4)
+                    (EnumDamageSeverity)reader.GetInt32(4)
                 ));
             }
             CloseConnection();

@@ -12,9 +12,9 @@ namespace RoeiVereniging.Core.Models
         public int BoatId { get; set; }
         public string Description { get; set; } = string.Empty;
         public DateTime ReportedAt { get; set; }
-        public DamageSeverity Severity { get; set; }
+        public EnumDamageSeverity Severity { get; set; }
         public Damage() { }
-        public Damage(int damageId, int boatId, string description, DateTime reportedAt, DamageSeverity severity)
+        public Damage(int damageId, int boatId, string description, DateTime reportedAt, EnumDamageSeverity severity)
         {
             DamageId = damageId;
             BoatId = boatId;

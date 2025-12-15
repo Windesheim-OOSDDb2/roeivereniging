@@ -17,7 +17,7 @@ namespace RoeiVereniging.ViewModels
         private string description;
 
         [ObservableProperty]
-        private DamageSeverity severity;
+        private EnumDamageSeverity severity;
 
         [ObservableProperty]
         private DateTime reportedAt = DateTime.Now;
@@ -28,7 +28,7 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private string feedbackMessage;
 
-        public Array SeverityLevels => Enum.GetValues(typeof(DamageSeverity));
+        public Array SeverityLevels => Enum.GetValues(typeof(EnumDamageSeverity));
 
         [RelayCommand]
         private async Task SubmitReport()
