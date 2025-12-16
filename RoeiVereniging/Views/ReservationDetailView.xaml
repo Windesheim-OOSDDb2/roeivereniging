@@ -75,12 +75,14 @@
 				</HorizontalStackLayout>
 			</Frame>
 			<Button Text="Schade melden"
+                    FontSize="20"
 					BackgroundColor="#082757"
 					TextColor="White"
 					FontAttributes="Bold"
 					CornerRadius="8"
 					Margin="0,16,0,0"
 					WidthRequest="1355"
+                    HorizontalOptions="Fill"
                     Command="{Binding NavigateToReportDamageCommand}" />
 					
         </VerticalStackLayout>
