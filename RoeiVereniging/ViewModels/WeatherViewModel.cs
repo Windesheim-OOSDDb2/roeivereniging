@@ -8,12 +8,13 @@ using Microsoft.Maui.Graphics;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class WeatherViewModel : BaseViewModel
     {
-        private string apiKey = "a3ed4a6567";
+        private readonly string _apiKey;
         private readonly IReservationService _reservationService;
         private readonly IUserService _userService;
 
@@ -50,12 +51,18 @@ namespace RoeiVereniging.ViewModels
         {
             _reservationService = reservationService;
             _userService = userService;
+
+            // Get api key from environment variable
+            IConfigurationRoot config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build(); ;
+            IConfigurationSection section = config.GetSection("WeatherApiStrings");
+            _apiKey = section.GetValue<string>("key1");
+
             _ = InitializeAsync();
         }
 
         private async Task InitializeAsync()
         {
-            var live = await WeatherHelper.GetWeatherAsync("zwolle", apiKey);
+            var live = await WeatherHelper.GetWeatherAsync("zwolle", _apiKey);
             if (live != null)
             {
                 LiveWeather = live.LiveWeer != null && live.LiveWeer.Length > 0 ? live.LiveWeer[0] : null;

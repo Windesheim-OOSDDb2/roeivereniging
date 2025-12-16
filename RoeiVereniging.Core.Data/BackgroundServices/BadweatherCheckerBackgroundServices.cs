@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using RoeiVereniging.Core.Data.Helpers;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
@@ -18,7 +19,7 @@ namespace RoeiVereniging.Core.Services
         private readonly IReservationService _reservationService;
         private readonly IUserService _userService;
         private readonly IBoatService _boatService;
-        private string apiKey = "beb9920c3e";
+        private readonly string _apiKey;
         public WkVerwUi[] wkVerw = Array.Empty<WkVerwUi>();
         public string[] dangerKeywords = new[]
             {
@@ -37,6 +38,11 @@ namespace RoeiVereniging.Core.Services
             _reservationService = reservationService;
             _userService = userService;
             _boatService = boatService;
+
+            // Get api key from environment variable
+            IConfigurationRoot config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build(); ;
+            IConfigurationSection section = config.GetSection("WeatherApiStrings");
+            _apiKey = section.GetValue<string>("key2");
         }
 
         public void Start()
@@ -55,7 +61,7 @@ namespace RoeiVereniging.Core.Services
         {
             while (!token.IsCancellationRequested)
             {
-                var Response = await WeatherHelper.GetWeatherAsync("zwolle", apiKey);
+                var Response = await WeatherHelper.GetWeatherAsync("zwolle", _apiKey);
 
                 wkVerw = Response.WkVerw != null
                     ? Response.WkVerw.Select(w => new WkVerwUi(w)).ToArray()
