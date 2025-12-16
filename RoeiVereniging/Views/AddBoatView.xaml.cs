@@ -14,10 +14,5 @@ public partial class AddBoatView : ContentPage
         _viewModel = viewModel;
     }
 
-    private void SteeringWheelCheck(object sender, EventArgs e)
-    {
-        if (_viewModel == null) return;
-        _viewModel.SteeringWheelCheck();
-    }
 
 }
