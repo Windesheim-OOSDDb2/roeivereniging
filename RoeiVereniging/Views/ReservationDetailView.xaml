@@ -56,10 +56,13 @@
 			<Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" Margin="0,20,0,60" WidthRequest="1000">
 				<HorizontalStackLayout VerticalOptions="Center" Spacing="12">
 					<Label Text="Schade:" TextColor="#082757" VerticalOptions="Center"/>
-					<CollectionView ItemsSource="{Binding Damages}"
-                                    ItemsLayout="HorizontalList">
+                    <CollectionView ItemsSource="{Binding Top3RecentDamages}">
+                        <CollectionView.ItemsLayout>
+								<LinearItemsLayout Orientation="Horizontal"
+                                                           ItemSpacing="48" />
+                        </CollectionView.ItemsLayout>
 						<CollectionView.EmptyView>
-                            <Label Text="Geen schade gevonden." TextColor="#082757" Margin="16,0,0,0" VerticalOptions="Center" />
+							<Label Text="Geen schade gevonden." TextColor="#082757" Margin="16,0,0,0" VerticalOptions="Center" />
 						</CollectionView.EmptyView>
 						<CollectionView.ItemTemplate>
 							<DataTemplate>

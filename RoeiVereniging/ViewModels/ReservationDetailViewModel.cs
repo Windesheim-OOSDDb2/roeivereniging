@@ -54,5 +54,7 @@ namespace RoeiVereniging.ViewModels
             await Shell.Current.GoToAsync($"{nameof(ReportDamageView)}?boatId={BoatId}");
         }
 
+        public IEnumerable<Damage> Top3RecentDamages =>
+            Damages.OrderByDescending(d => d.ReportedAt).Take(3);
     }
 }
