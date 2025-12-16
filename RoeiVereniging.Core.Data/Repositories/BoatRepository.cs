@@ -10,6 +10,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public BoatRepository()
         {
+
             CreateTable(@"
                 CREATE TABLE IF NOT EXISTS boat (
                     boat_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -80,7 +81,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
         {
-            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var minLevel))
+            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var level))
             {
                 return boatList.FirstOrDefault();
             }
