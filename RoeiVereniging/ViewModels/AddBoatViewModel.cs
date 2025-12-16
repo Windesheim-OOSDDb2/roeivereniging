@@ -23,14 +23,11 @@ namespace RoeiVereniging.ViewModels
         private readonly IBoatService _boatService;
 
 
-        public string BoatTypeDisplay => BoatType.GetDescription();
+        public string BoatTypeDisplay => BoatType.GetEnumDescription();
 
         public ObservableCollection<BoatType> BoatTypes { get; } =
     new ObservableCollection<BoatType>(
         Enum.GetValues(typeof(BoatType)).Cast<BoatType>());
-
-
-
 
 
         [ObservableProperty] public ObservableCollection<BoatLevel> levels = new ObservableCollection<BoatLevel>() { BoatLevel.Beginner, BoatLevel.Gemiddeld, BoatLevel.Gevorderd, BoatLevel.Expert  };
@@ -156,7 +153,6 @@ namespace RoeiVereniging.ViewModels
                         steeringWheelPosition = true;
                         boatlevel = BoatLevel.Beginner;
                         break;
-
 
                     default:
                         

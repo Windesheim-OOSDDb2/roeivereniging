@@ -13,7 +13,7 @@ namespace RoeiVereniging.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value is Enum e
-                ? e.GetDescription()
+                ? e.GetEnumDescription()
                 : string.Empty;
         }
 

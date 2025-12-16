@@ -9,10 +9,10 @@ namespace RoeiVereniging.Core.Helpers
 {
     public static class EnumExtensions
     {
-        public static string GetDescription(this Enum value)
+        public static string GetEnumDescription(this Enum value)
         {
-            var field = value.GetType().GetField(value.ToString());
-            var attribute = field?
+            var enumField = value.GetType().GetField(value.ToString());
+            var attribute = enumField?
                 .GetCustomAttributes(typeof(DescriptionAttribute), false)
                 .FirstOrDefault() as DescriptionAttribute;
 
