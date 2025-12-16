@@ -23,5 +23,24 @@ namespace RoeiVereniging.Views
                 BindingContext = new ReservationDetailViewModel(reservation);
             }
         }
+
+        private async void OnReportDamageClicked(object sender, EventArgs e)
+        {
+            if (BindingContext is ReservationDetailViewModel vm && vm.Reservation != null)
+            {
+                int boatId = vm.Reservation.BoatId;
+                await Shell.Current.GoToAsync($"ReportDamageView?BoatId={boatId}");
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is ReservationDetailViewModel vm)
+            {
+                vm.LoadDamages();
+            }
+        }
+
     }
 }

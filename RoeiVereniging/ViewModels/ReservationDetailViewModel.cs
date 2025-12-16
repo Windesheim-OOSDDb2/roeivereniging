@@ -7,11 +7,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RoeiVereniging.Views;
+using RoeiVereniging.Core.Repositories;
+using System.Collections.ObjectModel;
+using RoeiVereniging.Core.Data.Repositories;
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class ReservationDetailViewModel : ObservableObject
     {
+        private readonly DamageRepository _damageRepository = new DamageRepository();
+
+        public ObservableCollection<Damage> Damages { get; } = new();
+
+        public ReservationDetailViewModel(ReservationViewDTO reservation)
+        {
+            Reservation = reservation;
+            LoadDamages();
+        }
+
+        public void LoadDamages()
+        {
+            Damages.Clear();
+            var damages = _damageRepository.GetByBoatId(BoatId);
+            foreach (var damage in damages)
+            {
+                Damages.Add(damage);
+            }
+        }
+
         [ObservableProperty]
         private ReservationViewDTO reservation;
 
@@ -24,10 +47,6 @@ namespace RoeiVereniging.ViewModels
         public DateTime StartTime => Reservation?.StartTime ?? DateTime.MinValue;
         public DateTime EndTime => Reservation?.EndTime ?? DateTime.MinValue;
 
-        public ReservationDetailViewModel(ReservationViewDTO reservation)
-        {
-            Reservation = reservation;
-        }
 
         [RelayCommand]
         private async Task NavigateToReportDamage()

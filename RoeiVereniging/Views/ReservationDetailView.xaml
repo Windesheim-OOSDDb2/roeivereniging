@@ -56,17 +56,18 @@
 			<Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" Margin="0,20,0,60" WidthRequest="1000">
 				<HorizontalStackLayout VerticalOptions="Center" Spacing="12">
 					<Label Text="Schade:" TextColor="#082757" VerticalOptions="Center"/>
-					<CollectionView ItemsSource="{Binding Damages}">
+					<CollectionView ItemsSource="{Binding Damages}"
+                                    ItemsLayout="HorizontalList">
 						<CollectionView.EmptyView>
-							<Label Text="Geen schade gevonden." TextColor="Gray" Margin="16,0,0,0" VerticalOptions="Center" />
+                            <Label Text="Geen schade gevonden." TextColor="#082757" Margin="16,0,0,0" VerticalOptions="Center" />
 						</CollectionView.EmptyView>
 						<CollectionView.ItemTemplate>
 							<DataTemplate>
-								<Frame BorderColor="#0854d1" Margin="0,4,0,4">
+								<Frame BackgroundColor="White" BorderColor="#0854d1" Margin="0,4,0,4">
 									<VerticalStackLayout>
-										<Label Text="{Binding Description}" FontAttributes="Bold"/>
-										<Label Text="{Binding Severity}" />
-										<Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy}'}"/>
+                                        <Label Text="{Binding Description}" FontAttributes="Bold" TextColor="#082757"/>
+                                        <Label Text="{Binding Severity}" TextColor="#082757" />
+                                        <Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy}'}" TextColor="#082757"/>
 									</VerticalStackLayout>
 								</Frame>
 							</DataTemplate>
@@ -75,6 +76,7 @@
 				</HorizontalStackLayout>
 			</Frame>
 			<Button Text="Schade melden"
+                    Clicked="OnReportDamageClicked"
                     FontSize="20"
 					BackgroundColor="#082757"
 					TextColor="White"
@@ -83,7 +85,7 @@
 					Margin="0,16,0,0"
 					WidthRequest="1355"
                     HorizontalOptions="Fill"
-                    Command="{Binding NavigateToReportDamageCommand}" />
+                     />
 					
         </VerticalStackLayout>
     </ScrollView>

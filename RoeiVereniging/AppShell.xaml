@@ -9,4 +9,6 @@
         ContentTemplate="{DataTemplate views:ReserveBoatView}"
         Route="reserve" />
 
+    <ShellContent Route="ReportDamageView" ContentTemplate="{DataTemplate views:ReportDamageView}" />
+
 </Shell>

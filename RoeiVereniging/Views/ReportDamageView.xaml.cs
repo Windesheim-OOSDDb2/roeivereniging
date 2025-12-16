@@ -10,10 +10,10 @@ namespace RoeiVereniging.Views
 {
     public partial class ReportDamageView : ContentPage
     {
-        public ReportDamageView(ReportDamageViewModel vm)
+        public ReportDamageView()
         {
             InitializeComponent();
-            BindingContext = vm;
+            BindingContext = new ReportDamageViewModel();
         }
     }
 }

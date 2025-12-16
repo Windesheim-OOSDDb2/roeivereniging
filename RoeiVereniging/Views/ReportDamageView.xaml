@@ -5,22 +5,21 @@
 			 xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
 
-    <ScrollView>
         <VerticalStackLayout Padding="20,0,20,16" Spacing="16">
 			<components:PageHeader PageTitle="Reservering details" />
             <!-- Titel -->
-            <Label Text="Schade melden voor: Boot Id/naam"
+            <Label Text="{Binding BoatName, StringFormat='Schade melden voor: {0}'}"
                    FontSize="16"
                    HorizontalOptions="Center"
                    TextColor="#0A2A5C"
                    Margin="0,0,0,24"/>
             
             <!-- Schade label en editor -->
-            <VerticalStackLayout Padding="36,0" Spacing="8">
+            <VerticalStackLayout Padding="36, 0" Spacing="0">
                 <Label Text="Schade"
                        FontSize="22"
                        TextColor="Black"
-                       Margin="0,0,0,0"/>
+                       Margin="38,0,0,0"/>
                 <Frame BorderColor="Black"
 					   BackgroundColor="White"
                        CornerRadius="10"
@@ -49,12 +48,12 @@
                         HeightRequest="100"
                         WidthRequest="160"
                         HorizontalOptions="Start"
-                        Margin="36,20,32,20"/>
+                        Margin="36,0,32,20"/>
             </HorizontalStackLayout>
 
             <!-- Schade melden knop -->
             <Button Text="Schade melden"
-                    Command="{Binding SubmitReport}"
+                    Command="{Binding SubmitReportCommand}"
                     FontSize="24"
                     FontAttributes="Bold"
                     BackgroundColor="#0A2A5C"
@@ -64,8 +63,9 @@
                     Margin="32,20,32,0"
                     HorizontalOptions="Fill"/>
 
-            <!-- Naar schade historie knop -->
-            <Button Text="Naar schade historie >"
+            <HorizontalStackLayout>
+                <!-- Naar schade historie knop -->
+			    <Button Text="Naar schade historie >"
                     FontSize="20"
                     BackgroundColor="#E6ECFA"
                     TextColor="#0A2A5C"
@@ -74,8 +74,16 @@
 					WidthRequest="300"
                     Margin="70,20,32,20"
                     HorizontalOptions="Start"
-                    ContentLayout="Left,20">
-            </Button>
+                    ContentLayout="Left,20" />
+
+			    <Label Text="{Binding FeedbackMessage}"
+				   TextColor="Green"
+				   FontAttributes="Bold"
+				   FontSize="18"
+				   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+				   Margin="240,0,0,0"/>
+            </HorizontalStackLayout>
+
         </VerticalStackLayout>
-    </ScrollView>
 </ContentPage>
