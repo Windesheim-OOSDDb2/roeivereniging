@@ -56,7 +56,7 @@ namespace RoeiVereniging.Core.Services
             _cts?.Cancel();
         }
 
-        // while app is running, send a mail every hour
+        // while app is running, check for bad weather every hour and if badweather is expected in the next 3 days, send email to users with reservations on those days
         private async Task PingLoop(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
@@ -97,11 +97,9 @@ namespace RoeiVereniging.Core.Services
                 }
                 // check if array is not empty before looping  
                 if (wkVerw.Length > 0)
-                {
-                    // Check the first 3 entries of wkVerw for min temp < 10 or dangerous weather image  
+                { 
                     for (int i = 0; i < Math.Min(3, wkVerw.Length); i++)
                     {
-                        // check if temp is below 10 or imagekey contains dangerous weather since imagekey is identical to a weather description  
                         if (wkVerw[i].MinTemp < 10 || dangerKeywords.Any(keyword => string.Equals(wkVerw[i].ImageKey, keyword, StringComparison.OrdinalIgnoreCase)))
                         {
                             List<Reservation> reservations = _reservationService.GetByDate(DateTime.Parse(wkVerw[i].Datum));
