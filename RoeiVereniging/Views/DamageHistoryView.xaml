@@ -6,12 +6,43 @@
              BackgroundColor="White">
     <VerticalStackLayout>
         <components:PageHeader PageTitle="Schade historie" />
-            <Label 
-                Text="{Binding BoatDisplayText}"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center"
-                TextColor="Black"
-                />
-
+        <Label 
+            Text="{Binding BoatDisplayText}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            TextColor="Black"
+            Margin="0,0,0,16"/>
+        <Frame BackgroundColor="#DEE6F8" CornerRadius="12" Padding="12" Margin="20,20,20,20">
+            <VerticalStackLayout>
+                <Label Text="Schade:" TextColor="#082757" VerticalOptions="Start" HorizontalOptions="Start"/>
+                <CollectionView ItemsSource="{Binding Damages}" Margin="0,8,0,0" HeightRequest="600">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3"
+                                         HorizontalItemSpacing="24"
+                                         VerticalItemSpacing="32"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <Label Text="Geen schade gevonden." TextColor="#082757" Margin="16,0,0,0" VerticalOptions="Center" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White"
+                                   BorderColor="#0854d1"
+                                   Margin="16, 32"
+                                   CornerRadius="10"
+                                   Padding="12"
+                                   WidthRequest="350"
+                                   HeightRequest="120">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Description}" FontAttributes="Bold" TextColor="#082757"/>
+                                    <Label Text="{Binding Severity}" TextColor="#082757" />
+                                    <Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy HH:mm}'}" TextColor="#082757"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Frame>
     </VerticalStackLayout>
 </ContentPage>
