@@ -59,7 +59,7 @@
                     <CollectionView ItemsSource="{Binding Top3RecentDamages}">
                         <CollectionView.ItemsLayout>
 								<LinearItemsLayout Orientation="Horizontal"
-                                                           ItemSpacing="48" />
+                                                           ItemSpacing="32" />
                         </CollectionView.ItemsLayout>
 						<CollectionView.EmptyView>
 							<Label Text="Geen schade gevonden." TextColor="#082757" Margin="16,0,0,0" VerticalOptions="Center" />
@@ -86,7 +86,7 @@
 					FontAttributes="Bold"
 					CornerRadius="8"
 					Margin="0,-40,0,0"
-					WidthRequest="1355"
+					WidthRequest="1550"
                     HorizontalOptions="Fill"
 
                      />
@@ -99,7 +99,7 @@
 					CornerRadius="12"
 					HeightRequest="56"
 					WidthRequest="300"
-					Margin="70,20,32,20"
+					Margin="164,40,32,20"
 					HorizontalOptions="Start"
 					ContentLayout="Left,20"
                     Clicked="OnNavigateToDamageHistoryClicked"/>

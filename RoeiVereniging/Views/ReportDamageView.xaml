@@ -5,7 +5,7 @@
 			 xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
 
-        <VerticalStackLayout Padding="20,0,20,16" Spacing="16">
+        <VerticalStackLayout Padding="20,0,20,16" Spacing="0">
 			<components:PageHeader PageTitle="Schade melden" />
             <!-- Titel -->
             <Label Text="{Binding BoatDisplayText}"
@@ -15,7 +15,7 @@
                    Margin="0,0,0,24"/>
             
             <!-- Schade label en editor -->
-            <VerticalStackLayout Padding="36, 0" Spacing="0">
+            <VerticalStackLayout Padding="130, 0" Spacing="20">
                 <Label Text="Schade"
                        FontSize="22"
                        TextColor="Black"
@@ -37,7 +37,7 @@
             </VerticalStackLayout>
 
             <!-- Ernst  -->
-            <HorizontalStackLayout Padding="36,0" Spacing="0">
+            <HorizontalStackLayout Padding="130,0" Spacing="0">
                 <Picker Title="Ernst"
 						TitleColor="Black"
                         ItemsSource="{Binding SeverityLevels}"
@@ -59,8 +59,8 @@
                     BackgroundColor="#0A2A5C"
                     TextColor="White"
                     CornerRadius="8"
-					WidthRequest="1355"
-                    Margin="32,20,32,0"
+					WidthRequest="1550"
+                    Margin="32,80,32,0"
                     HorizontalOptions="Fill"/>
 
             <HorizontalStackLayout>
@@ -71,7 +71,7 @@
 				   FontSize="18"
 				   HorizontalOptions="Center"
                    VerticalOptions="Center"
-				   Margin="240,0,0,0"/>
+				   Margin="830,50,0,0"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
