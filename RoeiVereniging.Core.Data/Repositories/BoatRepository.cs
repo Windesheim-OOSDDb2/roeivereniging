@@ -79,20 +79,16 @@ namespace RoeiVereniging.Core.Data.Repositories
             return boat;
         }
 
-        public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
+        public Boat? Get(int amount, bool steeringwheelposition, BoatLevel difficulty, BoatType type)
         {
-            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var level))
-            {
-                return boatList.FirstOrDefault();
-            }
 
             var boat = boatList.FirstOrDefault(b =>
-                b.SeatsAmount == amount &&
-                b.SteeringWheelPosition == steeringwheelposition &&
-                b.Level == level &&
-                b.Type == type);
+               b.SeatsAmount == amount &&
+               b.SteeringWheelPosition == steeringwheelposition &&
+               b.Level == difficulty &&
+               b.Type == type) ?? null;
 
-            return boat ?? boatList.FirstOrDefault();
+            return boat ?? null;
         }
 
         public List<Boat> GetAll()

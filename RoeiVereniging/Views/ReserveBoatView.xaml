@@ -163,18 +163,18 @@
         
         <!-- passenger amount end-->
 
-        <Entry
+        <Picker
             Grid.Column="4"
             Grid.ColumnSpan="1"
-            Grid.Row="2"
-            Margin="15, 10, 15, 10"
+            Grid.Row="2" 
             BackgroundColor="#DEE6F8"
             TextColor="#082757"
-            Text="{Binding Difficulty}"
-            FontSize="20"
+            TitleColor="#082757"
             FontAttributes="Bold"
-            Placeholder="Niveau"
-            PlaceholderColor="#082757" />
+            FontSize="20"
+            Margin="15, 10, 15, 10"
+            ItemsSource="{Binding BoatLevels}"
+            SelectedItem="{Binding Difficulty}"/>
 
 
         <!-- Row 3 -->
@@ -188,7 +188,7 @@
             StrokeThickness="0">
             <Picker
                 HorizontalTextAlignment="Center"
-                ItemsSource="{Binding boatTypes}"
+                ItemsSource="{Binding BoatTypes}"
                 SelectedItem="{Binding Type, Mode=TwoWay}" 
                 BackgroundColor="#5FA6E8"
                 TextColor="#FFFFFF"
@@ -222,10 +222,20 @@
             Grid.Row="4"
             BackgroundColor="#082757"
             TextColor="#FFFFFF"
-            VerticalOptions="Center"
+            VerticalOptions="Start"
             HorizontalOptions="Fill"
             FontSize="25"
             Margin="0, 0" />
+
+        <Label
+            Text="{Binding ErrorMessage}"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Grid.Row="4"
+            VerticalOptions="End"
+            TextColor="red"
+            FontAttributes="Bold"
+            FontSize="20" />
 
         <Button
             Grid.Column="1"
