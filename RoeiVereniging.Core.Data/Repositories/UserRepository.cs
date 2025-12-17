@@ -76,7 +76,7 @@ namespace RoeiVereniging.Core.Repositories
             using var cmd = Connection.CreateCommand();
             cmd.CommandText = "SELECT user_id, name, email, password FROM user";
             using var reader = cmd.ExecuteReader();
-            var users = new List<User>();
+            List<User> users = new List<User>();
             while (reader.Read())
             {
                 users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)));

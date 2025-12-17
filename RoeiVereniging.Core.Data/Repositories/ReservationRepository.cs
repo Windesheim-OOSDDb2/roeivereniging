@@ -95,7 +95,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public List<Reservation> GetUnmessaged()
         {
-            var list = new List<Reservation>();
+            List<Reservation> list = new List<Reservation>();
             OpenConnection();
             using var cmd = Connection.CreateCommand();
             cmd.CommandText = @"
