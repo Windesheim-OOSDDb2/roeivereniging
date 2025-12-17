@@ -56,5 +56,7 @@ namespace RoeiVereniging.ViewModels
 
         public IEnumerable<Damage> Top3RecentDamages =>
             Damages.OrderByDescending(d => d.ReportedAt).Take(3);
+
+        public string BoatDisplayText => $"{BoatName} (ID: {BoatId})";
     }
 }

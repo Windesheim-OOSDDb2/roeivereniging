@@ -33,6 +33,15 @@ namespace RoeiVereniging.Views
             }
         }
 
+        private async void OnNavigateToDamageHistoryClicked(object sender, EventArgs e)
+        {
+            if (BindingContext is ReservationDetailViewModel vm)
+            {
+                int boatId = vm.BoatId;
+                await Shell.Current.GoToAsync($"DamageHistoryView?boatId={boatId}");
+            }
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

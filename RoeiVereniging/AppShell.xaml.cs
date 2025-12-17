@@ -13,7 +13,7 @@ namespace RoeiVereniging
             Routing.RegisterRoute(nameof(WeatherView), typeof(WeatherView));
             Routing.RegisterRoute(nameof(ReservationDetailView), typeof(ReservationDetailView));
             Routing.RegisterRoute(nameof(ReportDamageView), typeof(ReportDamageView));
-            Routing.RegisterRoute(nameof(DamageHistoryView), typeof(DamageHistoryView));
+            Routing.RegisterRoute("DamageHistoryView", typeof(RoeiVereniging.Views.DamageHistoryView));
         }
     }
 }

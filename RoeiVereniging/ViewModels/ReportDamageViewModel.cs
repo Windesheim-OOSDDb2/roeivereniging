@@ -45,6 +45,12 @@ namespace RoeiVereniging.ViewModels
         {
             var boat = _boatRepository.Get(value);
             BoatName = boat?.ToString() ?? string.Empty;
+            OnPropertyChanged(nameof(BoatDisplayText)); // <-- Voeg deze regel toe
+        }
+
+        partial void OnBoatNameChanged(string value)
+        {
+            OnPropertyChanged(nameof(BoatDisplayText)); // <-- Voeg deze partial method toe
         }
 
         partial void OnDescriptionChanged(string value)
@@ -82,9 +88,11 @@ namespace RoeiVereniging.ViewModels
 
             
             await Shell.Current.GoToAsync("..");
-
-
         }
 
+        public string BoatDisplayText => $"{BoatName} (ID: {BoatId})";
+
+
     }
+
 }

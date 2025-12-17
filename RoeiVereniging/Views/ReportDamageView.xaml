@@ -6,9 +6,9 @@
              BackgroundColor="White">
 
         <VerticalStackLayout Padding="20,0,20,16" Spacing="16">
-			<components:PageHeader PageTitle="Reservering details" />
+			<components:PageHeader PageTitle="Schade melden" />
             <!-- Titel -->
-            <Label Text="{Binding BoatName, StringFormat='Schade melden voor: {0}'}"
+            <Label Text="{Binding BoatDisplayText}"
                    FontSize="16"
                    HorizontalOptions="Center"
                    TextColor="#0A2A5C"
@@ -36,7 +36,7 @@
                 </Frame>
             </VerticalStackLayout>
 
-            <!-- Ernst Picker -->
+            <!-- Ernst  -->
             <HorizontalStackLayout Padding="36,0" Spacing="0">
                 <Picker Title="Ernst"
 						TitleColor="Black"
@@ -64,19 +64,7 @@
                     HorizontalOptions="Fill"/>
 
             <HorizontalStackLayout>
-                <!-- Naar schade historie knop -->
-			    <Button Text="Naar schade historie >"
-                    FontSize="20"
-                    BackgroundColor="#E6ECFA"
-                    TextColor="#0A2A5C"
-                    CornerRadius="12"
-                    HeightRequest="56"
-					WidthRequest="300"
-                    Margin="70,20,32,20"
-                    HorizontalOptions="Start"
-                    ContentLayout="Left,20"
-                    Clicked="OnNavigateToDamageHistoryClicked"/>
-
+                <!-- Feedback -->
 			    <Label Text="{Binding FeedbackMessage}"
 				   TextColor="Green"
 				   FontAttributes="Bold"
