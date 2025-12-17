@@ -12,6 +12,7 @@ namespace RoeiVereniging.ViewModels
     public partial class ReservationViewModel : BaseViewModel
     {
         private List<ReservationViewDTO> _allReservations = new();
+        private readonly GlobalViewModel _global;
 
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
 
@@ -40,18 +41,19 @@ namespace RoeiVereniging.ViewModels
         private readonly UserRepository _userRepo;
         private readonly BoatRepository _boatRepo;
 
-        public ReservationViewModel(IReservationService reservationService)
+        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global)
         {
             _reservationService = reservationService;
             _userRepo = new UserRepository();
             _boatRepo = new BoatRepository();
+            _global = global;
 
-            LoadForDummyUser();
+            LoadForCurrentUser();
         }
 
-        private void LoadForDummyUser()
+        private void LoadForCurrentUser()
         {
-            User? user = _userRepo.Get(1);
+            User? user = _userRepo.Get(_global.user.Id);
             if (user == null) return;
 
             var boats = _boatRepo.GetAll();

@@ -77,7 +77,5 @@ namespace RoeiVereniging.Core.Repositories
             CloseConnection();
             return users;
         }
-
-        // Add authentication method here (and create if needed)
     }
 }
