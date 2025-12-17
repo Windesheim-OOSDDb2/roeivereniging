@@ -23,7 +23,7 @@
                     BackgroundColor="#dee6f8"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    WidthRequest="420">
+                    WidthRequest="690">
 
                 <VerticalStackLayout Spacing="20">
                     <Label Text="Login"
