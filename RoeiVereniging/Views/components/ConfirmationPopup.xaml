@@ -29,10 +29,10 @@
                    HorizontalTextAlignment="Center"
                    HorizontalOptions="Center" />
 
-            <Label Text="Ps. zet de reservering in je eigen agenda!"
+            <Label x:Name="MessageFooter"
                    TextColor="Black"
                    FontAttributes="Bold"
-                   FontSize="20"
+                   FontSize="18"
                    HorizontalTextAlignment="Center"
                    HorizontalOptions="Center"
                    Margin="0,10,0,10" />
