@@ -17,11 +17,6 @@ namespace RoeiVereniging.Core.Services
             _userRepository = userRepository;
         }
 
-        public User? GetById(int id)
-        {
-            return _userRepository.GetById(id);
-        }
-
         public User? Get(string email)
         {
             return _userRepository.Get(email);
