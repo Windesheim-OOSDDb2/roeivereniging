@@ -70,7 +70,7 @@
 									<VerticalStackLayout>
                                         <Label Text="{Binding Description}" FontAttributes="Bold" TextColor="#082757"/>
                                         <Label Text="{Binding Severity}" TextColor="#082757" />
-                                        <Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy}'}" TextColor="#082757"/>
+                                        <Label Text="{Binding ReportedAt, StringFormat='Gemeld op: {0:dd-MM-yyyy HH:mm}'}" TextColor="#082757"/>
 									</VerticalStackLayout>
 								</Frame>
 							</DataTemplate>
