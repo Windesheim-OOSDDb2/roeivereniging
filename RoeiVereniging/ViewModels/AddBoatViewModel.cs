@@ -159,7 +159,7 @@ namespace RoeiVereniging.ViewModels
                         break;
                 }
 
-                var boat = new Boat(1, Name,seatsAmount, SteeringWheelPosition,boatlevel, boatStatus, BoatType);
+                Boat boat = new Boat(1, Name,seatsAmount, steeringWheelPosition,boatlevel, boatStatus, BoatType);
                 _boatService.Add(boat);
                 ErrorMessage = "";
             }
