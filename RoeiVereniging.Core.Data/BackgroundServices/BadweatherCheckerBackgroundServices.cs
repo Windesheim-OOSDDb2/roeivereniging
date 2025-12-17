@@ -42,7 +42,7 @@ namespace RoeiVereniging.Core.Services
             // Get api key from environment variable
             IConfigurationRoot config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build(); ;
             IConfigurationSection section = config.GetSection("WeatherApiStrings");
-            _apiKey = section.GetValue<string>("key2");
+            _apiKey = section.GetValue<string>("weathercheckerapikey");
         }
 
         public void Start()
