@@ -31,6 +31,7 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IBoatService, BoatService>();
             builder.Services.AddSingleton<IReservationService, ReservationService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
 
             // Repositories
             builder.Services.AddSingleton<IBoatRepository, BoatRepository>();
@@ -44,7 +45,17 @@ namespace RoeiVereniging
             builder.Services.AddTransient<AddBoatView>().AddTransient<AddBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
-            return builder.Build();
+
+            // Background Services
+            builder.Services.AddSingleton<BadweatherCheckerBackgroundServices>();
+
+            // Build the app
+            var app = builder.Build();
+
+            // After building the app, start the backgrouservice
+            app.Services.GetService<BadweatherCheckerBackgroundServices>()?.Start();
+
+            return app;
         }
     }
 }

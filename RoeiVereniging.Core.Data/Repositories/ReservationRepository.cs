@@ -22,14 +22,16 @@ namespace RoeiVereniging.Core.Data.Repositories
                     start_time TEXT NOT NULL,
                     end_time TEXT NOT NULL,
                     created_at TEXT NOT NULL,
-                    boat_id INTEGER NOT NULL
+                    boat_id INTEGER NOT NULL,
+                    messaged INTEGER NOT NULL DEFAULT 0
                 );
             ");
 
+
             InsertMultipleWithTransaction(new List<string> {
-                @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id) VALUES(1,1,'2025-01-10 10:00','2025-01-10 11:00','2025-01-01',1)",
-                @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id) VALUES(2,1,'2025-01-11 14:00','2025-01-11 15:00','2025-01-01',2)",
-                @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id) VALUES(3,1,'2025-01-12 18:00','2025-01-12 19:30','2025-01-01',3)"
+                @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged) VALUES(1,1,'2025-01-10 10:00','2025-01-10 11:00','2025-01-01',1, 0)",
+                @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged) VALUES(2,1,'2025-01-11 14:00','2025-01-11 15:00','2025-01-01',2, 0)",
+                @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged) VALUES(3,1,'2025-01-12 18:00','2025-01-12 19:30','2025-01-01',3, 0)"
             });
         }
 
@@ -49,7 +51,8 @@ namespace RoeiVereniging.Core.Data.Repositories
                     DateTime.Parse(reader.GetString(2)),
                     DateTime.Parse(reader.GetString(3)),
                     DateTime.Parse(reader.GetString(4)),
-                    reader.GetInt32(5)
+                    reader.GetInt32(5),
+                    reader.GetInt32(6)
                 ));
             }
             CloseConnection();
@@ -72,7 +75,50 @@ namespace RoeiVereniging.Core.Data.Repositories
             cmd.ExecuteNonQuery();
             CloseConnection();
 
+            GetAll();
+
             return reservation;
+        }
+
+        public void MarkMessaged(int reservationId)
+        {
+            OpenConnection();
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = @"
+                UPDATE Reservation 
+                SET messaged = 1 
+                WHERE reservation_id = @id";
+            cmd.Parameters.AddWithValue("@id", reservationId);
+            cmd.ExecuteNonQuery();
+            CloseConnection();
+        }
+
+        public List<Reservation> GetUnmessaged()
+        {
+            List<Reservation> list = new List<Reservation>();
+            OpenConnection();
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = @"
+                SELECT * 
+                FROM Reservation 
+                WHERE messaged = 0 
+                AND start_time BETWEEN @start AND @end";
+            cmd.Parameters.AddWithValue("@start", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+            cmd.Parameters.AddWithValue("@end", DateTime.Now.AddDays(3).ToString("yyyy-MM-dd HH:mm"));
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new Reservation(
+                    reader.GetInt32(0),
+                    reader.GetInt32(1),
+                    DateTime.Parse(reader.GetString(2)),
+                    DateTime.Parse(reader.GetString(3)),
+                    DateTime.Parse(reader.GetString(4)),
+                    reader.GetInt32(5)
+                ));
+            }
+            CloseConnection();
+            return list;
         }
 
         public List<Reservation> GetAll()
@@ -80,7 +126,7 @@ namespace RoeiVereniging.Core.Data.Repositories
             if (reservationList.Count > 0)
                 reservationList.Clear();
 
-            string selectQuery = "SELECT reservation_id, user_id, start_time, end_time, created_at, boat_id FROM Reservation";
+            string selectQuery = "SELECT reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged FROM Reservation";
             OpenConnection();
             using (SqliteCommand command = new(selectQuery, Connection))
             {
@@ -94,7 +140,8 @@ namespace RoeiVereniging.Core.Data.Repositories
                     DateTime endTime = DateTime.Parse(reader.GetString(3));
                     DateTime createdAt = DateTime.Parse(reader.GetString(4));
                     int boatId = reader.GetInt32(5);
-                    reservationList.Add(new Reservation(id, userId, startTime, endTime, createdAt, boatId));
+                    int messaged = reader.GetInt32(6);
+                    reservationList.Add(new Reservation(id, userId, startTime, endTime, createdAt, boatId, messaged));
                 }
             }
             CloseConnection();
@@ -104,6 +151,11 @@ namespace RoeiVereniging.Core.Data.Repositories
         public Reservation? Get(int id)
         {
             return reservationList.FirstOrDefault(r => r.Id == id);
+        }
+
+        public List<Reservation> GetByDate(DateTime date)
+        {
+            return reservationList.Where(r => r.StartTime.Date == date.Date).ToList();
         }
     }
 }

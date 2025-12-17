@@ -28,6 +28,11 @@ namespace RoeiVereniging.Core.Services
             return _boatRepository.Get(amount, steeringwheelposition, difficulty, type);
         }
 
+        public Boat? GetById(int id)
+        {
+            return _boatRepository.Get(id);
+        }
+
         public List<Boat> GetAll()
         {
             return _boatRepository.GetAll();
