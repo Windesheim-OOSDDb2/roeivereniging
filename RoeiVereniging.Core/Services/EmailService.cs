@@ -65,13 +65,13 @@ namespace RoeiVereniging.Core.Services
 
         public void SendMail(string htmlBody, string subject, string recipient)
         {
-            var client = new SmtpClient(_host, _port)
+            using var client = new SmtpClient(_host, _port)
             {
                 Credentials = new NetworkCredential(_username, _password),
                 EnableSsl = true
             };
 
-            var mailMessage = new MailMessage
+            using var mailMessage = new MailMessage
             {
                 From = new MailAddress("alarmen@roeimeister.nl"),
                 Subject = subject,
