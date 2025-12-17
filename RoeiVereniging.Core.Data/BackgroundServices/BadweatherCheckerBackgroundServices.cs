@@ -80,7 +80,7 @@ namespace RoeiVereniging.Core.Services
                             try
                             {
                                 var boat = _boatService.GetById(reservation.BoatId);
-                                var user = _userService.GetById(reservation.UserId);
+                                var user = _userService.Get(reservation.UserId);
 
                                 if (boat != null && user != null)
                                 {
@@ -107,7 +107,7 @@ namespace RoeiVereniging.Core.Services
                             {
                                 try
                                 {
-                                    _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.GetById(reservation.UserId).EmailAddress);
+                                    _mailService.SendDangerousWeatherMail(reservation.StartTime, _boatService.GetById(reservation.BoatId).name, _userService.Get(reservation.UserId).EmailAddress);
                                     _reservationService.MarkMessaged(reservation.Id);
                                 }
                                 catch (Exception ex)

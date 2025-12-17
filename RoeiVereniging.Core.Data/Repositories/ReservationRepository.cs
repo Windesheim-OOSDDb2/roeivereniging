@@ -1,11 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Data.Repositories
 {

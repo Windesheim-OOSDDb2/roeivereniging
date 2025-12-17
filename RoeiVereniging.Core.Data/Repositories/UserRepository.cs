@@ -62,33 +62,6 @@ namespace RoeiVereniging.Core.Repositories
             CloseConnection();
             return user;
         }
-        public User? Get(string email)
-        {
-            OpenConnection();
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE email = @Email";
-            cmd.Parameters.AddWithValue("@Email", email);
-            using var reader = cmd.ExecuteReader();
-            User? user = null;
-            if (reader.Read())
-                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
-            CloseConnection();
-            return user;
-        }
-
-        public User? Get(int id)
-        {
-            OpenConnection();
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE user_id = @id";
-            cmd.Parameters.AddWithValue("@id", id);
-            using var reader = cmd.ExecuteReader();
-            User? user = null;
-            if (reader.Read())
-                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
-            CloseConnection();
-            return user;
-        }
 
         public List<User> GetAll()
         {
@@ -97,23 +70,6 @@ namespace RoeiVereniging.Core.Repositories
             cmd.CommandText = "SELECT user_id, name, email, password FROM user";
             using var reader = cmd.ExecuteReader();
             List<User> users = new List<User>();
-            while (reader.Read())
-            {
-                users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)));
-            }
-            CloseConnection();
-            return users;
-        }
-
-
-
-        public List<User> GetAll()
-        {
-            OpenConnection();
-            using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user";
-            using var reader = cmd.ExecuteReader();
-            var users = new List<User>();
             while (reader.Read())
             {
                 users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)));
