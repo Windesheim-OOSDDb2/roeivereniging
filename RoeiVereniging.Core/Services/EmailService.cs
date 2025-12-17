@@ -16,10 +16,10 @@ namespace RoeiVereniging.Core.Services
         {
             IConfigurationRoot config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();;
             IConfigurationSection section = config.GetSection("MailServerStrings");
-            _username = section.GetValue<string>("username");
-            _password = section.GetValue<string>("password");
-            _host = section.GetValue<string>("host");
-            _port = section.GetValue<int>("port");
+            _username = section.GetValue<string>("Username");
+            _password = section.GetValue<string>("Password");
+            _host = section.GetValue<string>("Host");
+            _port = section.GetValue<int>("Port");
         }
 
         public void SendDangerousWeatherMail(DateTime dateTime, string boatName, string recipient)
