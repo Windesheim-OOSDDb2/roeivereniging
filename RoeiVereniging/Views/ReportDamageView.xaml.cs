@@ -15,5 +15,10 @@ namespace RoeiVereniging.Views
             InitializeComponent();
             BindingContext = new ReportDamageViewModel();
         }
+
+        private async void OnNavigateToDamageHistoryClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("DamageHistoryView");
+        }
     }
 }
