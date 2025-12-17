@@ -13,7 +13,7 @@ namespace RoeiVereniging.Core.Models
         public int SeatsAmount { get; set; }
         public bool SteeringWheelPosition {  get; set; }
         public BoatLevel Level { get; set; }
-        public BoatType BoatType { get; set; } = BoatType.C;
+        public BoatType Type { get; set; }
         public BoatStatus BoatStatus { get; set; } = BoatStatus.Working;
 
         public Boat(int id, string name, int seatsAmount, bool steeringWheelPosition, BoatLevel level, BoatStatus boatStatus, BoatType boatType)
@@ -24,7 +24,7 @@ namespace RoeiVereniging.Core.Models
             SteeringWheelPosition = steeringWheelPosition;
             Level = level;
             BoatStatus = boatStatus;
-            BoatType = boatType;
+            Type = boatType;
         }
         public override string? ToString()
         {

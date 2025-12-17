@@ -24,9 +24,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.C},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Scull},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Liteboat},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
             });
             LoadBoats();
         }
@@ -90,8 +90,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                 b.SeatsAmount == amount &&
                 b.SteeringWheelPosition == steeringwheelposition &&
                 b.Level == level &&
-                b.BoatType == type
-            );
+                b.Type == type);
 
             return boat ?? boatList.FirstOrDefault();
         }
@@ -111,7 +110,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                 command.Parameters.AddWithValue("SteeringWheelPosition", item.SteeringWheelPosition);
                 command.Parameters.AddWithValue("Seats_Amount", item.SeatsAmount);
                 command.Parameters.AddWithValue("Level", item.Level);
-                command.Parameters.AddWithValue("Type", item.BoatType);
+                command.Parameters.AddWithValue("Type", item.Type);
                 command.Parameters.AddWithValue("Status", item.BoatStatus);
 
                 item.Id = Convert.ToInt32(command.ExecuteScalar());
