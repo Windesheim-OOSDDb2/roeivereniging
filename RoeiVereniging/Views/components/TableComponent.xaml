@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+     x:Class="RoeiVereniging.Views.Components.TableComponent"
+     x:Name="This"
+     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     BackgroundColor="White">
+
+    <VerticalStackLayout Spacing="10">
+        <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
+
+            <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
+
+                <!-- static for now  -->
+                <Picker Grid.Column="0" Title="Filter 1" />
+                <Picker Grid.Column="1" Title="Filter 2" />
+
+                <Label Grid.Column="2"
+                       Text="Datum"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+
+                <Label Grid.Column="3"
+                       Text="Tijd"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Grid>
+        </Frame>
+
+        <CollectionView x:Name="TableView">
+            <!-- TODO: add a template -->
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentView>
