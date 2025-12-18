@@ -16,7 +16,7 @@ namespace RoeiVereniging.ViewModels
         public IList<TableColumnDefinition> ReservationColumns { get; } =
             new List<TableColumnDefinition>
             {
-                new() { Header = "Bootnaam", BindingPath = "BoatName", Width = "2*" },
+                new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },
                 new() { Header = "Niveau", BindingPath = "BoatLevelText" },
                 new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}" },
                 new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}" }

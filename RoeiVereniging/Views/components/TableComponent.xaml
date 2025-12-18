@@ -9,32 +9,17 @@
     <VerticalStackLayout Spacing="10">
         <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
 
-            <Grid x:Name="HeaderGrid" ColumnSpacing="12">
+            <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0">
 
-                <!-- static for now  -->
-                <!--<Picker Grid.Column="0" Title="Filter 1" />
-                <Picker Grid.Column="1" Title="Filter 2" />
-
-                <Label Grid.Column="2"
-                       Text="Datum"
-                       TextColor="Black"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-
-                <Label Grid.Column="3"
-                       Text="Tijd"
-                       TextColor="Black"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/> -->
             </Grid>
         </Frame>
 
         <ScrollView>
-            <CollectionView x:Name="TableView">
+            <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
-                            <Grid x:Name="RowGrid" ColumnSpacing="12" />
+                        <Frame StyleClass="row-card" BackgroundColor="#5fa6e8" Padding="10">
+                            <Grid x:Name="RowGrid" ColumnSpacing="0" RowSpacing="0" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Windows.Input;
 
 namespace RoeiVereniging.Core.Models
 {
@@ -13,5 +14,10 @@ namespace RoeiVereniging.Core.Models
 
         // TODO: change to enum or find way to get typing for grid column width
         public string Width { get; set; } = "*";
+
+        public TableHeaderType HeaderType { get; set; } = TableHeaderType.Text;
+        public IList? SelectOptions { get; set; }
+        public object? SelectedValue { get; set; }
+        public ICommand? Command { get; set; }
     }
 }

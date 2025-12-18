@@ -10,6 +10,7 @@ public partial class TableComponent : ContentView
 		InitializeComponent();
 	}
 
+    // Make Items and Columns bindable properties so they can be set from outside
     public static readonly BindableProperty ItemsSourceProperty =
         BindableProperty.Create(
             nameof(ItemsSource),
@@ -24,6 +25,7 @@ public partial class TableComponent : ContentView
             typeof(TableComponent),
             propertyChanged: OnColumnsChanged);
 
+    // Public properties to get/set the bindable properties
     public IEnumerable ItemsSource
     {
         get => (IEnumerable)GetValue(ItemsSourceProperty);
@@ -35,18 +37,22 @@ public partial class TableComponent : ContentView
         set => SetValue(ColumnsProperty, value);
     }
 
+    // Callback for wjen ItemsSource changes
     private static void OnDataChange(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (TableComponent)bindable;
         control.TableView.ItemsSource = (IEnumerable)newValue;
     }
 
+    // Callback for when Columns changes
     private static void OnColumnsChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (TableComponent)bindable;
         control.BuildColumns();
     }
 
+    // Builds the table columns based on the Columns property
+    // Called whenever Columns property changes or on initialization
     private void BuildColumns()
     {
 
@@ -62,7 +68,8 @@ public partial class TableComponent : ContentView
         for (int i = 0; i < Columns.Count; i++)
         {
             HeaderGrid.ColumnDefinitions.Add(
-                new ColumnDefinition { Width = ParseWidthToGridlength(Columns[i].Width) });
+                new ColumnDefinition { Width = ParseWidthToGridlength(Columns[i].Width) }
+            );
 
             var headerLabel = new Label
             {
@@ -70,7 +77,9 @@ public partial class TableComponent : ContentView
                 TextColor = Colors.Black,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.Center,
+                Padding = new Thickness(12, 8),
+                BackgroundColor = Color.FromArgb("#0854D1")
             };
 
             Grid.SetColumn(headerLabel, i);
@@ -79,7 +88,7 @@ public partial class TableComponent : ContentView
 
         TableView.ItemTemplate = new DataTemplate(() =>
         {
-            var grid = new Grid { ColumnSpacing = 12 };
+            var grid = new Grid { ColumnSpacing = 0, RowSpacing = 0, BackgroundColor = Color.FromArgb("#5fa6e8") };
 
             for (int i = 0; i < Columns.Count; i++)
             {
@@ -87,19 +96,24 @@ public partial class TableComponent : ContentView
                 var label = new Label
                 {
                     VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalTextAlignment = TextAlignment.Center,
                     FontSize = 14,
                     TextColor = Colors.Black,
+                    BackgroundColor = Color.FromArgb("#5fa6e8"),
+                    Padding = new Thickness(12, 8),
                 };
-                label.SetBinding(Label.TextProperty, Columns[i].BindingPath);
+                label.SetBinding(
+                    Label.TextProperty, 
+                    new Binding(
+                        Columns[i].BindingPath,
+                        stringFormat: Columns[i].StringFormat
+                ));
                 Grid.SetColumn(label, i);
                 grid.Children.Add(label);
             }
 
-            return new Frame
-            {
-                StyleClass = new[] { "row-card" },
-                Content = grid
-            };
+            return grid;
         });
     }
 
