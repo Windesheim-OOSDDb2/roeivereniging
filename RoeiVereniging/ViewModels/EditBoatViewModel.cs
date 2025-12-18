@@ -49,7 +49,7 @@ namespace RoeiVereniging.ViewModels
 
         public void OnAppearing()
         {
-            Boat = _boatService.Get(5);
+            Boat = _boatService.Get(1);
             Name = Boat.Name;
             BoatType = Boat.Type;
         }
