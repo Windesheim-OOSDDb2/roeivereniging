@@ -105,7 +105,7 @@ namespace RoeiVereniging.ViewModels
             string footerText = "Ps. zet de reservering in je eigen agenda!.";
 
             // Generate QR code with reservation info
-            CalendarEvent generator = new CalendarEvent("Birthday party", "Join QRCoder's fourth birthday!", "51.26118,6.6717", new DateTime(2017, 10, 13), new DateTime(2017, 10, 13), true);
+            CalendarEvent generator = new CalendarEvent($"Reservering RoeiMeister", $"Roeien met {type}", "", date, date, true);
             string payload = generator.ToString();
 
             var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, GenerateQrCode(payload));
