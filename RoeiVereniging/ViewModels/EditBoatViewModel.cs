@@ -1,26 +1,35 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Services;
+using RoeiVereniging.Views.components;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Microsoft.Maui.Controls.Internals.Profile;
-using System.Text.RegularExpressions;
-using RoeiVereniging.Core.Helpers;
+
+
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class EditBoatViewModel : BaseViewModel
     {
+
+        
         private readonly IBoatService _boatService;
 
         public string BoatTypeDisplay => BoatType.GetEnumDescription();
+
+        
 
         public ObservableCollection<BoatType> BoatTypes { get; } =
     new ObservableCollection<BoatType>(
@@ -31,6 +40,11 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty] private BoatType boatType;
         [ObservableProperty] private bool isVisible = true;
         [ObservableProperty] private string errorMessage;
+
+
+        private string titleText;
+        private string popupText;
+        private string footerText;
 
         private bool steeringWheelPosition;
         private int seatsAmount;
@@ -55,7 +69,7 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        public void EditBoat()
+        public async Task EditBoat()
         {
             if (!string.IsNullOrWhiteSpace(name) && Regex.IsMatch(name, @"^[a-zA-Z0-9À-ž ]+$"))
             {
@@ -163,6 +177,11 @@ namespace RoeiVereniging.ViewModels
                 Boat.Level = boatlevel;
 
                 _boatService.Update(Boat);
+                var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Boot succesvol aangepast", "Je boot is aangepast en opgeslagen in de database", "");
+
+                await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+                await Shell.Current.GoToAsync(nameof(ReserveBoatView));
+
                 ErrorMessage = "";
             }
             else
