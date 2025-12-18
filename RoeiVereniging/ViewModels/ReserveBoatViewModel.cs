@@ -25,7 +25,7 @@ namespace RoeiVereniging.ViewModels
 
         // Put all levels except "Alles" in an collection
         public ObservableCollection<BoatLevel> BoatLevels => Enum.GetValues(typeof(BoatLevel)).Cast<BoatLevel>().Where(level => level != BoatLevel.Alles).ToObservableCollection();
-        
+
 
         [ObservableProperty]
         private DateTime date = DateTime.Now.AddDays(7);
@@ -66,7 +66,7 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        public void ReserveBoat()
+        public async Task ReserveBoat()
         {
             if (!ValidateInputs()) return;
 
@@ -75,7 +75,7 @@ namespace RoeiVereniging.ViewModels
 
             if (selectedBoat == null)
             {
-                ErrorMessage = "Geen passende boot gevonden voor de gegeven criteria.";
+                await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
                 return;
             }
 
@@ -98,26 +98,26 @@ namespace RoeiVereniging.ViewModels
             DateTime reservationDateTime = date.Date + time;
             if (reservationDateTime < DateTime.Now)
             {
-                ErrorMessage = "Reservering datum en tijd moeten in de toekomst liggen nniet in het verleden.";
+                UpdateErrorUi("Reservering datum en tijd moeten in de toekomst liggen nniet in het verleden.");
                 return false;
             }
 
             if (Amount == 0)
             {
-                ErrorMessage = "Aantal passagiers moet is een verplicht veld.";
+                UpdateErrorUi("Aantal passagiers moet is een verplicht veld.");
                 return false;
             }
 
             if (Difficulty == null)
             {
-                ErrorMessage = "Selecteer een niveau";
+                UpdateErrorUi("Selecteer een niveau");
                 Difficulty = null;
                 return false;
             }
 
             if (Type == null)
             {
-                ErrorMessage = "selecteer een type boot";
+                UpdateErrorUi("selecteer een type boot");
                 return false;
             }
 
@@ -158,6 +158,13 @@ namespace RoeiVereniging.ViewModels
             }
         }
 
+        public async Task UpdateErrorUi(string message)
+        {
+            ErrorMessage = "";
+            await Task.Delay(200);
+            ErrorMessage = message;
+        }
+
         [RelayCommand]
         public async Task GoToReservations()
         {
@@ -168,7 +175,7 @@ namespace RoeiVereniging.ViewModels
         public async Task GoToAddBoats()
         {
             await Shell.Current.GoToAsync(nameof(AddBoatView));
-        } 
+        }
         [RelayCommand]
         public async Task GoToWeatherPage()
         {
