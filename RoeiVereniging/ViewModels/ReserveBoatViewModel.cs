@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
 using System.Globalization;
 using QRCoder;
+using static QRCoder.PayloadGenerator;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -63,14 +64,14 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private ImageSource? qrCodeImage;
 
-        private void GenerateQrCode(string qrText)
+        private ImageSource GenerateQrCode(string qrText)
         {
             using var qrGenerator = new QRCodeGenerator();
             using var qrData = qrGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
             using var qrCode = new PngByteQRCode(qrData);
             var qrBytes = qrCode.GetGraphic(20);
 
-            QrCodeImage = ImageSource.FromStream(() => new MemoryStream(qrBytes));
+            return QrCodeImage = ImageSource.FromStream(() => new MemoryStream(qrBytes));
         }
 
         public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
@@ -104,10 +105,10 @@ namespace RoeiVereniging.ViewModels
             string footerText = "Ps. zet de reservering in je eigen agenda!.";
 
             // Generate QR code with reservation info
-            string qrContent = $"Reservering: {dateText} {timeText}, Boot: {selectedBoat.Name}";
-            GenerateQrCode(qrContent);
+            CalendarEvent generator = new CalendarEvent("Birthday party", "Join QRCoder's fourth birthday!", "51.26118,6.6717", new DateTime(2017, 10, 13), new DateTime(2017, 10, 13), true);
+            string payload = generator.ToString();
 
-            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, null);
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, GenerateQrCode(payload));
             Shell.Current.CurrentPage.ShowPopup(popup);
 
             ResetInputs();
