@@ -91,6 +91,11 @@ namespace RoeiVereniging.Core.Data.Repositories
             return boat ?? null;
         }
 
+        public Boat? GetById(int id)
+        {
+            return boatList.FirstOrDefault(b => b.BoatId == id);
+        }
+
         public List<Boat> GetAll()
         {
             return boatList;

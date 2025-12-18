@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Helpers;
+using RoeiVereniging.Core.Interfaces.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class WeatherViewModel : BaseViewModel
     {
-        private string apiKey = "a3ed4a6567";
+        private readonly string _apiKey;
+        private readonly IReservationService _reservationService;
+        private readonly IUserService _userService;
 
         [ObservableProperty]
         public LiveWeerV2? liveWeather = null;
@@ -43,14 +47,22 @@ namespace RoeiVereniging.ViewModels
                 "nachtbewolkt"  // Cloudy at night (EN)
             };
 
-        public WeatherViewModel()
+        public WeatherViewModel(IReservationService reservationService, IUserService userService)
         {
+            _reservationService = reservationService;
+            _userService = userService;
+
+            // Get api key from environment variable
+            IConfigurationRoot config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build(); ;
+            IConfigurationSection section = config.GetSection("WeatherApiStrings");
+            _apiKey = section.GetValue<string>("MainApiKey");
+
             _ = InitializeAsync();
         }
 
         private async Task InitializeAsync()
         {
-            var live = await WeatherHelper.GetWeatherAsync("zwolle", apiKey);
+            var live = await WeatherHelper.GetWeatherAsync("zwolle", _apiKey);
             if (live != null)
             {
                 LiveWeather = live.LiveWeer != null && live.LiveWeer.Length > 0 ? live.LiveWeer[0] : null;
@@ -59,7 +71,9 @@ namespace RoeiVereniging.ViewModels
                     ? live.WkVerw.Select(w => new WkVerwUi(w)).ToArray()
                     : Array.Empty<WkVerwUi>();
 
-                UpdateBackgroundForWeather(LiveWeather);
+                LiveBackgroundColor = Color.FromRgba(WeatherEvaluationHelper.GetBackgroundColorForWeather(
+                    LiveWeather, dangerKeywords, MaxWindBft, ColdThreshold));
+
                 LiveWeatherIcon = WeatherImageFileMapperHelper.MapToImageFile(LiveWeather?.Image);
                 liveWeatherMessage = string.Empty;
             }
@@ -89,49 +103,10 @@ namespace RoeiVereniging.ViewModels
             else
                 LiveWeatherMessage = string.Empty;
 
-            UpdateBackgroundForWeather(value);
+            LiveBackgroundColor = Color.FromRgba(WeatherEvaluationHelper.GetBackgroundColorForWeather(
+                value, dangerKeywords, MaxWindBft, ColdThreshold));
+
             LiveWeatherIcon = WeatherImageFileMapperHelper.MapToImageFile(value?.Image);
-        }
-
-        private void UpdateBackgroundForWeather(LiveWeerV2? weather)
-        {
-            if (IsDangerousWeather(weather))
-            {
-                LiveBackgroundColor = Color.FromRgba("#D7263D");
-                return;
-            }
-
-            UpdateBackgroundForTemperature(weather?.Temp);
-        }
-
-        private bool IsDangerousWeather(LiveWeerV2? weather)
-        {
-            if (weather is null)
-                return false;
-
-            string imageKey = weather.Image ?? string.Empty;
-
-            foreach (var kw in dangerKeywords)
-            {
-                if (imageKey.Contains(kw, StringComparison.OrdinalIgnoreCase))
-                    return true;
-            }
-
-            if (weather.WindBft >= MaxWindBft)
-                return true;
-
-            return false;
-        }
-
-        private void UpdateBackgroundForTemperature(double? temp)
-        {
-            if (temp is null)
-            {
-                LiveBackgroundColor = Color.FromRgba("#D7263D");
-                return;
-            }
-
-            LiveBackgroundColor = temp < ColdThreshold ? Color.FromRgba("#D7263D") : Color.FromRgba("#0854D1");
         }
     }
 }
