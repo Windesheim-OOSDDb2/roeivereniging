@@ -9,15 +9,20 @@ using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Data.Repositories;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using RoeiVereniging.Core.Interfaces.Services;
+using RoeiVereniging.Core.Services;
+using RoeiVereniging.Core.Repositories;
 
 namespace RoeiVereniging.ViewModels
 {
     [QueryProperty(nameof(BoatId), "BoatId")]
+    [QueryProperty(nameof(ReservationId), "ReservationId")]
     public partial class ReportDamageViewModel : ObservableObject
     {
 
         private readonly DamageRepository _damageRepository = new DamageRepository();
         private readonly BoatRepository _boatRepository = new BoatRepository();
+        private readonly IUserService _userService = new UserService(new UserRepository());
 
         [ObservableProperty]
         private string description;
@@ -33,6 +38,9 @@ namespace RoeiVereniging.ViewModels
 
         [ObservableProperty]
         private string boatName;
+
+        [ObservableProperty]
+        private int reservationId;
 
         [ObservableProperty]
         private string feedbackMessage;
@@ -73,12 +81,21 @@ namespace RoeiVereniging.ViewModels
                 return;
             }
 
+            var currentUser = _userService.GetAll().FirstOrDefault();
+            if (currentUser == null)
+            {
+                FeedbackMessage = "Gebruiker niet gevonden. Log opnieuw in.";
+                return;
+            }
+
             var damage = new Damage
             {
                 BoatId = BoatId,
                 Description = Description,
                 Severity = Severity,
-                ReportedAt = ReportedAt
+                ReportedAt = ReportedAt,
+                UserId = currentUser.Id,
+                ReservationId = ReservationId
             };
 
             _damageRepository.Add(damage);

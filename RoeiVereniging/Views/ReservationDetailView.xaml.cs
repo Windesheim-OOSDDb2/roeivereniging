@@ -29,7 +29,8 @@ namespace RoeiVereniging.Views
             if (BindingContext is ReservationDetailViewModel vm && vm.Reservation != null)
             {
                 int boatId = vm.Reservation.BoatId;
-                await Shell.Current.GoToAsync($"ReportDamageView?BoatId={boatId}");
+                int reservationId = vm.Reservation.ReservationId;
+                await Shell.Current.GoToAsync($"ReportDamageView?BoatId={boatId}&ReservationId={reservationId}");
             }
         }
 
