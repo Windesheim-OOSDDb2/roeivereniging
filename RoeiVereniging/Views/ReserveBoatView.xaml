@@ -6,7 +6,8 @@
              xmlns:conv="clr-namespace:RoeiVereniging.Converters"
              x:Class="RoeiVereniging.Views.ReserveBoatView"
              x:DataType="vm:ReserveBoatViewModel"
-             BackgroundColor="White" >
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False" >
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
