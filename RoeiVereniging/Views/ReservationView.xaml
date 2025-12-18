@@ -11,8 +11,11 @@
     <ContentPage.Resources>
         <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
-    <VerticalStackLayout Spacing="0">
+
+    <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White">
+
         <components:PageHeader PageTitle="Mijn reserveringen"/>
+
         <CollectionView ItemsSource="{Binding MyReservations}">
 
             <CollectionView.Header>
@@ -26,10 +29,11 @@
                             SelectedItem="{Binding SelectedBoatName}"
                             Title="Bootnaam"/>
 
-                        <Picker Grid.Column="1"
+                        <Picker
+                            Grid.Column="1"
                             TextColor="Black"
                             ItemsSource="{Binding Levels}"
-                            SelectedItem="{Binding SelectedLevel}" 
+                            SelectedItem="{Binding SelectedLevel}"
                             Title="Niveau"/>
 
                         <Grid Grid.Column="2">
@@ -37,7 +41,7 @@
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleDateCommand}"
                                 />
-                            </Grid.GestureRecognizers>
+                             </Grid.GestureRecognizers>
 
                             <Label
                                 Text="{Binding DateSortText}"
@@ -59,6 +63,7 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"/>
                         </Grid>
+
 
                     </Grid>
                 </Frame>
