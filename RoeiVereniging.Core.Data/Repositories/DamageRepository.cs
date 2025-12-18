@@ -14,7 +14,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             CreateTable(@"
                 CREATE TABLE IF NOT EXISTS Damage (
                     damage_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    reservation_id INTEGER NOT NULL,
                     boat_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
                     description TEXT NOT NULL,
                     reported_at TEXT NOT NULL,
                     severity INTEGER NOT NULL
@@ -27,11 +29,13 @@ namespace RoeiVereniging.Core.Data.Repositories
             OpenConnection();
             using var cmd = Connection.CreateCommand();
             cmd.CommandText = @"
-                INSERT INTO Damage (boat_id, description, reported_at, severity)
-                VALUES (@boatId, @description, @reportedAt, @severity);    
+                INSERT INTO Damage (reservation_id, boat_id, user_id, description, reported_at, severity)
+                VALUES (@reservation_id, @boatId, @user_id, @description, @reportedAt, @severity);    
             ";
 
+            cmd.Parameters.AddWithValue("@reservation_id", damage.ReservationId);
             cmd.Parameters.AddWithValue("@boatId", damage.BoatId);
+            cmd.Parameters.AddWithValue("@user_id", damage.UserId);
             cmd.Parameters.AddWithValue("@description", damage.Description);
             cmd.Parameters.AddWithValue("@reportedAt", damage.ReportedAt.ToString("o"));
             cmd.Parameters.AddWithValue("@severity", (int)damage.Severity);
@@ -44,7 +48,7 @@ namespace RoeiVereniging.Core.Data.Repositories
             var list = new List<Damage>();
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT damage_id, boat_id, description, reported_at, severity FROM Damage WHERE boat_id = @boatId";
+            cmd.CommandText = "SELECT damage_id, reservation_id, boat_id, user_id, description, reported_at, severity FROM Damage WHERE boat_id = @boatId";
             cmd.Parameters.AddWithValue("@boatId", boatId);
             using var reader = cmd.ExecuteReader(); 
             while (reader.Read())
@@ -52,9 +56,11 @@ namespace RoeiVereniging.Core.Data.Repositories
                 list.Add(new Damage(
                     reader.GetInt32(0),
                     reader.GetInt32(1),
-                    reader.GetString(2),
-                    DateTime.Parse(reader.GetString(3)),
-                    (EnumDamageSeverity)reader.GetInt32(4)
+                    reader.GetInt32(2),
+                    reader.GetInt32(3),
+                    reader.GetString(4),
+                    DateTime.Parse(reader.GetString(5)),
+                    (EnumDamageSeverity)reader.GetInt32(6)
                 ));
             }
             CloseConnection();
