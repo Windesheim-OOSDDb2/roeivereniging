@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Views;
+using System.Globalization;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -68,7 +70,7 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public async Task ReserveBoat()
         {
-            if (!ValidateInputs()) return;
+            if(!ValidateInputs()) return;
 
             DateTime ReservationDateTime = date.Date + time;
             Boat? selectedBoat = GetBoat();
@@ -80,6 +82,15 @@ namespace RoeiVereniging.ViewModels
             }
 
             _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
+
+            string titleText = "Reservering bevestigd";
+            string dateText = date.ToString("d MMMM yyyy", new CultureInfo("nl-NL"));
+            string timeText = time.ToString(@"hh\:mm");
+            string popupText = $"De reservering voor {dateText} om {timeText} is succesvol gereserveerd!\nTot dan!";
+            string footerText = "Ps. zet de reservering in je eigen agenda!.";
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText);
+            Shell.Current.CurrentPage.ShowPopup(popup);
+
             ResetInputs();
         }
 
