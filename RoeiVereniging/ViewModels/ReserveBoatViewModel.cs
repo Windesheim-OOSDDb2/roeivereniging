@@ -25,6 +25,7 @@ namespace RoeiVereniging.ViewModels
 
         private readonly IReservationService _reservationService;
         private readonly IBoatService _boatService;
+        private readonly IQrCodeService _qrCodeService;
         public ObservableCollection<BoatType> BoatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
 
         // Put all levels except "Alles" in an collection
@@ -61,23 +62,12 @@ namespace RoeiVereniging.ViewModels
         private TimeSpan OldTime = DateTime.Now.TimeOfDay;
         private DateTime OldDate = DateTime.Now;
 
-        [ObservableProperty]
-        private ImageSource? qrCodeImage;
 
-        private ImageSource GenerateQrCode(string qrText)
-        {
-            using var qrGenerator = new QRCodeGenerator();
-            using var qrData = qrGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
-            using var qrCode = new PngByteQRCode(qrData);
-            var qrBytes = qrCode.GetGraphic(20);
-
-            return QrCodeImage = ImageSource.FromStream(() => new MemoryStream(qrBytes));
-        }
-
-        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
+        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, IQrCodeService qrCodeService)
         {
             _reservationService = reservationService;
             _boatService = boatService;
+            _qrCodeService = qrCodeService;
             Reservations = new(_reservationService.GetAll());
             Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
         }
@@ -98,20 +88,30 @@ namespace RoeiVereniging.ViewModels
 
             _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
 
+            // Show confirmation popup with reservation details and QR code
+            ShowPopup(selectedBoat, ReservationDateTime);
+
+            ResetInputs();
+        }
+
+        public void ShowPopup(Boat selectedBoat, DateTime reservationDateTime)
+        {
             string titleText = "Reservering bevestigd";
             string dateText = date.ToString("d MMMM yyyy", new CultureInfo("nl-NL"));
             string timeText = time.ToString(@"hh\:mm");
             string popupText = $"De reservering voor {dateText} om {timeText} is succesvol gereserveerd!\nTot dan!";
             string footerText = "Ps. zet de reservering in je eigen agenda!.";
+            ImageSource qrCode = GenerateQrCode(selectedBoat, reservationDateTime);
 
-            // Generate QR code with reservation info
-            CalendarEvent generator = new CalendarEvent($"Reservering RoeiMeister", $"Roeien met {type}", "", date, date, true);
-            string payload = generator.ToString();
-
-            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, GenerateQrCode(payload));
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, qrCode);
             Shell.Current.CurrentPage.ShowPopup(popup);
+        }
 
-            ResetInputs();
+        private ImageSource GenerateQrCode(Boat selectedBoat, DateTime reservationDateTime)
+        {
+            string payload = new CalendarEvent($"Reservering RoeiMeister", $"Roeien met {selectedBoat.name}", "", reservationDateTime, reservationDateTime.AddHours(2), false).ToString();
+
+            return ImageSource.FromStream(() => _qrCodeService.GenerateQrCode(payload));
         }
 
         public void ResetInputs()
