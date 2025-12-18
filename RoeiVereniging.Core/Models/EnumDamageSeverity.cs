@@ -9,7 +9,7 @@ namespace RoeiVereniging.Core.Models
     public enum EnumDamageSeverity
     {
         Licht,
-        Gematigd,
+        Matig,
         Ernstig
     }
 }
