@@ -90,6 +90,7 @@ namespace RoeiVereniging.ViewModels
             Time = DateTime.Now.TimeOfDay;
             Difficulty = null;
             Type = null;
+            ErrorMessage = "";
         }
 
         public bool ValidateInputs()
