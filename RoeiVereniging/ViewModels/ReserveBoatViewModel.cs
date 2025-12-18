@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
 using System.Globalization;
+using QRCoder;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -59,6 +60,19 @@ namespace RoeiVereniging.ViewModels
         private TimeSpan OldTime = DateTime.Now.TimeOfDay;
         private DateTime OldDate = DateTime.Now;
 
+        [ObservableProperty]
+        private ImageSource? qrCodeImage;
+
+        private void GenerateQrCode(string qrText)
+        {
+            using var qrGenerator = new QRCodeGenerator();
+            using var qrData = qrGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
+            using var qrCode = new PngByteQRCode(qrData);
+            var qrBytes = qrCode.GetGraphic(20);
+
+            QrCodeImage = ImageSource.FromStream(() => new MemoryStream(qrBytes));
+        }
+
         public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
         {
             _reservationService = reservationService;
@@ -88,7 +102,12 @@ namespace RoeiVereniging.ViewModels
             string timeText = time.ToString(@"hh\:mm");
             string popupText = $"De reservering voor {dateText} om {timeText} is succesvol gereserveerd!\nTot dan!";
             string footerText = "Ps. zet de reservering in je eigen agenda!.";
-            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText);
+
+            // Generate QR code with reservation info
+            string qrContent = $"Reservering: {dateText} {timeText}, Boot: {selectedBoat.Name}";
+            GenerateQrCode(qrContent);
+
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, null);
             Shell.Current.CurrentPage.ShowPopup(popup);
 
             ResetInputs();
