@@ -14,6 +14,15 @@ namespace RoeiVereniging.ViewModels
         private List<ReservationViewDTO> _allReservations = new();
         private readonly GlobalViewModel _global;
 
+        public IList<TableColumnDefinition> ReservationColumns { get; } =
+            new List<TableColumnDefinition>
+            {
+                new() { Header = "Bootnaam", BindingPath = "BoatName", Width = 1.0 },
+                new() { Header = "Niveau", BindingPath = "BoatLevelText" },
+                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}" },
+                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}" }
+            };
+
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
 
         public List<string> BoatNames { get; private set; } = new();

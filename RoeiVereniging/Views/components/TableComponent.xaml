@@ -29,14 +29,16 @@
             </Grid>
         </Frame>
 
-        <CollectionView x:Name="TableView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
-                        <Grid x:Name="RowGrid" ColumnSpacing="12" />
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ScrollView>
+            <CollectionView x:Name="TableView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
+                            <Grid x:Name="RowGrid" ColumnSpacing="12" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentView>

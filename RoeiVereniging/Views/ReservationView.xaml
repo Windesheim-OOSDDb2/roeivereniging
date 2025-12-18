@@ -101,7 +101,7 @@
 
         </CollectionView> -->
 
-        <components:TableComponent ItemsSource="{Binding MyReservations}" />
+        <components:TableComponent ItemsSource="{Binding MyReservations}" Columns="{Binding ReservationColumns}" />
 
     </VerticalStackLayout>
 
