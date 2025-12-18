@@ -31,6 +31,8 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IBoatService, BoatService>();
             builder.Services.AddSingleton<IReservationService, ReservationService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
+            builder.Services.AddSingleton<IAuthService, AuthService>();
 
             // Repositories
             builder.Services.AddSingleton<IBoatRepository, BoatRepository>();
@@ -38,6 +40,7 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
             // Views and ViewModels
+            builder.Services.AddTransient<LoginView>().AddTransient<LoginViewModel>();
             builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
@@ -46,6 +49,18 @@ namespace RoeiVereniging
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
             builder.Services.AddTransient<EditBoatView>().AddTransient<EditBoatViewModel>();
             return builder.Build();
+            builder.Services.AddSingleton<GlobalViewModel>();
+
+            // Background Services
+            builder.Services.AddSingleton<BadweatherCheckerBackgroundServices>();
+
+            // Build the app
+            var app = builder.Build();
+
+            // After building the app, start the backgrouservice
+            app.Services.GetService<BadweatherCheckerBackgroundServices>()?.Start();
+
+            return app;
         }
     }
 }

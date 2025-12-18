@@ -45,51 +45,36 @@ namespace RoeiVereniging.Core.Data.Helpers
                 return null;
             }
         }
-    }
 
-    public class WeerLiveV2Response
-    {
-        [JsonPropertyName("liveweer")]
-        public LiveWeerV2[] LiveWeer { get; set; } = Array.Empty<LiveWeerV2>();
+        /// <summary>
+        /// Calls the WeerLive V2 API and returns the weather forecast for the next 3 days for the specified location.
+        /// </summary>
+        /// <param name="locatie">Location name or "lat,lon".</param>
+        /// <param name="apiKey">API key for weerlive.nl</param>
+        public static async Task<WkVerw[]?> GetThreeDayForecastAsync(string locatie, string apiKey, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(locatie)) throw new ArgumentException("locatie is required", nameof(locatie));
+                if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentException("apiKey is required", nameof(apiKey));
 
-        [JsonPropertyName("wk_verw")]
-        public WkVerw[] WkVerw { get; set; } = Array.Empty<WkVerw>();
-    }
+                string endpoint = $"api/weerlive_api_v2.php?key={Uri.EscapeDataString(apiKey)}&locatie={Uri.EscapeDataString(locatie)}";
 
-    public class LiveWeerV2
-    {
-        [JsonPropertyName("plaats")]
-        public string Plaats { get; set; }
+                using var response = await _httpClient.GetAsync(endpoint, cancellationToken).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
 
-        [JsonPropertyName("temp")]
-        public double Temp { get; set; }
+                var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                var data = JsonSerializer.Deserialize<WeerLiveV2Response>(json, _jsonOptions);
 
-        [JsonPropertyName("gtemp")]
-        public double GTemp { get; set; }
-
-        [JsonPropertyName("samenv")]
-        public string Samenv { get; set; }
-
-        [JsonPropertyName("lv")]
-        public int LV { get; set; }
-
-        [JsonPropertyName("windr")]
-        public string WindR { get; set; }
-
-        [JsonPropertyName("windkmh")]
-        public double WindKmH { get; set; }
-
-        [JsonPropertyName("windbft")]
-        public int WindBft { get; set; }
-
-        [JsonPropertyName("sup")]
-        public string Sup { get; set; }
-
-        [JsonPropertyName("sunder")]
-        public string Sunder { get; set; }
-
-        [JsonPropertyName("image")]
-        public string Image { get; set; }
+                // Return up to 3 days of forecast if available
+                return data?.WkVerw != null ? data.WkVerw.Length >= 3 ? data.WkVerw[..3] : data.WkVerw : null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching weather forecast: {ex.Message}");
+                return null;
+            }
+        }
     }
 
 }
