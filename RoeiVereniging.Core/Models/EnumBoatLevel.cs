@@ -8,9 +8,10 @@ namespace RoeiVereniging.Core.Models
 {
     public enum BoatLevel : ushort
     {
-        Beginner = 0,
-        Gemiddeld = 1,
-        Gevorderd = 2,
-        Expert = 3
+        Alles = 0,
+        Beginner = 1,
+        Gemiddeld = 2,
+        Gevorderd = 3,
+        Expert = 4
     }
 }
