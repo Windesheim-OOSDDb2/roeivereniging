@@ -23,6 +23,7 @@ namespace RoeiVereniging.ViewModels
 
         private readonly IReservationService _reservationService;
         private readonly IBoatService _boatService;
+        private readonly GlobalViewModel _global;
         public ObservableCollection<BoatType> BoatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
 
         // Put all levels except "Alles" in an collection
@@ -59,12 +60,13 @@ namespace RoeiVereniging.ViewModels
         private TimeSpan OldTime = DateTime.Now.TimeOfDay;
         private DateTime OldDate = DateTime.Now;
 
-        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
+        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, GlobalViewModel global)
         {
             _reservationService = reservationService;
             _boatService = boatService;
             Reservations = new(_reservationService.GetAll());
             Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
+            _global = global;
         }
 
         [RelayCommand]
@@ -81,7 +83,7 @@ namespace RoeiVereniging.ViewModels
                 return;
             }
 
-            _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
+            _reservationService.Set(new Reservation(1, _global.user.Id, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
 
             string titleText = "Reservering bevestigd";
             string dateText = date.ToString("d MMMM yyyy", new CultureInfo("nl-NL"));
