@@ -10,6 +10,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public BoatRepository()
         {
+
             CreateTable(@"
                 CREATE TABLE IF NOT EXISTS boat (
                     boat_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,9 +24,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.C},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Scull},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Boord},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
+               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
             });
             LoadBoats();
         }
@@ -80,7 +81,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
         {
-            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var minLevel))
+            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var level))
             {
                 return boatList.FirstOrDefault();
             }
@@ -88,10 +89,15 @@ namespace RoeiVereniging.Core.Data.Repositories
             var boat = boatList.FirstOrDefault(b =>
                 b.SeatsAmount == amount &&
                 b.SteeringWheelPosition == steeringwheelposition &&
-                b.Level == minLevel &&
-                b.BoatType == type);
+                b.Level == level &&
+                b.Type == type);
 
             return boat ?? boatList.FirstOrDefault();
+        }
+
+        public Boat? GetById(int id)
+        {
+            return boatList.FirstOrDefault(b => b.BoatId == id);
         }
 
         public List<Boat> GetAll()
@@ -109,7 +115,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                 command.Parameters.AddWithValue("SteeringWheelPosition", item.SteeringWheelPosition);
                 command.Parameters.AddWithValue("Seats_Amount", item.SeatsAmount);
                 command.Parameters.AddWithValue("Level", item.Level);
-                command.Parameters.AddWithValue("Type", item.BoatType);
+                command.Parameters.AddWithValue("Type", item.Type);
                 command.Parameters.AddWithValue("Status", item.BoatStatus);
 
                 item.Id = Convert.ToInt32(command.ExecuteScalar());

@@ -7,85 +7,100 @@
              x:DataType="vm:ReservationViewModel"
              xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
+
     <ContentPage.Resources>
         <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
-    <VerticalStackLayout Spacing="0">
+    <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White">
+
         <components:PageHeader PageTitle="Mijn reserveringen"/>
         <CollectionView ItemsSource="{Binding MyReservations}"
                         SelectionMode="Single"
                         SelectionChanged="OnReservationSelected">
             <CollectionView.Header>
-                <Frame StyleClass="row-header" BackgroundColor="#0854d1">
+                <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
                     <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
 
-                        <Label Text="Boot naam"
-                           FontAttributes="Bold"
-                           TextColor="#000000"
-                           StyleClass="cell-left" 
-                           Grid.Column="0"
-                        />
+                        <Picker
+                            Grid.Column="0"
+                            TextColor="Black"
+                            ItemsSource="{Binding BoatNames}"
+                            SelectedItem="{Binding SelectedBoatName}"
+                            Title="Bootnaam"/>
 
-                        <Label Text="Niveau"
-                           FontAttributes="Bold"
-                           TextColor="#000000"
-                           StyleClass="cell" 
-                           Grid.Column="1"
-                        />
+                        <Picker
+                            Grid.Column="1"
+                            TextColor="Black"
+                            ItemsSource="{Binding Levels}"
+                            SelectedItem="{Binding SelectedLevel}"
+                            Title="Niveau"/>
 
-                        <Label Text="Start datum"
-                           FontAttributes="Bold"
-                           StyleClass="cell" 
-                           TextColor="#000000"
-                           Grid.Column="2"
-                        />
+                        <Grid Grid.Column="2">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleDateCommand}"
+                                />
+                             </Grid.GestureRecognizers>
 
-                        <Label Text="Tijd"
-                           StyleClass="cell" 
-                           TextColor="#000000"
-                           Grid.Column="3"
-                        />
+                            <Label
+                                Text="{Binding DateSortText}"
+                                TextColor="Black"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
+
+                        <Grid Grid.Column="3">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleTimeCommand}"
+                                />
+                            </Grid.GestureRecognizers>
+
+                            <Label
+                                Text="{Binding TimeSortText}"
+                                TextColor="Black"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
+
+
                     </Grid>
                 </Frame>
             </CollectionView.Header>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:ReservationViewDTO">
                     <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
                         <Grid ColumnDefinitions="2*, *, *, *" RowDefinitions="Auto" ColumnSpacing="12">
 
-                            <!-- boatname -->
                             <Label Grid.Column="0"
-                               Text="{Binding BoatName}"
-                               TextColor="#000000"
-                               StyleClass="cell-left" 
-                            />
+                                   Text="{Binding BoatName}"
+                                   TextColor="#000000"
+                                   StyleClass="cell-left"/>
 
-                            <!-- skill Level -->
                             <Label Grid.Column="1"
-                               Text="{Binding BoatLevelText}"
-                               StyleClass="cell" 
-                               TextColor="#000000"
-                            /> 
+                                   Text="{Binding BoatLevelText}"
+                                   StyleClass="cell"
+                                   TextColor="#000000"/>
 
-                            <!-- start date -->
                             <Label Grid.Column="2"
-                               Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}"
-                               StyleClass="cell" 
-                               TextColor="#000000"
-                            />         
+                                   Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}"
+                                   StyleClass="cell"
+                                   TextColor="#000000"/>
 
-                            <!-- time -->
                             <Label Grid.Column="3"
-                               Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
-                               StyleClass="cell"                               
-                               TextColor="#000000"
-                            />
+                                   Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
+                                   StyleClass="cell"
+                                   TextColor="#000000"/>
+
                         </Grid>
                     </Frame>
                 </DataTemplate>
-
             </CollectionView.ItemTemplate>
+
         </CollectionView>
+
     </VerticalStackLayout>
+
 </ContentPage>
