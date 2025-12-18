@@ -5,7 +5,14 @@ namespace RoeiVereniging.Views.Components;
 
 public partial class TableComponent : ContentView
 {
-	public TableComponent()
+
+    public event Action? FilterRequested;
+    private void OnFilterRequested()
+    {
+        FilterRequested?.Invoke();
+    }
+
+    public TableComponent()
 	{
 		InitializeComponent();
 	}
@@ -70,20 +77,32 @@ public partial class TableComponent : ContentView
             HeaderGrid.ColumnDefinitions.Add(
                 new ColumnDefinition { Width = ParseWidthToGridlength(Columns[i].Width) }
             );
-
-            var headerLabel = new Label
+            View headerView;
+            switch (Columns[i].HeaderType)
             {
-                Text = Columns[i].Header,
-                TextColor = Colors.Black,
-                FontAttributes = FontAttributes.Bold,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                Padding = new Thickness(12, 8),
-                BackgroundColor = Color.FromArgb("#0854D1")
-            };
+                case TableHeaderType.SortAZ:
+                    headerView = CreateSortableHeader(Columns[i]);
+                    break;
+                case TableHeaderType.SortDate:
+                    headerView = CreateSortableHeader(Columns[i]);
+                    break;
+                case TableHeaderType.SortTime:
+                    headerView = CreateSortableHeader(Columns[i]);
+                    break;
 
-            Grid.SetColumn(headerLabel, i);
-            HeaderGrid.Children.Add(headerLabel);
+                case TableHeaderType.Select:
+                    headerView = CreateSelectHeader(Columns[i]);
+                    break;
+
+                case TableHeaderType.Button:
+                    headerView = CreateButtonHeader(Columns[i]);
+                    break;
+                default:
+                    headerView = CreateTextHeader(Columns[i]);
+                    break;
+            }
+            Grid.SetColumn(headerView, i);
+            HeaderGrid.Children.Add(headerView);
         }
 
         TableView.ItemTemplate = new DataTemplate(() =>
@@ -117,7 +136,70 @@ public partial class TableComponent : ContentView
         });
     }
 
+    // TODO: make a new file for label creation maybe
+    private View CreateTextHeader(TableColumnDefinition column)
+    {
+        return new Label
+        {
+            Text = column.Header,
+            TextColor = Colors.White,
+            FontAttributes = FontAttributes.Bold,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Padding = new Thickness(12, 8),
+            BackgroundColor = Color.FromArgb("#0854D1")
+        };
+    }
+    private View CreateSortableHeader(TableColumnDefinition column)
+    {
+        View label = CreateTextHeader(column);
+
+        TapGestureRecognizer tap = new();
+        tap.Tapped += (obj, e) =>
+        {
+            column.SelectedValue = column.SelectedValue as bool? == true ? false : true;
+            OnFilterRequested();
+        };
+
+        label.GestureRecognizers.Add(tap);
+        return label;
+    }
+
+    private View CreateSelectHeader(TableColumnDefinition column)
+    {
+        Picker picker = new()
+        {
+            Title = column.Header,
+            BackgroundColor = Color.FromArgb("#0854D1"),
+            TextColor = Colors.White
+        };
+
+        // for each unique item there will be a column added to the select
+        picker.ItemsSource = GetUniqueColumnValues(column);
+
+        picker.SelectedIndexChanged += (obj, e) =>
+        {
+            column.SelectedValue = picker.SelectedItem;
+            OnFilterRequested();
+        };
+
+        return picker;
+    }
+
+    private View CreateButtonHeader(TableColumnDefinition column)
+    {
+        return new Button
+        {
+            Text = column.Header,
+            Command = column.Command,
+            BackgroundColor = Color.FromArgb("#0854D1"),
+            TextColor = Colors.White,
+            Padding = new Thickness(12, 8)
+        };
+    }
+
     // helper function to parse width strings (like "2*") into GridLength objects (typing the variable right away with gridlength didn't work >:c)
+    // TODO: move to a helper function file 
     private static GridLength ParseWidthToGridlength(string width)
     {
         if (string.IsNullOrWhiteSpace(width))
@@ -140,4 +222,31 @@ public partial class TableComponent : ContentView
         return new GridLength(double.Parse(width), GridUnitType.Absolute);
     }
 
+    //helper function to get each unique column value and add it to the list
+    private IList GetUniqueColumnValues(TableColumnDefinition column)
+    {
+        var values = new HashSet<object>();
+
+        if (ItemsSource == null)
+        {
+            return values.ToList();
+        }
+
+        foreach (var item in ItemsSource)
+        {
+            var prop = item.GetType().GetProperty(column.BindingPath);
+            if (prop == null)
+            {
+                continue;
+            }
+
+            var value = prop.GetValue(item);
+            if (value != null)
+            {
+                values.Add(value);
+            }
+        }
+
+        return values.ToList();
+    }
 }

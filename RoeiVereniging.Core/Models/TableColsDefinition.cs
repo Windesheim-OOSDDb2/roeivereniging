@@ -16,7 +16,6 @@ namespace RoeiVereniging.Core.Models
         public string Width { get; set; } = "*";
 
         public TableHeaderType HeaderType { get; set; } = TableHeaderType.Text;
-        public IList? SelectOptions { get; set; }
         public object? SelectedValue { get; set; }
         public ICommand? Command { get; set; }
     }

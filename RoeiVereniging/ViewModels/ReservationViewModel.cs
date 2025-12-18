@@ -17,9 +17,9 @@ namespace RoeiVereniging.ViewModels
             new List<TableColumnDefinition>
             {
                 new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },
-                new() { Header = "Niveau", BindingPath = "BoatLevelText" },
-                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}" },
-                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}" }
+                new() { Header = "Niveau", BindingPath = "BoatLevelText", HeaderType = TableHeaderType.Select },
+                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}", HeaderType = TableHeaderType.SortDate },
+                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime }
             };
 
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
