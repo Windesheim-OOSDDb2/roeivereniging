@@ -8,6 +8,7 @@ namespace RoeiVereniging.Core.Models
         public DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
         public int BoatId { get; set; }
+        public int Messaged { get; set; }
 
         public Reservation(int id, int userId, DateTime startTime, DateTime endTime, DateTime createdAt, int boatId)
             : base(id, "reservering")
@@ -17,6 +18,17 @@ namespace RoeiVereniging.Core.Models
             CreatedAt = createdAt;
             UserId = userId;
             BoatId = boatId;
+        }
+
+        public Reservation(int id, int userId, DateTime startTime, DateTime endTime, DateTime createdAt, int boatId, int messaged)
+            : base(id, "reservering")
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            CreatedAt = createdAt;
+            UserId = userId;
+            BoatId = boatId;
+            Messaged = messaged;
         }
     }
 }
