@@ -9,10 +9,10 @@
     <VerticalStackLayout Spacing="10">
         <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
 
-            <Grid ColumnDefinitions="2*, *, *, *" ColumnSpacing="12">
+            <Grid x:Name="HeaderGrid" ColumnSpacing="12">
 
                 <!-- static for now  -->
-                <Picker Grid.Column="0" Title="Filter 1" />
+                <!--<Picker Grid.Column="0" Title="Filter 1" />
                 <Picker Grid.Column="1" Title="Filter 2" />
 
                 <Label Grid.Column="2"
@@ -25,13 +25,18 @@
                        Text="Tijd"
                        TextColor="Black"
                        HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="Center"/> -->
             </Grid>
         </Frame>
 
         <CollectionView x:Name="TableView">
-            <!-- TODO: add a template -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8">
+                        <Grid x:Name="RowGrid" ColumnSpacing="12" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
-
     </VerticalStackLayout>
 </ContentView>

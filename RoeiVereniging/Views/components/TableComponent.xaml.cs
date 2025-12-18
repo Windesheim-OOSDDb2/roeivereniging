@@ -1,4 +1,3 @@
-using Android.Widget;
 using System.Collections;
 
 namespace RoeiVereniging.Views.Components;
