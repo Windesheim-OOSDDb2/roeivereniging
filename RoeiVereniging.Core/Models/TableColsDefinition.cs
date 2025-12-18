@@ -12,6 +12,6 @@ namespace RoeiVereniging.Core.Models
         public string? StringFormat { get; set; }
 
         // TODO: change to enum or find way to get typing for grid column width
-        public double Width { get; set; }
+        public string Width { get; set; } = "*";
     }
 }

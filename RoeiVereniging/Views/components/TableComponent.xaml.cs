@@ -55,13 +55,35 @@ public partial class TableComponent : ContentView
             return;
         }
 
+        HeaderGrid.ColumnDefinitions.Clear();
+        HeaderGrid.Children.Clear();
+
+        // fill header columns based on what is within Columns.Header
+        for (int i = 0; i < Columns.Count; i++)
+        {
+            HeaderGrid.ColumnDefinitions.Add(
+                new ColumnDefinition { Width = ParseWidthToGridlength(Columns[i].Width) });
+
+            var headerLabel = new Label
+            {
+                Text = Columns[i].Header,
+                TextColor = Colors.Black,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
+            };
+
+            Grid.SetColumn(headerLabel, i);
+            HeaderGrid.Children.Add(headerLabel);
+        }
+
         TableView.ItemTemplate = new DataTemplate(() =>
         {
             var grid = new Grid { ColumnSpacing = 12 };
 
             for (int i = 0; i < Columns.Count; i++)
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(Columns[i].Width) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = ParseWidthToGridlength(Columns[i].Width) });
                 var label = new Label
                 {
                     VerticalOptions = LayoutOptions.Center,
@@ -70,7 +92,7 @@ public partial class TableComponent : ContentView
                 };
                 label.SetBinding(Label.TextProperty, Columns[i].BindingPath);
                 Grid.SetColumn(label, i);
-                grid.Add(label);
+                grid.Children.Add(label);
             }
 
             return new Frame
@@ -79,6 +101,29 @@ public partial class TableComponent : ContentView
                 Content = grid
             };
         });
+    }
+
+    // helper function to parse width strings (like "2*") into GridLength objects (typing the variable right away with gridlength didn't work >:c)
+    private static GridLength ParseWidthToGridlength(string width)
+    {
+        if (string.IsNullOrWhiteSpace(width))
+        {
+            return GridLength.Star;
+        }
+
+        if (width.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+        {
+            return GridLength.Auto;
+        }
+
+        if (width.EndsWith("*"))
+        {
+            var factor = width.Replace("*", "");
+            return string.IsNullOrEmpty(factor) ? GridLength.Star : new GridLength(double.Parse(factor), GridUnitType.Star);
+        }
+
+        // return the absolute value
+        return new GridLength(double.Parse(width), GridUnitType.Absolute);
     }
 
 }

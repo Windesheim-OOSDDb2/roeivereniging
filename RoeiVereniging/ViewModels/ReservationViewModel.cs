@@ -3,7 +3,6 @@ using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Repositories;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -17,7 +16,7 @@ namespace RoeiVereniging.ViewModels
         public IList<TableColumnDefinition> ReservationColumns { get; } =
             new List<TableColumnDefinition>
             {
-                new() { Header = "Bootnaam", BindingPath = "BoatName", Width = 1.0 },
+                new() { Header = "Bootnaam", BindingPath = "BoatName", Width = "2*" },
                 new() { Header = "Niveau", BindingPath = "BoatLevelText" },
                 new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}" },
                 new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}" }
