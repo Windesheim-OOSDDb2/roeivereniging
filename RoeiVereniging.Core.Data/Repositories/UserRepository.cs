@@ -26,9 +26,9 @@ namespace RoeiVereniging.Core.Repositories
 
             string hashedPassword = PasswordHelper.HashPassword("test");
             InsertMultipleWithTransaction(new List<string> {
-                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', 'member', 1)"
+                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', 'member', 1)",
+                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(2,'Test user 2','test2@test.nl', '{hashedPassword}', 'member', 1)"
             });
-
         }
 
         public User? Get(string email)
