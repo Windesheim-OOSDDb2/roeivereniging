@@ -118,5 +118,28 @@ namespace RoeiVereniging.Core.Data.Repositories
             CloseConnection();
             return item;
         }
+
+        public Boat Update(Boat item)
+        {
+            string updateQuery = @"UPDATE boat SET name = @Name, SteeringwheelPosition = @SteeringWheelPosition, seats_amount = @Seats_Amount, level = @Level, type = @Type, status = @Status WHERE boat_id = @BoatId;";
+
+            OpenConnection();
+            using (SqliteCommand command = new(updateQuery, Connection))
+            {
+                command.Parameters.AddWithValue("@Name", item.Name);
+                command.Parameters.AddWithValue("@SteeringWheelPosition", item.SteeringWheelPosition);
+                command.Parameters.AddWithValue("@Seats_Amount", item.SeatsAmount);
+                command.Parameters.AddWithValue("@Level", (int)item.Level);
+                command.Parameters.AddWithValue("@Type", (int)item.Type);
+                command.Parameters.AddWithValue("@Status", (int)item.BoatStatus);
+                command.Parameters.AddWithValue("@BoatId", item.BoatId);
+
+                command.ExecuteNonQuery();
+            }
+
+            CloseConnection();
+            return item;
+        }
+
     }
 }

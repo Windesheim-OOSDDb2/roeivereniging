@@ -1,4 +1,5 @@
-﻿using RoeiVereniging.Views;
+﻿using RoeiVereniging.ViewModels;
+using RoeiVereniging.Views;
 
 namespace RoeiVereniging
 {
@@ -11,6 +12,7 @@ namespace RoeiVereniging
             Routing.RegisterRoute(nameof(ReserveBoatView), typeof(ReserveBoatView));
             Routing.RegisterRoute(nameof(AddBoatView), typeof(AddBoatView));
             Routing.RegisterRoute(nameof(WeatherView), typeof(WeatherView));
+            Routing.RegisterRoute(nameof(EditBoatView), typeof(EditBoatView));
         }
     }
 }

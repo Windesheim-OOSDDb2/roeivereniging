@@ -9,5 +9,7 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
         public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type);
         public List<Boat> GetAll();
         public Boat Add(Boat item);
+
+        public Boat Update(Boat item);
     }
 }
