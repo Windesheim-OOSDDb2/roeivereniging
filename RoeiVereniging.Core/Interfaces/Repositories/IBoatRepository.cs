@@ -10,5 +10,7 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
         public Boat? GetById(int id);
         public List<Boat> GetAll();
         public Boat Add(Boat item);
+
+        public Boat Update(Boat item);
     }
 }
