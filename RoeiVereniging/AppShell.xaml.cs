@@ -1,5 +1,4 @@
-﻿using RoeiVereniging.ViewModels;
-using RoeiVereniging.Views;
+﻿using RoeiVereniging.Views;
 
 namespace RoeiVereniging
 {

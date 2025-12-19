@@ -69,6 +69,12 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
+        public async Task Cancel()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
+
+        [RelayCommand]
         public async Task EditBoat()
         {
             if (!string.IsNullOrWhiteSpace(name) && Regex.IsMatch(name, @"^[a-zA-Z0-9À-ž ]+$"))
@@ -180,7 +186,7 @@ namespace RoeiVereniging.ViewModels
                 var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Boot succesvol aangepast", "Je boot is aangepast en opgeslagen in de database", "");
 
                 await Shell.Current.CurrentPage.ShowPopupAsync(popup);
-                await Shell.Current.GoToAsync(nameof(ReserveBoatView));
+                await Shell.Current.GoToAsync("..");
 
                 ErrorMessage = "";
             }
@@ -188,6 +194,8 @@ namespace RoeiVereniging.ViewModels
             {
                 ErrorMessage = "geen bijzondere karakters";
             }
+
+            
 
         }
     }

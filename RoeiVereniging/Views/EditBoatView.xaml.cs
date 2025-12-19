@@ -4,10 +4,10 @@ namespace RoeiVereniging.Views;
 
 public partial class EditBoatView : ContentPage
 {
-	public EditBoatView(EditBoatViewModel vm)
+	public EditBoatView(EditBoatViewModel viewmodel)
 	{
 		InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewmodel;
     }
 
     protected override void OnAppearing()
