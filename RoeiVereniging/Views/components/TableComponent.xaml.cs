@@ -1,5 +1,9 @@
 using RoeiVereniging.Core.Models;
 using System.Collections;
+using System.Collections.ObjectModel;
+using RoeiVereniging.Core.Models;
+using RoeiVereniging.Core.Helpers;
+using RoeiVereniging.Views.Components.Helpers;
 
 namespace RoeiVereniging.Views.Components;
 
@@ -9,13 +13,18 @@ public partial class TableComponent : ContentView
     public event Action? FilterRequested;
     private void OnFilterRequested()
     {
-        FilterRequested?.Invoke();
+        ApplyFilters();
     }
+
+    // to make filter functionality work, 2 annonymous objects are needed
+    private List<object> _allItems = new();
+    private readonly ObservableCollection<object> _filteredItems = new();
 
     public TableComponent()
 	{
 		InitializeComponent();
-	}
+        TableView.ItemsSource = _filteredItems;
+    }
 
     // Make Items and Columns bindable properties so they can be set from outside
     public static readonly BindableProperty ItemsSourceProperty =
@@ -48,7 +57,12 @@ public partial class TableComponent : ContentView
     private static void OnDataChange(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (TableComponent)bindable;
-        control.TableView.ItemsSource = (IEnumerable)newValue;
+
+        control._allItems = newValue is IEnumerable enumerable
+            ? enumerable.Cast<object>().ToList()
+            : new List<object>();
+
+        control.ApplyFilters();
     }
 
     // Callback for when Columns changes
@@ -56,6 +70,30 @@ public partial class TableComponent : ContentView
     {
         var control = (TableComponent)bindable;
         control.BuildColumns();
+    }
+
+    // helper function to parse width strings (like "2*") into GridLength objects (typing the variable right away with gridlength didn't work >:c)
+    // Can't be outside of class because I can't get access to GridLength type otherwise
+    private static GridLength ParseWidthToGridlength(string width)
+    {
+        if (string.IsNullOrWhiteSpace(width))
+        {
+            return GridLength.Star;
+        }
+
+        if (width.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+        {
+            return GridLength.Auto;
+        }
+
+        if (width.EndsWith("*"))
+        {
+            var factor = width.Replace("*", "");
+            return string.IsNullOrEmpty(factor) ? GridLength.Star : new GridLength(double.Parse(factor), GridUnitType.Star);
+        }
+
+        // return the absolute value
+        return new GridLength(double.Parse(width), GridUnitType.Absolute);
     }
 
     // Builds the table columns based on the Columns property
@@ -136,7 +174,7 @@ public partial class TableComponent : ContentView
         });
     }
 
-    // TODO: make a new file for label creation maybe
+    // Can't really make these outside of the class because they need access to maui control types
     private View CreateTextHeader(TableColumnDefinition column)
     {
         return new Label
@@ -198,30 +236,6 @@ public partial class TableComponent : ContentView
         };
     }
 
-    // helper function to parse width strings (like "2*") into GridLength objects (typing the variable right away with gridlength didn't work >:c)
-    // TODO: move to a helper function file 
-    private static GridLength ParseWidthToGridlength(string width)
-    {
-        if (string.IsNullOrWhiteSpace(width))
-        {
-            return GridLength.Star;
-        }
-
-        if (width.Equals("Auto", StringComparison.OrdinalIgnoreCase))
-        {
-            return GridLength.Auto;
-        }
-
-        if (width.EndsWith("*"))
-        {
-            var factor = width.Replace("*", "");
-            return string.IsNullOrEmpty(factor) ? GridLength.Star : new GridLength(double.Parse(factor), GridUnitType.Star);
-        }
-
-        // return the absolute value
-        return new GridLength(double.Parse(width), GridUnitType.Absolute);
-    }
-
     //helper function to get each unique column value and add it to the list
     private IList GetUniqueColumnValues(TableColumnDefinition column)
     {
@@ -249,4 +263,62 @@ public partial class TableComponent : ContentView
 
         return values.ToList();
     }
+
+    private void ApplyFilters()
+    {
+        IEnumerable<object> query = _allItems;
+
+        // if columns is null just add all
+        if (Columns == null || Columns.Count == 0)
+        {
+            _filteredItems.Clear();
+            foreach (var item in _allItems)
+            {
+                _filteredItems.Add(item);
+            }
+
+            return;
+        }
+
+        foreach (var column in Columns)
+        {
+            // I use continue if null because not each column needs to have a filter applied
+            if (column.SelectedValue == null)
+            {
+                continue;
+            }
+
+            var prop = query.FirstOrDefault()?.GetType().GetProperty(column.BindingPath);
+            if (prop == null)
+            {
+                continue;
+            }
+
+            switch (column.HeaderType)
+            {
+                case TableHeaderType.Select:
+                    query = query.Where(item =>
+                        Equals(prop.GetValue(item), column.SelectedValue));
+                    break;
+
+                case TableHeaderType.SortAZ:
+                    query = SortingHelper.ApplyAZSort(query, prop, column);
+                    break;
+
+                case TableHeaderType.SortDate:
+                    query = SortingHelper.ApplyDateSort(query, prop, column);
+                    break;
+
+                case TableHeaderType.SortTime:
+                    query = SortingHelper.ApplyTimeSort(query, prop, column);
+                    break;
+            }
+        }
+
+        _filteredItems.Clear();
+        foreach (var item in query)
+        {
+            _filteredItems.Add(item);
+        }
+    }   
 }
