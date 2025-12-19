@@ -1,9 +1,10 @@
+using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views.Components.Helpers;
 using System.Collections;
 using System.Collections.ObjectModel;
-using RoeiVereniging.Core.Models;
-using RoeiVereniging.Core.Helpers;
-using RoeiVereniging.Views.Components.Helpers;
+using System.Data.Common;
 
 namespace RoeiVereniging.Views.Components;
 
@@ -129,6 +130,12 @@ public partial class TableComponent : ContentView
                     break;
 
                 case TableHeaderType.Select:
+                    // if "Alles" is selected, no need to create select header
+                    if (Columns[i].SelectedValue?.ToString() == "Alles")
+                    {
+                        headerView = null;
+                        break;
+                    }
                     headerView = CreateSelectHeader(Columns[i]);
                     break;
 
@@ -139,7 +146,12 @@ public partial class TableComponent : ContentView
                     headerView = CreateTextHeader(Columns[i]);
                     break;
             }
-            Grid.SetColumn(headerView, i);
+            if (headerView == null)
+            {
+               continue;
+            }
+
+        Grid.SetColumn(headerView, i);
             HeaderGrid.Children.Add(headerView);
         }
 
@@ -260,8 +272,10 @@ public partial class TableComponent : ContentView
                 values.Add(value);
             }
         }
-
-        return values.ToList();
+        var list = values.ToList();
+        list.Insert(0, "Toon alles");
+        
+        return list;
     }
 
     private void ApplyFilters()
@@ -297,6 +311,11 @@ public partial class TableComponent : ContentView
             switch (column.HeaderType)
             {
                 case TableHeaderType.Select:
+                    // skip filters if Toon Alles is applied to show every row instead
+                    if(column.SelectedValue.ToString() == "Toon alles")
+                    {
+                        continue;
+                    }
                     query = query.Where(item =>
                         Equals(prop.GetValue(item), column.SelectedValue));
                     break;
