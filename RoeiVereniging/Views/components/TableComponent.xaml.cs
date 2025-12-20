@@ -122,9 +122,11 @@ public partial class TableComponent : ContentView
                 case TableHeaderType.SortAZ:
                     headerView = CreateSortableHeader(Columns[i]);
                     break;
+
                 case TableHeaderType.SortDate:
                     headerView = CreateSortableHeader(Columns[i]);
                     break;
+
                 case TableHeaderType.SortTime:
                     headerView = CreateSortableHeader(Columns[i]);
                     break;
@@ -242,8 +244,8 @@ public partial class TableComponent : ContentView
         {
             Text = column.Header,
             Command = column.Command,
-            BackgroundColor = Color.FromArgb("#0854D1"),
-            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#5fa6e8"),
+            TextColor = Colors.Black,
             Padding = new Thickness(12, 8)
         };
     }

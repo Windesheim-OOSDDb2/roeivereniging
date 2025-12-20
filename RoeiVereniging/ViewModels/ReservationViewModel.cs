@@ -1,10 +1,12 @@
-﻿using RoeiVereniging.Core.Data.Repositories;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using RoeiVereniging.Core.Data.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Repositories;
+using RoeiVereniging.Views;
 using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -13,14 +15,10 @@ namespace RoeiVereniging.ViewModels
         private List<ReservationViewDTO> _allReservations = new();
         private readonly GlobalViewModel _global;
 
-        public IList<TableColumnDefinition> ReservationColumns { get; } =
-            new List<TableColumnDefinition>
-            {
-                new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },
-                new() { Header = "Niveau", BindingPath = "BoatLevelText", HeaderType = TableHeaderType.Select },
-                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}", HeaderType = TableHeaderType.SortDate },
-                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime }
-            };
+        // Example command for navigation to WeatherView
+        public ICommand GoToWeatherCommand { get; }
+
+        public IList<TableColumnDefinition> ReservationColumns { get; }
 
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
 
@@ -56,7 +54,21 @@ namespace RoeiVereniging.ViewModels
             _boatRepo = new BoatRepository();
             _global = global;
 
-            LoadForCurrentUser();
+            GoToWeatherCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(nameof(WeatherView));
+            });
+
+            ReservationColumns = new List<TableColumnDefinition>
+            {
+                new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },
+                new() { Header = "Niveau", BindingPath = "BoatLevelText", HeaderType = TableHeaderType.Select },
+                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}", HeaderType = TableHeaderType.SortDate },
+                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime },
+                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.Button, Command = GoToWeatherCommand }
+            };
+
+        LoadForCurrentUser();
         }
 
         private void LoadForCurrentUser()
@@ -111,65 +123,65 @@ namespace RoeiVereniging.ViewModels
             OnPropertyChanged(nameof(Levels));
         }
 
-        partial void OnSelectedBoatNameChanged(string? value) => Filter();
-        partial void OnSelectedLevelChanged(BoatLevel? value) => Filter();
+        //partial void OnSelectedBoatNameChanged(string? value) => Filter();
+        //partial void OnSelectedLevelChanged(BoatLevel? value) => Filter();
 
-        [RelayCommand]
-        private void ToggleDate()
-        {
-            SelectedTime = null;
-            SelectedDate = SelectedDate == true ? false : true;
-            Filter();
-        }
+        //[RelayCommand]
+        //private void ToggleDate()
+        //{
+        //    SelectedTime = null;
+        //    SelectedDate = SelectedDate == true ? false : true;
+        //    Filter();
+        //}
 
-        [RelayCommand]
-        private void ToggleTime()
-        {
-            SelectedDate = null;
-            SelectedTime = SelectedTime == true ? false : true;
-            Filter();
-        }
+        //[RelayCommand]
+        //private void ToggleTime()
+        //{
+        //    SelectedDate = null;
+        //    SelectedTime = SelectedTime == true ? false : true;
+        //    Filter();
+        //}
 
-        private void Filter()
-        {
-            IEnumerable<ReservationViewDTO> filtered = _allReservations;
+        //private void Filter()
+        //{
+        //    IEnumerable<ReservationViewDTO> filtered = _allReservations;
 
-            if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Bootnaam")
-                filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
+        //    if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Bootnaam")
+        //        filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
 
-            if (SelectedLevel != null && SelectedLevel != BoatLevel.Alles)
-                filtered = filtered.Where(r => r.BoatLevel == SelectedLevel);
+        //    if (SelectedLevel != null && SelectedLevel != BoatLevel.Alles)
+        //        filtered = filtered.Where(r => r.BoatLevel == SelectedLevel);
 
-            if (SelectedDate is not null)
-            {
-                if (SelectedDate.Value)
-                {
-                    filtered = filtered.OrderBy(r => r.StartTime);
-                    DateSortText = @"Datum /\";
-                }
-                else
-                {
-                    filtered = filtered.OrderByDescending(r => r.StartTime);
-                    DateSortText = @"Datum \/";
-                }
-            }
+        //    if (SelectedDate is not null)
+        //    {
+        //        if (SelectedDate.Value)
+        //        {
+        //            filtered = filtered.OrderBy(r => r.StartTime);
+        //            DateSortText = @"Datum /\";
+        //        }
+        //        else
+        //        {
+        //            filtered = filtered.OrderByDescending(r => r.StartTime);
+        //            DateSortText = @"Datum \/";
+        //        }
+        //    }
 
-            if (SelectedTime is not null)
-            {
-                if (SelectedTime.Value)
-                {
-                    filtered = filtered.OrderBy(r => r.StartTime.TimeOfDay);
-                    TimeSortText = @"Tijd /\";
-                }
-                else
-                {
-                    filtered = filtered.OrderByDescending(r => r.StartTime.TimeOfDay);
-                    TimeSortText = @"Tijd \/";
-                }
-            }
-            MyReservations.Clear();
-            foreach (var res in filtered)
-                MyReservations.Add(res);
-        }
+        //    if (SelectedTime is not null)
+        //    {
+        //        if (SelectedTime.Value)
+        //        {
+        //            filtered = filtered.OrderBy(r => r.StartTime.TimeOfDay);
+        //            TimeSortText = @"Tijd /\";
+        //        }
+        //        else
+        //        {
+        //            filtered = filtered.OrderByDescending(r => r.StartTime.TimeOfDay);
+        //            TimeSortText = @"Tijd \/";
+        //        }
+        //    }
+        //    MyReservations.Clear();
+        //    foreach (var res in filtered)
+        //        MyReservations.Add(res);
+        //}
     }
 }
