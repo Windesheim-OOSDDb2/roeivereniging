@@ -12,7 +12,7 @@ namespace RoeiVereniging.Core.Models
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public Role Role { get; set; } = Role.None;
-        public User(int id, string name, string lastName, string emailAddress, string password) : base(id, name)
+        public User(int id, string name, string emailAddress, string password) : base(id, name)
         {
             EmailAddress = emailAddress;
             Password = password;
