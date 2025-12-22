@@ -72,7 +72,7 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public async Task ReserveBoat()
         {
-            if(!ValidateInputs()) return;
+            if (!ValidateInputs()) return;
 
             DateTime ReservationDateTime = date.Date + time;
             Boat? selectedBoat = GetBoat();
@@ -82,7 +82,7 @@ namespace RoeiVereniging.ViewModels
                 await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
                 return;
             }
-            else if (_reservationService.GetActiveReservationsCountByUserId(_global.user.Id) >= 2) 
+            else if (_reservationService.GetActiveReservationsCountByUserId(_global.user.Id) >= 2)
             {
                 await UpdateErrorUi("Je hebt al 2 actieve reserveringen. Verwijder een bestaande reservering om een nieuwe te maken.");
                 return;
@@ -199,6 +199,12 @@ namespace RoeiVereniging.ViewModels
         public async Task GoToWeatherPage()
         {
             await Shell.Current.GoToAsync(nameof(WeatherView));
+        }
+
+        [RelayCommand]
+        public async Task GoToBoatList()
+        {
+            await Shell.Current.GoToAsync(nameof(BoatListView));
         }
     }
 }

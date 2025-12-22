@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             x:Class="RoeiVereniging.Views.BoatListView"
+             BackgroundColor="White">
+
+    <ContentPage.BindingContext>
+        <viewmodels:BoatListViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Spacing="0">
+
+        
+        <!--Temporary header till component is made-->
+        
+        <Grid BackgroundColor="White" Padding="0,10" ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Start" Spacing="0" Margin="10,0,0,0">
+                <Image Source="logo.png" HeightRequest="100" />
+                <Label
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       TextColor="#D32F2F"
+                       Margin="0,-10,0,0"/>
+            </VerticalStackLayout>
+
+
+
+           
+            <Label Grid.Column="1" Text="Gebruikers" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="2" Text="Boten" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="3" Text="Reparaties" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="4" Text="Overzicht" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+
+        <HorizontalStackLayout Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 10">
+            <Button
+                Text="Boot toevoegen"
+                Command="{Binding GoToAddBoatCommand}"
+                BackgroundColor="#082757"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                HeightRequest="40"
+                WidthRequest="160"/>
+        </HorizontalStackLayout>
+
+        <components:TableComponent
+            Columns="{Binding BoatTableColumns}"
+            ItemsSource="{Binding Boats}" />
+    </VerticalStackLayout>
+</ContentPage>
