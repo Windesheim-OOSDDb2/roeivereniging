@@ -36,7 +36,7 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM user WHERE email = @email";
+            cmd.CommandText = "SELECT user_id, name, email, password, role, level, dateOfBirth FROM user WHERE email = @email";
             cmd.Parameters.AddWithValue("@email", email);
             using var reader = cmd.ExecuteReader();
             User? user = null;
@@ -62,7 +62,7 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM user WHERE user_id = @id";
+            cmd.CommandText = "SELECT user_id, name, email, password, role, level, dateOfBirth FROM user WHERE user_id = @id";
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
             User? user = null;
@@ -84,7 +84,7 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM user";
+            cmd.CommandText = "SELECT user_id, name, email, password, role, level, dateOfBirth FROM user";
             using var reader = cmd.ExecuteReader();
             List<User> users = new List<User>();
             while (reader.Read())
