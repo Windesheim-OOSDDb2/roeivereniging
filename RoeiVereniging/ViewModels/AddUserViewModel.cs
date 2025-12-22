@@ -17,14 +17,11 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class AddUserViewModel : BaseViewModel
     {
-        // services and helpers
         private readonly IUserService _userService;
 
-        // Display lists
         public ObservableCollection<BoatLevel> BoatLevels { get; } = new ObservableCollection<BoatLevel>(Enum.GetValues<BoatLevel>());
         public ObservableCollection<Role> Roles { get; } = new ObservableCollection<Role>(Enum.GetValues<Role>());
 
-        // observabel properties
         [ObservableProperty]
         private string? firstName;
 
