@@ -17,7 +17,6 @@
         
         <Grid BackgroundColor="White" Padding="0,10" ColumnSpacing="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -25,12 +24,12 @@
             </Grid.ColumnDefinitions>
 
 
-            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Start" Spacing="0" Margin="10,0,0,0">
+            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Start" Spacing="0" Margin="0,0,0,0">
                 <Image Source="logo.png" HeightRequest="100" />
-                <Label
-                       FontAttributes="Bold"
+                <Label FontAttributes="Bold"
                        FontSize="18"
                        TextColor="#D32F2F"
+                       HorizontalOptions="Center"
                        Margin="0,-10,0,0"/>
             </VerticalStackLayout>
 
