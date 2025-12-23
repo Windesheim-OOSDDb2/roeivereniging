@@ -53,7 +53,7 @@
 			</Grid>
 
 			<!-- Damage -->
-			<Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" Margin="0,20,0,60" WidthRequest="1000">
+			<Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" Margin="0,20,0,60" WidthRequest="1550">
 				<HorizontalStackLayout VerticalOptions="Center" Spacing="12">
 					<Label Text="Schade:" TextColor="#082757" VerticalOptions="Center"/>
                     <CollectionView ItemsSource="{Binding Top3RecentDamages}">
