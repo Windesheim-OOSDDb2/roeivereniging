@@ -29,7 +29,6 @@ namespace RoeiVereniging.Core.Repositories
                 $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', '0', 1)",
                 $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(2,'Test user','admin@test.nl', '{hashedPassword}', '1', 1)"
             });
-
         }
 
         public User? Get(string email)
