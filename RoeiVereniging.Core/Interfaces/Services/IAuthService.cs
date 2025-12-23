@@ -7,5 +7,7 @@ namespace RoeiVereniging.Core.Interfaces.Services
         public User? Login(string email, string password);
 
         public bool IsAdmin(User user);
+
+        public bool IsUser(User user);
     }
 }

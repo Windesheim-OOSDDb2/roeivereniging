@@ -31,5 +31,10 @@ namespace RoeiVereniging.Core.Services
         {
             return user.Role == Role.Admin;
         }
+
+        public bool IsUser(User user)
+        {
+            return user.Role == Role.User;
+        }
     }
 }
