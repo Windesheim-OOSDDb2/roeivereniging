@@ -22,18 +22,18 @@
 
         public int LastActiveDate { get; set; }
 
-        public UserDTO(int userId, string name, string lastName, string emailAddress, int dateofBirth, int level, int reservationsCount, int damageCount, int registrationDate, int lastActiveDate)
+        public UserDTO(int userId, string name)
         {
             UserId = userId;
             Name = name;
-            LastName = lastName;
-            EmailAddress = emailAddress;
-            DateofBirth = dateofBirth;
-            Level = level;
-            ReservationsCount = reservationsCount;
-            DamageCount = damageCount;
-            RegistrationDate = registrationDate;
-            LastActiveDate = lastActiveDate;
+            //LastName = lastName;
+            //EmailAddress = emailAddress;
+            //DateofBirth = dateofBirth;
+            //Level = level;
+            //ReservationsCount = reservationsCount;
+            //DamageCount = damageCount;
+            //RegistrationDate = registrationDate;
+            //LastActiveDate = lastActiveDate;
         }
 
     }

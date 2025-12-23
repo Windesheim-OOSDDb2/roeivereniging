@@ -45,11 +45,24 @@ namespace RoeiVereniging.ViewModels
             _userRepo = new UserRepository();
             LoadUsers();
         }
-
-
+ 
         private void LoadUsers()
         {
-            
+            var users = _userRepo.GetAll();
+
+            foreach (var user in users)
+            {
+                var userDTO = new UserDTO(
+                    user.Id,
+                    user.Name
+                    //user.LastName,
+                    //user.RegistrationDate,
+                    //user.LastActiveDate
+                    );
+
+                _allUsers.Add(userDTO);
+                Users.Add(userDTO);
+            }
         }
 
         partial void OnSearchTextChanged(string? value) => Filter();
