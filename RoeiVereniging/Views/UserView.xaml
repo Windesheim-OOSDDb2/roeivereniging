@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RoeiVereniging.Views.UserView"
-             Title="UserView">
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <components:PageHeader PageTitle="Gebruikersoverzicht"/>
+        <Label Text="Deze pagina is nog in ontwikkeling."
+               FontSize="18"
+               HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
