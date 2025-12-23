@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Views;
+using System.Globalization;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -21,8 +23,12 @@ namespace RoeiVereniging.ViewModels
 
         private readonly IReservationService _reservationService;
         private readonly IBoatService _boatService;
-        public ObservableCollection<BoatType> boatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
-        
+        private readonly GlobalViewModel _global;
+        public ObservableCollection<BoatType> BoatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
+
+        // Put all levels except "Alles" in an collection
+        public ObservableCollection<BoatLevel> BoatLevels => Enum.GetValues(typeof(BoatLevel)).Cast<BoatLevel>().Where(level => level != BoatLevel.Alles).ToObservableCollection();
+
 
         [ObservableProperty]
         private DateTime date = DateTime.Now.AddDays(7);
@@ -40,7 +46,7 @@ namespace RoeiVereniging.ViewModels
         private int amount = 0;
 
         [ObservableProperty]
-        private string? difficulty = null;
+        private BoatLevel? difficulty = null;
 
         [ObservableProperty]
         private BoatType? type = null;
@@ -48,23 +54,50 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private bool pickerlabel = true;
 
+        [ObservableProperty]
+        private string? errorMessage = null;
+
         private TimeSpan OldTime = DateTime.Now.TimeOfDay;
         private DateTime OldDate = DateTime.Now;
 
-        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService)
+        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, GlobalViewModel global)
         {
             _reservationService = reservationService;
             _boatService = boatService;
             Reservations = new(_reservationService.GetAll());
             Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
+            _global = global;
         }
 
         [RelayCommand]
-        public void ReserveBoat()
+        public async Task ReserveBoat()
         {
             if(!ValidateInputs()) return;
+
             DateTime ReservationDateTime = date.Date + time;
-            _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, GetBoat().Id));
+            Boat? selectedBoat = GetBoat();
+
+            if (selectedBoat == null)
+            {
+                await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
+                return;
+            }
+            else if (_reservationService.GetActiveReservationsCountByUserId(_global.user.Id) >= 2) 
+            {
+                await UpdateErrorUi("Je hebt al 2 actieve reserveringen. Verwijder een bestaande reservering om een nieuwe te maken.");
+                return;
+            }
+
+            _reservationService.Set(new Reservation(1, _global.user.Id, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
+
+            string titleText = "Reservering bevestigd";
+            string dateText = date.ToString("d MMMM yyyy", new CultureInfo("nl-NL"));
+            string timeText = time.ToString(@"hh\:mm");
+            string popupText = $"De reservering voor {dateText} om {timeText} is succesvol gereserveerd!\nTot dan!";
+            string footerText = "Ps. zet de reservering in je eigen agenda!.";
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText);
+            Shell.Current.CurrentPage.ShowPopup(popup);
+
             ResetInputs();
         }
 
@@ -75,6 +108,7 @@ namespace RoeiVereniging.ViewModels
             Time = DateTime.Now.TimeOfDay;
             Difficulty = null;
             Type = null;
+            ErrorMessage = "";
         }
 
         public bool ValidateInputs()
@@ -82,12 +116,27 @@ namespace RoeiVereniging.ViewModels
             // Check if the reservation date and time is now or later
             DateTime reservationDateTime = date.Date + time;
             if (reservationDateTime < DateTime.Now)
-                return false;
-
-            // Check if difficulty can be parsed to an int
-            if (!int.TryParse(Difficulty, out _))
             {
+                UpdateErrorUi("Reservering datum en tijd moeten in de toekomst liggen nniet in het verleden.");
+                return false;
+            }
+
+            if (Amount == 0)
+            {
+                UpdateErrorUi("Aantal passagiers moet is een verplicht veld.");
+                return false;
+            }
+
+            if (Difficulty == null)
+            {
+                UpdateErrorUi("Selecteer een niveau");
                 Difficulty = null;
+                return false;
+            }
+
+            if (Type == null)
+            {
+                UpdateErrorUi("selecteer een type boot");
                 return false;
             }
 
@@ -96,9 +145,9 @@ namespace RoeiVereniging.ViewModels
 
         public Boat? GetBoat()
         {
-            if (Type is BoatType boatType)
+            if (Type is BoatType boatType && Difficulty is BoatLevel boatLevel)
             {
-                return _boatService.Get(Amount, true, Difficulty, boatType);
+                return _boatService.Get(Amount, true, boatLevel, boatType);
             }
             return null;
         }
@@ -128,6 +177,13 @@ namespace RoeiVereniging.ViewModels
             }
         }
 
+        public async Task UpdateErrorUi(string message)
+        {
+            ErrorMessage = "";
+            await Task.Delay(200);
+            ErrorMessage = message;
+        }
+
         [RelayCommand]
         public async Task GoToReservations()
         {
@@ -138,7 +194,7 @@ namespace RoeiVereniging.ViewModels
         public async Task GoToAddBoats()
         {
             await Shell.Current.GoToAsync(nameof(AddBoatView));
-        } 
+        }
         [RelayCommand]
         public async Task GoToWeatherPage()
         {
