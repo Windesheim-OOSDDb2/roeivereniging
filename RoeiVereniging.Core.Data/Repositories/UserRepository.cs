@@ -42,7 +42,7 @@ namespace RoeiVereniging.Core.Repositories
 
             if (reader.Read())
             {
-                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), (Role)reader.GetInt32(4));
             }
             CloseConnection();
 
@@ -58,7 +58,7 @@ namespace RoeiVereniging.Core.Repositories
             using var reader = cmd.ExecuteReader();
             User? user = null;
             if (reader.Read())
-                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), (Role)reader.GetInt32(4));
             CloseConnection();
             return user;
         }
@@ -72,7 +72,7 @@ namespace RoeiVereniging.Core.Repositories
             List<User> users = new List<User>();
             while (reader.Read())
             {
-                users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)));
+                users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), (Role)reader.GetInt32(4)));
             }
             CloseConnection();
             return users;
