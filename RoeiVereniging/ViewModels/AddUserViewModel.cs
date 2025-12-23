@@ -73,7 +73,7 @@ namespace RoeiVereniging.ViewModels
         {
             string titleText = "Gebruiker succesvol toegevoegd";
             string popupText = $"De gebruiker {newUser.Name} met e-mailadres {newUser.EmailAddress} is succesvol toegevoegd!";
-            string footerText = "Klik op ok om terug te gaan naar het vorige scherm";
+            string footerText = "Klik op klaar om terug te gaan naar het vorige scherm";
 
             var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText);
             Shell.Current.CurrentPage.ShowPopup(popup);
