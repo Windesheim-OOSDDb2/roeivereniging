@@ -32,9 +32,16 @@ namespace RoeiVereniging.Core.Services
             return user.Role == Role.Admin;
         }
 
-        public bool IsUser(User user)
+        public bool CanAccess(User? user, Role requiredRole)
         {
-            return user.Role == Role.User;
+            if (user == null) return false;
+
+            if (requiredRole == Role.Admin)
+            {
+                return IsAdmin(user);
+            }
+
+            return requiredRole == Role.User;
         }
     }
 }

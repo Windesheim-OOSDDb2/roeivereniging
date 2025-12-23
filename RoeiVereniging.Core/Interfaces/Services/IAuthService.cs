@@ -8,6 +8,6 @@ namespace RoeiVereniging.Core.Interfaces.Services
 
         public bool IsAdmin(User user);
 
-        public bool IsUser(User user);
+        public bool CanAccess(User? user, Role requiredRole);
     }
 }

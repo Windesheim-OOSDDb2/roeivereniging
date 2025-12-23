@@ -1,18 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Services;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.Maui.Controls.Internals.Profile;
 using System.Text.RegularExpressions;
-using RoeiVereniging.Core.Helpers;
+using System.Threading.Tasks;
 
 
 
@@ -21,6 +21,8 @@ namespace RoeiVereniging.ViewModels
     public partial class AddBoatViewModel : BaseViewModel
     {
         private readonly IBoatService _boatService;
+        private readonly GlobalViewModel _global;
+        private readonly IAuthService _auth;
 
 
         public string BoatTypeDisplay => BoatType.GetEnumDescription();
@@ -45,17 +47,29 @@ namespace RoeiVereniging.ViewModels
         private BoatLevel boatlevel;
         private BoatStatus boatStatus;
 
-        public AddBoatViewModel(IBoatService boatService)
+        public AddBoatViewModel(IBoatService boatService, GlobalViewModel global, IAuthService auth)
         {
             _boatService = boatService;
+            _global = global;
+            _auth = auth;
             addProductEnabled = true;
-        }
 
+            Initialize();
+        }
+        private void Initialize()
+        {
+            if (!_auth.CanAccess(_global.currentUser, Role.Admin))
+            {
+                MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await Shell.Current.GoToAsync(nameof(LoginView));
+                });
+            }
+        }
         partial void OnBoatTypeChanged(BoatType value)
         {
             OnPropertyChanged(nameof(BoatTypeDisplay));
         }
-
 
         [RelayCommand]
         public void AddBoat()

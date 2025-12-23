@@ -14,7 +14,15 @@ namespace RoeiVereniging.ViewModels.admin
         {
             _global = global;
             _auth = auth;
-        }
-        public bool IsAdmin => _global.currentUser != null && _auth.IsAdmin(_global.currentUser);
+
+            if (_global.currentUser == null || !_auth.IsAdmin(_global.currentUser))
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Shell.Current.GoToAsync("//LoginView");
+                });
+                return;
+            }
+        } 
     }
 }
