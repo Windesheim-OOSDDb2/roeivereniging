@@ -19,15 +19,15 @@ namespace RoeiVereniging.Core.Repositories
                     name TEXT NOT NULL,
                     email TEXT NOT NULL,
                     password TEXT NOT NULL,
-                    role TEXT NOT NULL,
+                    role INTEGER NOT NULL,
                     level INTEGER NOT NULL
                 );
             ");
 
             string hashedPassword = PasswordHelper.HashPassword("test");
             InsertMultipleWithTransaction(new List<string> {
-                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', '0', 1)",
-                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(2,'Test user','admin@test.nl', '{hashedPassword}', '1', 1)"
+                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(1,'Test user','test@test.nl', '{hashedPassword}', {(int)Role.User}, 1)",
+                $@"INSERT OR IGNORE INTO user (user_id, name, email, password, role, level) VALUES(2,'Test user','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1)"
             });
         }
 
@@ -35,7 +35,7 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE email = @email";
+            cmd.CommandText = "SELECT user_id, name, email, password, role FROM user WHERE email = @email";
             cmd.Parameters.AddWithValue("@email", email);
             using var reader = cmd.ExecuteReader();
             User? user = null;
@@ -53,7 +53,7 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user WHERE user_id = @id";
+            cmd.CommandText = "SELECT user_id, name, email, password, role FROM user WHERE user_id = @id";
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
             User? user = null;
@@ -67,7 +67,7 @@ namespace RoeiVereniging.Core.Repositories
         {
             OpenConnection();
             using var cmd = Connection.CreateCommand();
-            cmd.CommandText = "SELECT user_id, name, email, password FROM user";
+            cmd.CommandText = "SELECT user_id, name, email, password, role FROM user";
             using var reader = cmd.ExecuteReader();
             List<User> users = new List<User>();
             while (reader.Read())

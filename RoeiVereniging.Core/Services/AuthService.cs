@@ -29,7 +29,7 @@ namespace RoeiVereniging.Core.Services
 
         public bool IsAdmin(User user)
         {
-            return true;
+            return user.Role == Role.Admin;
         }
     }
 }
