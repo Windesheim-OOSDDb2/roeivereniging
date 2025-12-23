@@ -37,10 +37,9 @@
 
 
            
-            <Label Grid.Column="1" Text="Gebruikers" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Label Grid.Column="2" Text="Boten" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Label Grid.Column="3" Text="Reparaties" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Label Grid.Column="4" Text="Overzicht" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="1" Text="Boten" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="2" Text="Reparaties" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="3" Text="Overzicht" FontAttributes="Bold" FontSize="50" TextColor="#082757" HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
 
         <HorizontalStackLayout Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 10">
