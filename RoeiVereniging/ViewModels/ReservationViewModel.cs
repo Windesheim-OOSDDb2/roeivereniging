@@ -1,57 +1,57 @@
-﻿using RoeiVereniging.Core.Data.Repositories;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using RoeiVereniging.Core.Data.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Repositories;
+using RoeiVereniging.Views;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
 
 namespace RoeiVereniging.ViewModels
 {
     public partial class ReservationViewModel : BaseViewModel
     {
         private List<ReservationViewDTO> _allReservations = new();
+        private readonly GlobalViewModel _global;
+
+
+        public IList<TableColumnDefinition> ReservationColumns { get; }
 
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();
 
         public List<string> BoatNames { get; private set; } = new();
         public List<BoatLevel> Levels { get; private set; } = new();
 
-        [ObservableProperty]
-        private string? selectedBoatName;
-
-        [ObservableProperty]
-        private BoatLevel? selectedLevel;
-
-        [ObservableProperty]
-        private bool? selectedDate = null;
-
-        [ObservableProperty]
-        private bool? selectedTime = null;
-
-        [ObservableProperty]
-        private string dateSortText = @"Datum \/";
-
-        [ObservableProperty]
-        private string timeSortText = @"Tijd \/";
 
         private readonly IReservationService _reservationService;
         private readonly UserRepository _userRepo;
         private readonly BoatRepository _boatRepo;
 
-        public ReservationViewModel(IReservationService reservationService)
+        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global)
         {
             _reservationService = reservationService;
             _userRepo = new UserRepository();
             _boatRepo = new BoatRepository();
+            _global = global;
 
-            LoadForDummyUser();
+
+            // Fill the columns, the BindingPath must mattch the name of a public property on the object pushed to the table component
+            // the binding path is used to read the value ofor displaying the cell and applying filters to the column 
+            ReservationColumns = new List<TableColumnDefinition>
+            {
+                new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },
+                new() { Header = "Niveau", BindingPath = "BoatLevelText", HeaderType = TableHeaderType.Select },
+                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}", HeaderType = TableHeaderType.SortDate },
+                new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime },
+            };
+
+        LoadForCurrentUser();
         }
 
-        private void LoadForDummyUser()
+        private void LoadForCurrentUser()
         {
-            User? user = _userRepo.GetById(1);
+            User? user = _userRepo.Get(_global.user.Id);
             if (user == null) return;
 
             var boats = _boatRepo.GetAll();
@@ -101,65 +101,5 @@ namespace RoeiVereniging.ViewModels
             OnPropertyChanged(nameof(Levels));
         }
 
-        partial void OnSelectedBoatNameChanged(string? value) => Filter();
-        partial void OnSelectedLevelChanged(BoatLevel? value) => Filter();
-
-        [RelayCommand]
-        private void ToggleDate()
-        {
-            SelectedTime = null;
-            SelectedDate = SelectedDate == true ? false : true;
-            Filter();
-        }
-
-        [RelayCommand]
-        private void ToggleTime()
-        {
-            SelectedDate = null;
-            SelectedTime = SelectedTime == true ? false : true;
-            Filter();
-        }
-
-        private void Filter()
-        {
-            IEnumerable<ReservationViewDTO> filtered = _allReservations;
-
-            if (!string.IsNullOrWhiteSpace(SelectedBoatName) && SelectedBoatName != "Bootnaam")
-                filtered = filtered.Where(r => r.BoatName == SelectedBoatName);
-
-            if (SelectedLevel != null && SelectedLevel != BoatLevel.Alles)
-                filtered = filtered.Where(r => r.BoatLevel == SelectedLevel);
-
-            if (SelectedDate is not null)
-            {
-                if (SelectedDate.Value)
-                {
-                    filtered = filtered.OrderBy(r => r.StartTime);
-                    DateSortText = @"Datum /\";
-                }
-                else
-                {
-                    filtered = filtered.OrderByDescending(r => r.StartTime);
-                    DateSortText = @"Datum \/";
-                }
-            }
-
-            if (SelectedTime is not null)
-            {
-                if (SelectedTime.Value)
-                {
-                    filtered = filtered.OrderBy(r => r.StartTime.TimeOfDay);
-                    TimeSortText = @"Tijd /\";
-                }
-                else
-                {
-                    filtered = filtered.OrderByDescending(r => r.StartTime.TimeOfDay);
-                    TimeSortText = @"Tijd \/";
-                }
-            }
-            MyReservations.Clear();
-            foreach (var res in filtered)
-                MyReservations.Add(res);
-        }
     }
 }

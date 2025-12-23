@@ -23,9 +23,14 @@ namespace RoeiVereniging.Core.Services
         }
 
 
-        public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
+        public Boat? Get(int amount, bool steeringwheelposition, BoatLevel difficulty, BoatType type)
         {
             return _boatRepository.Get(amount, steeringwheelposition, difficulty, type);
+        }
+
+        public Boat? GetById(int id)
+        {
+            return _boatRepository.Get(id);
         }
 
         public List<Boat> GetAll()
