@@ -51,7 +51,7 @@ namespace RoeiVereniging.ViewModels
 
         private void LoadForCurrentUser()
         {
-            User? user = _userRepo.Get(_global.user.Id);
+            User? user = _userRepo.Get(_global.currentUser.Id);
             if (user == null) return;
 
             var boats = _boatRepo.GetAll();

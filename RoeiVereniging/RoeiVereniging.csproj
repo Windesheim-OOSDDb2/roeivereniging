@@ -82,10 +82,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\components\ConfirmationPopup.xaml">
+	  <MauiXaml Update="Views\Admin\AdminDashboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Admin\adminDashboard.xaml">
+	  <MauiXaml Update="Views\components\ConfirmationPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\components\PageHeader.xaml">

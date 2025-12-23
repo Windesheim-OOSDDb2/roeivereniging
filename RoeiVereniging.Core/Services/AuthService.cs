@@ -26,5 +26,10 @@ namespace RoeiVereniging.Core.Services
 
             return null;
         }
+
+        public bool IsAdmin(User user)
+        {
+            return true;
+        }
     }
 }
