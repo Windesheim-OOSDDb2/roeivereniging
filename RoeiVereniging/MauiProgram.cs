@@ -50,6 +50,7 @@ namespace RoeiVereniging
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
             builder.Services.AddTransient<ReservationDetailView>().AddTransient<ReservationDetailViewModel>();
             builder.Services.AddTransient<ReportDamageView>().AddTransient<ReportDamageViewModel>();
+            builder.Services.AddTransient<AddUserView>().AddTransient<AddUserViewModel>();
             builder.Services.AddSingleton<GlobalViewModel>();
 
             // Background Services
