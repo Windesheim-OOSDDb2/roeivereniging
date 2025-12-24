@@ -35,10 +35,10 @@ namespace RoeiVereniging.ViewModels
 
             BoatTableColumns = new List<TableColumnDefinition>
             {
-                new () { Header = "Boot toevoegen", BindingPath = "Name", HeaderType = TableHeaderType.Button, Command = GoToAddBoatCommand},
-                new () { Header = "Aantal roeiers", BindingPath = "SeatsAmount", HeaderType = TableHeaderType.Select },
-                new () { Header = "Stuur positie", BindingPath = "SteeringWheelPosition", HeaderType = TableHeaderType.Select },
-                new () { Header = "Niveau", BindingPath = "Level", HeaderType = TableHeaderType.Select }
+                new () { Header = "Boot toevoegen", BindingPath = "Name", HeaderType = TableHeaderType.Button, Command = GoToAddBoatCommand, Width = "200"},
+                new () { Header = "Boot Naam", BindingPath = "Name", HeaderType = TableHeaderType.Select, Width = "*" },
+                new () { Header = "Niveau", BindingPath = "Level", HeaderType = TableHeaderType.Select, Width = "*" },
+                new () { Header = "Status", BindingPath = "BoatStatus", HeaderType = TableHeaderType.Select, Width = "*" }
             };
         }
 
