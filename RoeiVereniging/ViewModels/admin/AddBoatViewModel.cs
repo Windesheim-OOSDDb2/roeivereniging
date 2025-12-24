@@ -21,9 +21,6 @@ namespace RoeiVereniging.ViewModels
     public partial class AddBoatViewModel : BaseViewModel
     {
         private readonly IBoatService _boatService;
-        private readonly GlobalViewModel _global;
-        private readonly IAuthService _auth;
-
 
         public string BoatTypeDisplay => BoatType.GetEnumDescription();
 
@@ -47,25 +44,12 @@ namespace RoeiVereniging.ViewModels
         private BoatLevel boatlevel;
         private BoatStatus boatStatus;
 
-        public AddBoatViewModel(IBoatService boatService, GlobalViewModel global, IAuthService auth)
+        public AddBoatViewModel(IBoatService boatService)
         {
             _boatService = boatService;
-            _global = global;
-            _auth = auth;
             addProductEnabled = true;
+        }
 
-            Initialize();
-        }
-        private void Initialize()
-        {
-            if (!_auth.CanAccess(_global.currentUser, Role.Admin))
-            {
-                MainThread.InvokeOnMainThreadAsync(async () =>
-                {
-                    await Shell.Current.GoToAsync(nameof(LoginView));
-                });
-            }
-        }
         partial void OnBoatTypeChanged(BoatType value)
         {
             OnPropertyChanged(nameof(BoatTypeDisplay));
