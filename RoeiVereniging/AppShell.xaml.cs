@@ -11,7 +11,7 @@ namespace RoeiVereniging
         private readonly IAuthService _auth;
 
         public AppShell(GlobalViewModel global, IAuthService auth)
-        {
+        {   
             InitializeComponent();
 
             _global = global;
@@ -34,7 +34,9 @@ namespace RoeiVereniging
 
             // if route is not yet taken into routeguard, there is no protection and any role is required
             if (!RouteGuard.ProtectedRoutes.TryGetValue(targetRoute, out var requiredRole))
+            {
                 return;
+            }
 
             // block navigation to route when required role doesn't match currentuser
             if (!_auth.CanAccess(_global.currentUser, requiredRole))
