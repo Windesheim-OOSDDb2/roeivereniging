@@ -72,7 +72,7 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public async Task ReserveBoat()
         {
-            if(!ValidateInputs()) return;
+            if (!ValidateInputs()) return;
 
             DateTime ReservationDateTime = date.Date + time;
             Boat? selectedBoat = GetBoat();
@@ -199,6 +199,11 @@ namespace RoeiVereniging.ViewModels
         public async Task GoToWeatherPage()
         {
             await Shell.Current.GoToAsync(nameof(WeatherView));
+        }
+        [RelayCommand]
+        public async Task GoToAddUserPage()
+        {
+            await Shell.Current.GoToAsync(nameof(AddUserView));
         }
     }
 }

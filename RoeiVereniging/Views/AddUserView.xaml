@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             xmlns:conv="clr-namespace:RoeiVereniging.Converters"
+             x:Class="RoeiVereniging.Views.AddUserView"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             x:DataType="vm:AddUserViewModel">
+    <Grid BackgroundColor="White">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        
+        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="6">
+            <components:PageHeader PageTitle="Gebruiker toevoegen"/>
+        </VerticalStackLayout>
+        
+        <!-- Row 1 -->
+        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+            
+            <Entry
+                Text="{Binding FirstName}"
+                Placeholder="Voornaam"
+                TextColor="#082757"
+                FontSize="20" />
+        </Border>
+
+        <Border
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+            <Entry
+                Text="{Binding LastName}"
+                Placeholder="Achternaam"
+                TextColor="#082757"
+                FontSize="20" />
+        </Border>
+
+        <!-- Row 2 -->
+        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Grid.Row="2"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+            <Entry
+                Text="{Binding Email}"
+                Placeholder="E-mail"
+                TextColor="#082757"
+                FontSize="20" />
+        </Border>
+
+        <!-- Row 3 -->
+        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="3"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+            <Entry
+                Text="{Binding Password}"
+                Placeholder="Wachtwoord"
+                TextColor="#082757"
+                FontSize="20" />
+        </Border>
+
+        <!-- Start datepicker -->
+
+        <Border
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="3"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+            
+            <Label
+                Text="{Binding DateOfBirthDisplay}"
+                TextColor="#082757"
+                FontSize="20"
+                VerticalOptions="Center"
+                Margin="10,0,0,0"/>
+            
+        </Border>
+
+        <Image
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="3"
+            WidthRequest="30"
+            HeightRequest="30"
+            HorizontalOptions="End"
+            Margin="35"
+            Source="calendar.png" />
+
+        <DatePicker  
+           Grid.Column="3"  
+           Grid.ColumnSpan="2"  
+           Grid.Row="3"  
+           Opacity="0"  
+           FontSize="5000"  
+           Date="{Binding DateOfBirth}"  
+           MaximumDate="{x:Static sys:DateTime.Now}" />
+        
+        <!-- End datepicker -->
+
+        <!-- Row 4 -->
+        <!-- Start level picker -->
+
+        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+
+            <Label
+                Text="{Binding SelectedBoatLevel}"
+                TextColor="#082757"
+                FontSize="20"
+                VerticalOptions="Center"
+                Margin="10,0,0,0"/>
+
+        </Border>
+
+        <Picker
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            Margin="25"
+            Opacity="0"
+            ItemsSource="{Binding BoatLevels}"
+            SelectedItem="{Binding SelectedBoatLevel}"/>
+        
+        <!-- End level picker -->
+        <!-- start role picker -->
+
+        <Border
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            BackgroundColor="#DEE6F8"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 20" >
+
+            <Label
+                Text="{Binding SelectedRole}"
+                TextColor="#082757"
+                FontSize="20"
+                VerticalOptions="Center"
+                Margin="10,0,0,0"/>
+
+        </Border>
+
+        <Picker
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            Opacity="0"
+            ItemsSource="{Binding Roles}"
+            SelectedItem="{Binding SelectedRole}"/>
+        
+        <!-- End role picker -->
+        <!-- Row 5 -->
+
+        <Border
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="5" 
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 60" >
+
+            <Button
+                BackgroundColor="#D7263D"
+                TextColor="white"
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="Annuleren"
+                Command="{Binding GoBackCommand}"/>
+        </Border>
+
+        <Border
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="5" 
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            Margin="25, 60" >
+
+            <Button
+                BackgroundColor="#082757"
+                TextColor="white"
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="Aanmaken" 
+                Command="{Binding AddUserCommand}"/>
+        </Border>
+
+        <Label
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Grid.Row="5"
+            VerticalOptions="End"
+            Text="{Binding ErrorMessage}"
+            TextColor="red"
+            FontAttributes="Bold"
+            FontSize="20" />
+
+    </Grid>
+</ContentPage>
