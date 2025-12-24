@@ -51,6 +51,7 @@ namespace RoeiVereniging
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
             builder.Services.AddTransient<AddUserView>().AddTransient<AddUserViewModel>();
             builder.Services.AddSingleton<GlobalViewModel>();
+            builder.Services.AddSingleton<AppShell>();
 
             // Background Services
             builder.Services.AddSingleton<BadweatherCheckerBackgroundServices>();

@@ -37,8 +37,6 @@ public partial class LoginViewModel : BaseViewModel
             return;
         }
 
-        Application.Current.MainPage = new AppShell();
-
         if (_authService.IsAdmin(user))
         {
             await Shell.Current.GoToAsync(nameof(AdminDashboardView));
