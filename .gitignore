@@ -367,3 +367,8 @@ FodyWeavers.xsd
 
 **/test-results.trx
 appsettings.json
+
+# TemplateEngineHost cache en tijdelijke bestanden
+**/TemplateEngineHost/vs/
+**/templatecache.json
+**/*.etag

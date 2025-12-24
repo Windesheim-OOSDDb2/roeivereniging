@@ -73,7 +73,9 @@ namespace RoeiVereniging.ViewModels
                         reservation.BoatId,
                         boat.Name,
                         reservation.StartTime,
-                        reservation.EndTime
+                        reservation.EndTime,
+                        boat.SeatsAmount,
+                        boat.SteeringWheelPosition ? SteeringMode.Required : SteeringMode.Disabled
                     );
 
                     _allReservations.Add(dto);
@@ -101,5 +103,13 @@ namespace RoeiVereniging.ViewModels
             OnPropertyChanged(nameof(Levels));
         }
 
+        [ObservableProperty]
+        private string? selectedBoatName;
+
+        [ObservableProperty]
+        private BoatLevel selectedLevel;
+
+        public string DateSortText => "Datum";
+        public string TimeSortText => "Tijd";
     }
 }

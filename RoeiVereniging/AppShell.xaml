@@ -8,5 +8,4 @@
         Title="Reserve"
         ContentTemplate="{DataTemplate views:ReserveBoatView}"
         Route="reserve" />
-
 </Shell>
