@@ -47,12 +47,6 @@ namespace RoeiVereniging.ViewModels
                 new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime },
             };
 
-            // THIS IS NOT DEFINITIVE JUST AN EXAMPLE FOR MIDDLEWARE ON USER ROUTES
-            if (!_auth.CanAccess(global.currentUser, Role.User))
-            {
-                // TODO: maybe add a logout functionality here 
-            }
-
             LoadForCurrentUser();
         }
 
