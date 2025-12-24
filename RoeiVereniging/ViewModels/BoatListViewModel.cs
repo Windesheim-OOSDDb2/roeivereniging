@@ -20,13 +20,7 @@ namespace RoeiVereniging.ViewModels
         private readonly BoatRepository _boatRepository;
         public ObservableCollection<Boat> Boats { get; } = new();
 
-        public IList<TableColumnDefinition> BoatTableColumns { get; } = new List<TableColumnDefinition>
-        {
-            new TableColumnDefinition { Header = "Id", BindingPath = "BoatId", Width = "Auto", HeaderType = TableHeaderType.Text },
-            new TableColumnDefinition { Header = "Naam", BindingPath = "Name", Width = "*", HeaderType = TableHeaderType.Text },
-            new TableColumnDefinition { Header = "Level", BindingPath = "Level", Width = "*", HeaderType = TableHeaderType.Text },
-            new TableColumnDefinition { Header = "Status", BindingPath = "BoatStatus", Width = "*", HeaderType = TableHeaderType.Text }
-        };
+        public IList<TableColumnDefinition> BoatTableColumns { get; }
 
         public ICommand GoToAddBoatCommand { get; }
 
@@ -34,10 +28,21 @@ namespace RoeiVereniging.ViewModels
         {
             _boatRepository = new BoatRepository();
             LoadBoats();
-            GoToAddBoatCommand = new RelayCommand(OnGoToAddBoat);
+            GoToAddBoatCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(nameof(AddBoatView));
+            });
+
+            BoatTableColumns = new List<TableColumnDefinition>
+            {
+                new () { Header = "Boot toevoegen", BindingPath = "Name", HeaderType = TableHeaderType.Button, Command = GoToAddBoatCommand},
+                new () { Header = "Aantal roeiers", BindingPath = "SeatsAmount", HeaderType = TableHeaderType.Select },
+                new () { Header = "Stuur positie", BindingPath = "SteeringWheelPosition", HeaderType = TableHeaderType.Select },
+                new () { Header = "Niveau", BindingPath = "Level", HeaderType = TableHeaderType.Select }
+            };
         }
 
-        public void LoadBoats()
+        public void LoadBoats() 
         {
             Boats.Clear();
             foreach (var boat in _boatRepository.GetAll())
@@ -49,11 +54,6 @@ namespace RoeiVereniging.ViewModels
         public void Refresh()
         {
             LoadBoats();
-        }
-
-        private async void OnGoToAddBoat()
-        {
-            await Shell.Current.GoToAsync(nameof(AddBoatView));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

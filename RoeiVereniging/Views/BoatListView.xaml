@@ -72,15 +72,6 @@
         </Grid>
 
         <HorizontalStackLayout Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 10">
-            <Button
-                Text="Boot toevoegen"
-                Command="{Binding GoToAddBoatCommand}"
-                BackgroundColor="#082757"
-                TextColor="White"
-                FontAttributes="Bold"
-                CornerRadius="8"
-                HeightRequest="40"
-                WidthRequest="160"/>
         </HorizontalStackLayout>
 
         <components:TableComponent
