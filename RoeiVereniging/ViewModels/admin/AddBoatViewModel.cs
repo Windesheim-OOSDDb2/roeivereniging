@@ -1,18 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Services;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.Maui.Controls.Internals.Profile;
 using System.Text.RegularExpressions;
-using RoeiVereniging.Core.Helpers;
+using System.Threading.Tasks;
 
 
 
@@ -21,7 +21,6 @@ namespace RoeiVereniging.ViewModels
     public partial class AddBoatViewModel : BaseViewModel
     {
         private readonly IBoatService _boatService;
-
 
         public string BoatTypeDisplay => BoatType.GetEnumDescription();
 
@@ -55,7 +54,6 @@ namespace RoeiVereniging.ViewModels
         {
             OnPropertyChanged(nameof(BoatTypeDisplay));
         }
-
 
         [RelayCommand]
         public void AddBoat()

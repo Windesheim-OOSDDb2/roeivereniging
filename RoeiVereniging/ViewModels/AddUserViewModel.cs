@@ -41,7 +41,7 @@ namespace RoeiVereniging.ViewModels
         private BoatLevel selectedBoatLevel = BoatLevel.Beginner;
 
         [ObservableProperty]
-        private Role selectedRole = Role.None;
+        private Role selectedRole;
 
         [ObservableProperty]
         private string? dateOfBirthDisplay = DateTime.Now.ToString("dd-MM-yyyy");
