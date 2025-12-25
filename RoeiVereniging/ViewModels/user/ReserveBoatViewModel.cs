@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Views;
+using RoeiVereniging.Views.components;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -82,7 +83,7 @@ namespace RoeiVereniging.ViewModels
                 await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
                 return;
             }
-            else if (_reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2) 
+            else if (_global.currentUser.Role != Role.Admin && _global.currentUser.Role != Role.Materiallcommissaris && _reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2)
             {
                 await UpdateErrorUi("Je hebt al 2 actieve reserveringen. Verwijder een bestaande reservering om een nieuwe te maken.");
                 return;
@@ -95,7 +96,7 @@ namespace RoeiVereniging.ViewModels
             string timeText = time.ToString(@"hh\:mm");
             string popupText = $"De reservering voor {dateText} om {timeText} is succesvol gereserveerd!\nTot dan!";
             string footerText = "Ps. zet de reservering in je eigen agenda!.";
-            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText);
+            var popup = new ConfirmationPopup(titleText, popupText, footerText);
             Shell.Current.CurrentPage.ShowPopup(popup);
 
             ResetInputs();
