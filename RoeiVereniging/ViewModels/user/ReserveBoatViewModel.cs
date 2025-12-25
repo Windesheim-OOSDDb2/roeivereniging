@@ -80,7 +80,6 @@ namespace RoeiVereniging.ViewModels
 
             if (selectedBoat == null)
             {
-                await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
                 return;
             }
             else if (_global.currentUser.Role != Role.Admin && _global.currentUser.Role != Role.Materiallcommissaris && _reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2)
@@ -146,11 +145,38 @@ namespace RoeiVereniging.ViewModels
 
         public Boat? GetBoat()
         {
-            if (Type is BoatType boatType && Difficulty is BoatLevel boatLevel)
+            if (Type is not BoatType boatType || Difficulty is not BoatLevel boatLevel)
             {
-                return _boatService.Get(Amount, true, boatLevel, boatType);
+                UpdateErrorUi("Het gegeven type en of niveau is niet geldig");
+                return null;
             }
-            return null;
+
+            List<Boat> boats = _boatService.Get(Amount, true, boatLevel, boatType);
+            if (boats == null || !boats.Any())
+            {
+                UpdateErrorUi("Geen passende boot gevonden met de gegeven data");
+                return null;
+            }
+
+            var availableBoat = CheckAvailability(boats, date.Date + time);
+            if (availableBoat == null)
+            {
+                UpdateErrorUi("Alle boten zijn bezet voor deze datum en tijd probeer een ander moment");
+            }
+
+            return availableBoat;
+        }
+
+        public Boat? CheckAvailability(List<Boat> boats, DateTime reservationDateTime)
+        {
+            // Get all reservations that overlap with the given reservationDateTime
+            var reservedBoatIds = _reservationService.GetAll()
+                .Where(reservation => reservation.StartTime <= reservationDateTime && reservation.EndTime >= reservationDateTime)
+                .Select(reservation => reservation.BoatId)
+                .ToHashSet();
+
+            // Find the first boat that is not reserved
+            return boats.FirstOrDefault(boat => !reservedBoatIds.Contains(boat.Id));
         }
 
         [RelayCommand]
