@@ -4,6 +4,8 @@ using RoeiVereniging;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.ViewModels;
+using RoeiVereniging.Views;
+using RoeiVereniging.Views.Admin;
 
 namespace RoeiVereniging.ViewModels;
 public partial class LoginViewModel : BaseViewModel
@@ -22,17 +24,26 @@ public partial class LoginViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void Login()
+    private async void Login()
     {
         User? user = _authService.Login(email, password);
         if (user != null)
         {
-            _global.user = user;
-            Application.Current.MainPage = new AppShell();
+            _global.currentUser = user;
         }
         else
         {
             LoginMessage = "Ongeldige inloggegevens.";
+            return;
+        }
+
+        if (_authService.IsAdmin(user))
+        {
+            await Shell.Current.GoToAsync(nameof(AdminDashboardView));
+        }
+        else
+        {
+            await Shell.Current.GoToAsync(nameof(ReserveBoatView));
         }
     }
 }
