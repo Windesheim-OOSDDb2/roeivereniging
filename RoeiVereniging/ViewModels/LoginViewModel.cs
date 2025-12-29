@@ -39,7 +39,7 @@ public partial class LoginViewModel : BaseViewModel
 
         if (_authService.IsAdmin(user))
         {
-            await Shell.Current.GoToAsync(nameof(AdminDashboardView));
+            await Shell.Current.GoToAsync(nameof(BoatListView));
         }
         else
         {
