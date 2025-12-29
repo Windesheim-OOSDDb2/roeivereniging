@@ -25,6 +25,7 @@ namespace RoeiVereniging.ViewModels
 
         private readonly IReservationService _reservationService;
         private readonly IBoatService _boatService;
+        private readonly GlobalViewModel _global;
         private readonly IQrCodeService _qrCodeService;
         public ObservableCollection<BoatType> BoatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
 
@@ -63,19 +64,20 @@ namespace RoeiVereniging.ViewModels
         private DateTime OldDate = DateTime.Now;
 
 
-        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, IQrCodeService qrCodeService)
+        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, GlobalViewModel global, IQrCodeService qrCodeService)
         {
             _reservationService = reservationService;
             _boatService = boatService;
             _qrCodeService = qrCodeService;
             Reservations = new(_reservationService.GetAll());
             Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
+            _global = global;
         }
 
         [RelayCommand]
         public async Task ReserveBoat()
         {
-            if(!ValidateInputs()) return;
+            if (!ValidateInputs()) return;
 
             DateTime ReservationDateTime = date.Date + time;
             Boat? selectedBoat = GetBoat();
@@ -85,8 +87,13 @@ namespace RoeiVereniging.ViewModels
                 await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
                 return;
             }
+            else if (_reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2) 
+            {
+                await UpdateErrorUi("Je hebt al 2 actieve reserveringen. Verwijder een bestaande reservering om een nieuwe te maken.");
+                return;
+            }
 
-            _reservationService.Set(new Reservation(1, 1, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
+            _reservationService.Set(new Reservation(1, _global.currentUser.Id, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
 
             // Show confirmation popup with reservation details and QR code
             ShowPopup(selectedBoat, ReservationDateTime);
@@ -212,6 +219,11 @@ namespace RoeiVereniging.ViewModels
         public async Task GoToWeatherPage()
         {
             await Shell.Current.GoToAsync(nameof(WeatherView));
+        }
+        [RelayCommand]
+        public async Task GoToAddUserPage()
+        {
+            await Shell.Current.GoToAsync(nameof(AddUserView));
         }
     }
 }

@@ -143,6 +143,22 @@ namespace RoeiVereniging.Core.Data.Repositories
             return reservationList;
         }
 
+        public int GetActiveReservationsCountByUserId(int id)
+        {
+            OpenConnection();
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = @"
+                SELECT COUNT(*) 
+                FROM Reservation 
+                WHERE user_id = @id 
+                AND end_time > @now";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@now", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return count;
+        }
+
         public Reservation? Get(int id)
         {
             return reservationList.FirstOrDefault(r => r.Id == id);
