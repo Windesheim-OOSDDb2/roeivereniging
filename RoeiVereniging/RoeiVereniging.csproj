@@ -106,13 +106,11 @@
 	  <MauiXaml Update="Views\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-		<MauiXaml Update="Views\BoatListView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Views\ReservationView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-	    <Generator>MSBuild:Compile</Generator>
+	  <MauiXaml Update="Views\BoatListView.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ReservationView.xaml">
+		<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\User\ReserveBoatView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
