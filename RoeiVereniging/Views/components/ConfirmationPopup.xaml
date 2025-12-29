@@ -46,7 +46,8 @@
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 
-            <Frame Grid.Row="1" Grid.Column="1"
+            <Frame x:Name="QrCode"
+                   Grid.Row="1" Grid.Column="1"
                    Padding="10"
                    BackgroundColor="White"
                    CornerRadius="10"
