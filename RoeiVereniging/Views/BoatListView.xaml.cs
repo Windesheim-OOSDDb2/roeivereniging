@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using RoeiVereniging.ViewModels;
+using RoeiVereniging.Views.Admin;
 
 
 namespace RoeiVereniging.Views;
@@ -36,8 +37,8 @@ public partial class BoatListView : ContentPage
         // TODO: Navigatie naar reparatiespagina
     }
 
-    private void OnOverzichtClicked(object sender, EventArgs e)
+    private async void OnOverzichtClicked(object sender, EventArgs e)
     {
-        // TODO: Navigatie naar overzichtspagina
+        await Shell.Current.GoToAsync(nameof(AdminDashboardView), true);
     }
 }
