@@ -6,6 +6,8 @@
 
         public string Name { get; set; }
 
+        public string FirstName { get; set; }
+
         public string LastName { get; set; }
 
         public string EmailAddress { get; set; }
@@ -22,11 +24,12 @@
 
         public int LastActiveDate { get; set; }
 
-        public UserDTO(int userId, string name)
+        public UserDTO(int userId, string firstName, string lastName)
         {
             UserId = userId;
-            Name = name;
-            //LastName = lastName;
+            //Name = name;
+            FirstName = firstName;
+            LastName = lastName;
             //EmailAddress = emailAddress;
             //DateofBirth = dateofBirth;
             //Level = level;
