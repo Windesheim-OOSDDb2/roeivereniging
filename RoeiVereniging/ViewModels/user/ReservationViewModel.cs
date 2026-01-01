@@ -103,14 +103,5 @@ namespace RoeiVereniging.ViewModels
             OnPropertyChanged(nameof(BoatNames));
             OnPropertyChanged(nameof(Levels));
         }
-
-        [ObservableProperty]
-        private string? selectedBoatName;
-
-        [ObservableProperty]
-        private BoatLevel selectedLevel;
-
-        public string DateSortText => "Datum";
-        public string TimeSortText => "Tijd";
     }
 }
