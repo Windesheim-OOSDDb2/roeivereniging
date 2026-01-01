@@ -7,6 +7,8 @@ using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Data.Repositories;
 using CommunityToolkit.Maui;
 using RoeiVereniging.Core.Repositories;
+using RoeiVereniging.Views.Admin;
+using RoeiVereniging.ViewModels.admin;
 
 namespace RoeiVereniging
 {
@@ -41,13 +43,15 @@ namespace RoeiVereniging
 
             // Views and ViewModels
             builder.Services.AddTransient<LoginView>().AddTransient<LoginViewModel>();
-            builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
             builder.Services.AddTransient<AddBoatView>().AddTransient<AddBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
+            builder.Services.AddTransient<AdminDashboardView>().AddTransient<AdminDashboardViewModel>();
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
+            builder.Services.AddTransient<AddUserView>().AddTransient<AddUserViewModel>();
             builder.Services.AddSingleton<GlobalViewModel>();
+            builder.Services.AddSingleton<AppShell>();
 
             // Background Services
             builder.Services.AddSingleton<BadweatherCheckerBackgroundServices>();

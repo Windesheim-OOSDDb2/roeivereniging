@@ -25,14 +25,19 @@ namespace RoeiVereniging.Core.Models
 
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public Role Role { get; set; } = Role.None;
-        public User(int id, string firstName, string lastName, string emailAddress, string password, DateTime registrationDate, DateTime lastActiveDate) : base(id, $"{firstName} {lastName}")
+        public Role Role { get; set; }
+        public BoatLevel Level { get; set; } = BoatLevel.Beginner;
+        public DateOnly DateOfBirth { get; set; }
+        public User(int id, string firstName, string lastName, string emailAddress, string password, Role role, BoatLevel level, DateOnly dateofBirth, DateTime registrationDate, DateTime lastActiveDate) : base(id, $"{firstName} {lastName}")
         {
             UserId = id;
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             Password = password;
+            Role = role;
+            Level = level;
+            DateOfBirth = dateofBirth;
             RegistrationDate = registrationDate;
             LastActiveDate = lastActiveDate;
         }

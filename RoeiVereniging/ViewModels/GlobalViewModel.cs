@@ -4,6 +4,6 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class GlobalViewModel : BaseViewModel
     {
-        public required User user { get; set; }
+        public required User currentUser { get; set; }
     }
 }
