@@ -14,16 +14,14 @@
             </Grid>
         </Frame>
 
-        <ScrollView>
-            <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame StyleClass="row-card" BackgroundColor="#5fa6e8" Padding="10">
-                            <Grid x:Name="RowGrid" ColumnSpacing="0" RowSpacing="0" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
+        <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8" Padding="10">
+                        <Grid x:Name="RowGrid" ColumnSpacing="0" RowSpacing="0" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentView>

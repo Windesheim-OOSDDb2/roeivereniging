@@ -16,6 +16,12 @@ namespace RoeiVereniging.ViewModels
         private readonly GlobalViewModel _global;
         private readonly IAuthService _auth;
 
+        public ICommand RowTappedCommand => new Command<ReservationViewDTO>(async reservation =>
+        {
+            await Shell.Current.GoToAsync(
+                $"{nameof(JouwSaus)}?id={reservation.UserId}");
+        });
+
         public IList<TableColumnDefinition> ReservationColumns { get; }
 
         public ObservableCollection<ReservationViewDTO> MyReservations { get; } = new();

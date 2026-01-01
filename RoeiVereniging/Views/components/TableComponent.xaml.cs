@@ -2,6 +2,7 @@ using RoeiVereniging.Core.Models;
 using RoeiVereniging.Views.Components.Helpers;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace RoeiVereniging.Views.Components;
 
@@ -23,6 +24,20 @@ public partial class TableComponent : ContentView
 		InitializeComponent();
         TableView.ItemsSource = _filteredItems;
     }
+
+    // Make rows clickable, and head to a route passing an id as aparam
+    public static readonly BindableProperty RowClickedCommandProperty =
+    BindableProperty.Create(
+        nameof(RowClickedCommand),
+        typeof(ICommand),
+        typeof(TableComponent));
+
+    public ICommand RowClickedCommand
+    {
+        get => (ICommand)GetValue(RowClickedCommandProperty);
+        set => SetValue(RowClickedCommandProperty, value);
+    }
+
 
     // Make Items and Columns bindable properties so they can be set from outside
     public static readonly BindableProperty ItemsSourceProperty =
@@ -178,7 +193,16 @@ public partial class TableComponent : ContentView
                         stringFormat: Columns[i].StringFormat
                 ));
                 Grid.SetColumn(label, i);
+                var tap = new TapGestureRecognizer();
+                tap.Tapped += (_, __) =>
+                {
+                    if (RowClickedCommand?.CanExecute(null) == true)
+                        RowClickedCommand.Execute(grid.BindingContext);
+                };
+
+                grid.GestureRecognizers.Add(tap);
                 grid.Children.Add(label);
+
             }
 
             return grid;
