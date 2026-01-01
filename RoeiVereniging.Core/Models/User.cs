@@ -11,10 +11,10 @@ namespace RoeiVereniging.Core.Models
     {
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public Role Role { get; set; } = Role.None;
+        public Role Role { get; set; }
         public BoatLevel Level { get; set; } = BoatLevel.Beginner;
         public DateOnly DateOfBirth { get; set; }
-        public User(int id, string name, string emailAddress, string password,Role role, BoatLevel level, DateOnly dateOfBirth) : base(id, name)
+        public User(int id, string name, string emailAddress, string password, Role role, BoatLevel level, DateOnly dateOfBirth) : base(id, name)
         {
             EmailAddress = emailAddress;
             Password = password;

@@ -14,7 +14,7 @@ namespace RoeiVereniging.ViewModels
     {
         private List<ReservationViewDTO> _allReservations = new();
         private readonly GlobalViewModel _global;
-
+        private readonly IAuthService _auth;
 
         public IList<TableColumnDefinition> ReservationColumns { get; }
 
@@ -28,12 +28,13 @@ namespace RoeiVereniging.ViewModels
         private readonly UserRepository _userRepo;
         private readonly BoatRepository _boatRepo;
 
-        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global)
+        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global, IAuthService auth)
         {
             _reservationService = reservationService;
             _userRepo = new UserRepository();
             _boatRepo = new BoatRepository();
             _global = global;
+            _auth = auth;
 
 
             // Fill the columns, the BindingPath must mattch the name of a public property on the object pushed to the table component
@@ -46,12 +47,12 @@ namespace RoeiVereniging.ViewModels
                 new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime },
             };
 
-        LoadForCurrentUser();
+            LoadForCurrentUser();
         }
 
         private void LoadForCurrentUser()
         {
-            User? user = _userRepo.Get(_global.user.Id);
+            User? user = _userRepo.Get(_global.currentUser.Id);
             if (user == null) return;
 
             var boats = _boatRepo.GetAll();
