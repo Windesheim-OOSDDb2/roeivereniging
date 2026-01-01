@@ -77,7 +77,7 @@ namespace RoeiVereniging.ViewModels
         //}
 
         private readonly IUserRepository _userRepository;
-        public List<User> Users { get; set; } = new();
+        public ObservableCollection<User> Users { get; set; } = new();
 
         public IList<TableColumnDefinition> UserTableColumns { get; }
 
@@ -97,11 +97,10 @@ namespace RoeiVereniging.ViewModels
 
             UserTableColumns = new List<TableColumnDefinition>
             {
-                new () { Header = "ID", BindingPath = "UserId", HeaderType = TableHeaderType.Select },
-                new () { Header = "Naam", BindingPath = "Name", HeaderType = TableHeaderType.Select }
-                //new () { Header = "Achternaam", BindingPath = "-", HeaderType = TableHeaderType.Select },
-                //new () { Header = "Registratiedatum", BindingPath = "-", HeaderType = TableHeaderType.Select },
-                //new () { Header = "Laatst actief", BindingPath = "-", HeaderType = TableHeaderType.Select }
+                new () { Header = "Voornaam", BindingPath = "FirstName", HeaderType = TableHeaderType.Select },
+                new () { Header = "Achternaam", BindingPath = "LastName", HeaderType = TableHeaderType.Select },
+                new () { Header = "Registratie datum", BindingPath = "RegistrationDate", HeaderType = TableHeaderType.Select },
+                new () { Header = "Laatst actief", BindingPath = "LastActiveDate", HeaderType = TableHeaderType.Select }
             };
         }
 

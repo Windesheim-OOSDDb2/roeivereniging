@@ -20,11 +20,11 @@
 
         public int DamageCount { get; set; }
 
-        public int RegistrationDate { get; set; }
+        public string RegistrationDate { get; set; }
 
-        public int LastActiveDate { get; set; }
+        public string LastActiveDate { get; set; }
 
-        public UserDTO(int userId, string firstName, string lastName)
+        public UserDTO(int userId, string firstName, string lastName, string registrationDate, string lastActiveDate)
         {
             UserId = userId;
             //Name = name;
@@ -35,8 +35,8 @@
             //Level = level;
             //ReservationsCount = reservationsCount;
             //DamageCount = damageCount;
-            //RegistrationDate = registrationDate;
-            //LastActiveDate = lastActiveDate;
+            RegistrationDate = registrationDate;
+            LastActiveDate = lastActiveDate;
         }
 
     }
