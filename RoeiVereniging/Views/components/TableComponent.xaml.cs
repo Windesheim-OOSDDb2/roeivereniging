@@ -173,9 +173,11 @@ public partial class TableComponent : ContentView
         {
             var grid = new Grid { ColumnSpacing = 0, RowSpacing = 0, BackgroundColor = Color.FromArgb("#5fa6e8") };
 
+            // Iterate through columns to create cells for each column
             for (int i = 0; i < Columns.Count; i++)
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = ParseWidthToGridlength(Columns[i].Width) });
+
                 var label = new Label
                 {
                     VerticalOptions = LayoutOptions.Center,
@@ -186,24 +188,34 @@ public partial class TableComponent : ContentView
                     BackgroundColor = Color.FromArgb("#5fa6e8"),
                     Padding = new Thickness(12, 8),
                 };
+
+                // Bind the text of the label to the respective column data
                 label.SetBinding(
-                    Label.TextProperty, 
+                    Label.TextProperty,
                     new Binding(
                         Columns[i].BindingPath,
                         stringFormat: Columns[i].StringFormat
                 ));
+
                 Grid.SetColumn(label, i);
-                var tap = new TapGestureRecognizer();
-                tap.Tapped += (_, __) =>
-                {
-                    if (RowClickedCommand?.CanExecute(null) == true)
-                        RowClickedCommand.Execute(grid.BindingContext);
-                };
 
-                grid.GestureRecognizers.Add(tap);
+                // Add the label to the row
                 grid.Children.Add(label);
-
             }
+
+            // Create the click event for the row
+            var tap = new TapGestureRecognizer();
+            tap.Tapped += (_, __) =>
+            {
+                // Execute RowClickedCommand only if it's valid
+                if (RowClickedCommand?.CanExecute(grid.BindingContext) == true)
+                {
+                    RowClickedCommand.Execute(grid.BindingContext);
+                }
+            };
+
+            // Add TapGestureRecognizer to the grid (which represents a row)
+            grid.GestureRecognizers.Add(tap);
 
             return grid;
         });

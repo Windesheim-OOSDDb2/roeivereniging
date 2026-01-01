@@ -6,6 +6,7 @@ using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Repositories;
 using RoeiVereniging.Views;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace RoeiVereniging.ViewModels
@@ -18,8 +19,15 @@ namespace RoeiVereniging.ViewModels
 
         public ICommand RowTappedCommand => new Command<ReservationViewDTO>(async reservation =>
         {
-            await Shell.Current.GoToAsync(
-                $"{nameof(JouwSaus)}?id={reservation.UserId}");
+            // Await the previous navigation to complete before starting a new one
+            try
+            {
+                await Shell.Current.GoToAsync($"/ReservationDetailView?id={reservation.ReservationId}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.WriteLine($"navigation error: {ex.Message}");
+            }
         });
 
         public IList<TableColumnDefinition> ReservationColumns { get; }
