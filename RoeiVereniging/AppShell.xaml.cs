@@ -28,6 +28,7 @@ namespace RoeiVereniging
             Routing.RegisterRoute(nameof(ReservationDetailView), typeof(ReservationDetailView));
             Routing.RegisterRoute(nameof(ReportDamageView), typeof(ReportDamageView));
             Routing.RegisterRoute(nameof(DamageHistoryView), typeof(DamageHistoryView));
+            Routing.RegisterRoute(nameof(BoatListView), typeof(BoatListView));
             Routing.RegisterRoute(nameof(AddUserView), typeof(AddUserView));
         }
 
