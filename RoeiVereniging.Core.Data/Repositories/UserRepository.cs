@@ -29,10 +29,10 @@ namespace RoeiVereniging.Core.Repositories
             ");
 
             string hashedPassword = PasswordHelper.HashPassword("test");
-            string now = DateTime.UtcNow.ToString("o");
+            //string now = DateTime.UtcNow.ToString("o");
             InsertMultipleWithTransaction(new List<string> {
-                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(1,'Test', 'User','test@test.nl', '{hashedPassword}', {(int)Role.User}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{now}', '{now}')",
-                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(2,'Test', 'User 2','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{now}', '{now}')"
+                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(1,'Test', 'User','test@test.nl', '{hashedPassword}', {(int)Role.User}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')",
+                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(2,'Test', 'User 2','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss} ', ' {DateTime.Now:yyyy-MM-dd HH:mm:ss}')"
             });
         }
 
@@ -57,9 +57,10 @@ namespace RoeiVereniging.Core.Repositories
                                    reader.GetString(4), // password
                                    (Role)reader.GetInt32(5), //role
                                    (BoatLevel)reader.GetInt32(6), //boat level
-                                   DateOnly.FromDateTime(reader.GetDateTime(7)) //dateOfBirth
-                                   //reg, // registrationDate
-                                   //last // lastActiveDate
+                                   DateOnly.FromDateTime(reader.GetDateTime(7)), //dateOfBirth
+                                   reader.GetDateTime(8)
+                               //reg, // registrationDate
+                               //last // lastActiveDate
                                );
                 user.RegistrationDate = reg;
                 user.LastActiveDate = last;
@@ -89,9 +90,10 @@ namespace RoeiVereniging.Core.Repositories
                                    reader.GetString(4),
                                    (Role)reader.GetInt32(5),
                                    (BoatLevel)reader.GetInt32(6),
-                                   DateOnly.FromDateTime(reader.GetDateTime(7))
-                                   //reg,
-                                   //last
+                                   DateOnly.FromDateTime(reader.GetDateTime(7)),
+                                   reader.GetDateTime(8)
+                               //reg,
+                               //last
                                );
                 user.RegistrationDate = reg;
                 user.LastActiveDate = last;
@@ -109,8 +111,8 @@ namespace RoeiVereniging.Core.Repositories
             List<User> users = new List<User>();
             while (reader.Read())
             {
-                var reg = DateTime.Parse(reader.GetString(8));
-                var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
+                //var reg = DateTime.Parse(reader.GetString(8));
+                //var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
                 users.Add(new User(
                                    reader.GetInt32(0),
                                    reader.GetString(1),
@@ -119,9 +121,9 @@ namespace RoeiVereniging.Core.Repositories
                                    reader.GetString(4),
                                    (Role)reader.GetInt32(5),
                                    (BoatLevel)reader.GetInt32(6),
-                                   DateOnly.FromDateTime(reader.GetDateTime(7))
-                                   //reg,
-                                   //last
+                                   DateOnly.FromDateTime(reader.GetDateTime(7)),
+                                   reader.GetDateTime(8)
+                               //last
                                ));
                 //user.RegistrationDate = reg;
                 //user.LastActiveDate = last;
@@ -157,7 +159,7 @@ namespace RoeiVereniging.Core.Repositories
             newuser.RegistrationDate = DateTime.Parse(now);
             newuser.LastActiveDate = newuser.RegistrationDate;
 
-            return new User(newId, newuser.FirstName, newuser.LastName, newuser.EmailAddress, newuser.Password, newuser.Role, newuser.Level, newuser.DateOfBirth);
+            return new User(newId, newuser.FirstName, newuser.LastName, newuser.EmailAddress, newuser.Password, newuser.Role, newuser.Level, newuser.DateOfBirth, newuser.RegistrationDate);
         }
  
         public void UpdateLastActive(int userId)
