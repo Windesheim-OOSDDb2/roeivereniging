@@ -17,7 +17,7 @@ namespace RoeiVereniging.ViewModels
         private readonly GlobalViewModel _global;
         private readonly IAuthService _auth;
 
-        public ICommand RowTappedCommand => new Command<ReservationViewDTO>(async reservation =>
+        public ICommand RowClickedCommand => new Command<ReservationViewDTO>(async reservation =>
         {
             // Await the previous navigation to complete before starting a new one
             try

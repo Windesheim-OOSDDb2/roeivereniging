@@ -12,11 +12,8 @@ namespace RoeiVereniging.Views
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Debug.WriteLine("Query parameters: " + string.Join(", ", query.Select(kvp => $"{kvp.Key}: {kvp.Value}")));
-
             if (query.TryGetValue("id", out var stringId) && int.TryParse(stringId.ToString(), out int reservationId))
             {
-                Debug.WriteLine($"Successfully received ReservationId (converted): {reservationId}");
                 BindingContext = new ReservationDetailViewModel(reservationId);
             }
             else

@@ -205,7 +205,7 @@ public partial class TableComponent : ContentView
 
             // Create the click event for the row
             var tap = new TapGestureRecognizer();
-            tap.Tapped += (_, __) =>
+            tap.Tapped += (obj, e) =>
             {
                 // Execute RowClickedCommand only if it's valid
                 if (RowClickedCommand?.CanExecute(grid.BindingContext) == true)

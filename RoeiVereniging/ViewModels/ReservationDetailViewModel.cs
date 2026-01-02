@@ -12,6 +12,8 @@ public partial class ReservationDetailViewModel : ObservableObject
     private readonly BoatRepository _boatRepo = new BoatRepository();
     private readonly DamageRepository _damageRepository = new DamageRepository();
 
+    public IEnumerable<Damage> Top3RecentDamages => Damages.Take(3);
+
     // The reservation details will be loaded based on ReservationId
     private ReservationViewDTO _reservation;
     public ReservationViewDTO Reservation
@@ -45,7 +47,7 @@ public partial class ReservationDetailViewModel : ObservableObject
         LoadReservationDetails(reservationId);
         if (Reservation != null)
         {
-            LoadDamages(reservationId);
+            LoadDamagesByBoatId(Reservation.BoatId);
         }
         else
         {
@@ -76,59 +78,56 @@ public partial class ReservationDetailViewModel : ObservableObject
         await Shell.Current.GoToAsync($"DamageHistoryView?boatId={Reservation.BoatId}");
     }
 
-    private void LoadDamages(int reservationId)
+    private void LoadDamagesByBoatId(int BoatId)
     {
         Damages.Clear();
-        var getReservation = _reservationRepository.Get(reservationId);
-        if (getReservation == null)
+
+        var damages = _damageRepository.GetByBoatId(BoatId);
+
+        foreach (var damage in damages)
         {
-            Debug.WriteLine($"No reservation found for ID: {reservationId}");
-            return;
+            Damages.Add(damage);
         }
-
-        var boatId = getReservation.BoatId;
-        var damages = _damageRepository.GetByBoatId(boatId);
-
-        if (damages != null)
-        {
-            foreach (var damage in damages)
-            {
-                Damages.Add(damage);
-            }
-        }
-
         OnPropertyChanged(nameof(Damages));
+        OnPropertyChanged(nameof(Top3RecentDamages));
     }
 
     private void LoadReservationDetails(int reservationId)
     {
-        Debug.WriteLine($"Loading reservation details for ID: {reservationId} {reservationId.GetType()}");
-        var reservation = _reservationRepository.Get(reservationId);
+        Reservation reservation = _reservationRepository.Get(reservationId);
         if (reservation == null)
         {
-            Debug.WriteLine($"No reservation found for ID: {reservationId}");
+            // Maybe return to overview page or such? or popup? @Daniel
             return;
         }
 
-        var boat = _boatRepo.Get(reservation.BoatId);
+        Boat? boat = _boatRepo.Get(reservation.BoatId);
+
         if (boat == null)
         {
-            Debug.WriteLine($"No boat found for ID: {reservation.BoatId}");
+            // Maybe return to overview page or such? or popup? @Daniel
             return;
         }
 
-        // Set the Reservation object
-        Reservation = new ReservationViewDTO(
-            reservation.Id,
-            reservation.UserId,
-            boat.Level,
-            reservation.BoatId,
-            boat.Name,
-            reservation.StartTime,
-            reservation.EndTime,
-            boat.SeatsAmount,
-            boat.SteeringWheelPosition ? SteeringMode.Required : SteeringMode.Disabled
-        );
+        try
+        {
+
+            // Set the Reservation object
+            Reservation = new ReservationViewDTO(
+                reservation.Id,
+                reservation.UserId,
+                boat.Level,
+                boat.BoatId,
+                boat.Name,
+                reservation.StartTime,
+                reservation.EndTime,
+                boat.SeatsAmount,
+                boat.SteeringWheelPosition ? SteeringMode.Required : SteeringMode.Disabled
+            );
+        } catch (Exception e)
+        {
+            // Maybe return to overview page or such? or popup? @Daniel
+        }
 
         boatDisplayText = boat.Name;
         steeringModeText = boat.SteeringWheelPosition.ToString();
@@ -144,6 +143,5 @@ public partial class ReservationDetailViewModel : ObservableObject
         OnPropertyChanged(nameof(Reservation));
         OnPropertyChanged(nameof(startTime));
         OnPropertyChanged(nameof(endTime));
-        OnPropertyChanged(nameof(Damages));
     }
 }

@@ -5,7 +5,6 @@
              x:Class="RoeiVereniging.Views.ReservationDetailView"
              xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
              xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
-             x:DataType="vm:ReservationDetailViewModel" 
              BackgroundColor="White">
 
     <ScrollView>
@@ -58,13 +57,48 @@
             </Grid>
 
             <!-- Damage Section -->
-            <Frame BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12, 12, 12, 32" Margin="0,20,0,60" WidthRequest="1550">
-                <ScrollView Orientation="Horizontal">
-                    <HorizontalStackLayout VerticalOptions="Center" Spacing="12">
-                        <Label Text="Schade:" TextColor="#082757" VerticalOptions="Center"/>
-                       
-                    </HorizontalStackLayout>
-                </ScrollView>
+            <Frame BackgroundColor="#DEE6F8"
+               CornerRadius="8"
+               Padding="12"
+               Margin="0,20,0,60"
+               WidthRequest="1550">
+                <Label Text="Schade:"
+                   TextColor="#082757"
+                   FontAttributes="Bold"
+                />
+
+                <CollectionView ItemsSource="{Binding Top3RecentDamages}"
+                        ItemsLayout="HorizontalList"
+                        HeightRequest="120">
+
+                    <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                            <Frame BackgroundColor="White"
+                               BorderColor="#0854d1"
+                               Padding="12"
+                               WidthRequest="220">  
+
+                                <VerticalStackLayout>
+                                        <Label Text="{Binding Description}"
+                                   FontAttributes="Bold"
+                                   TextColor="#082757"/>
+
+                                        <Label Text="{Binding Severity}"
+                                   TextColor="#082757"/>
+
+                                        <Label Text="{Binding ReportedAt,
+                                   StringFormat='Gemeld op {0:dd-MM-yyyy}'}"
+                                   FontSize="12"
+                                   TextColor="#555"/>
+                                    </VerticalStackLayout>
+
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+
             </Frame>
 
             <Button Text="Schade melden"
