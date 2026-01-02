@@ -27,9 +27,9 @@ public partial class BoatListView : ContentPage
         await Shell.Current.GoToAsync(nameof(BoatListView), true);
     }
 
-    private void OnGebruikersClicked(object sender, EventArgs e)
+    private async void OnGebruikersClicked(object sender, EventArgs e)
     {
-        // TODO: Navigatie naar gebruikerspagina
+        await Shell.Current.GoToAsync(nameof(UserView), true);
     }
 
     private void OnReparatiesClicked(object sender, EventArgs e)

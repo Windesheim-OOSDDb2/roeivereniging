@@ -20,15 +20,14 @@ namespace RoeiVereniging.Core.Models
 
         public DateTime RegistrationDate { get; set; }
 
-        [ObservableProperty]
-        private DateTime lastActiveDate;
+        public DateTime LastActiveDate { get; set; }
 
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public Role Role { get; set; }
         public BoatLevel Level { get; set; } = BoatLevel.Beginner;
         public DateOnly DateOfBirth { get; set; }
-        public User(int id, string firstName, string lastName, string emailAddress, string password, Role role, BoatLevel level, DateOnly dateofBirth, DateTime registrationDate, DateTime lastActiveDate) : base(id, $"{firstName} {lastName}")
+        public User(int id, string firstName, string lastName, string emailAddress, string password, Role role, BoatLevel level, DateOnly dateofBirth) : base(id, $"{firstName} {lastName}")
         {
             UserId = id;
             FirstName = firstName;
@@ -38,8 +37,8 @@ namespace RoeiVereniging.Core.Models
             Role = role;
             Level = level;
             DateOfBirth = dateofBirth;
-            RegistrationDate = registrationDate;
-            LastActiveDate = lastActiveDate;
+            //RegistrationDate = registrationDate;
+            //LastActiveDate = lastActiveDate;
         }
     }
 }

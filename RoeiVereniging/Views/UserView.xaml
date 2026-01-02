@@ -64,7 +64,7 @@
                     Clicked="OnOverzichtClicked"/>
         </Grid>
             <components:TableComponent
-                Columns="{Binding UserTableContents}"
+                Columns="{Binding UserTableColumns}"
                 ItemsSource="{Binding Users}" />
     </VerticalStackLayout>
 </ContentPage>

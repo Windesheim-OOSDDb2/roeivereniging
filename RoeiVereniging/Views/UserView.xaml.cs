@@ -13,7 +13,7 @@ public partial class UserView : ContentPage
     }
     private async void OnBotenClicked(object sender, EventArgs e)
     {
-        //await Shell.Current.GoToAsync(nameof(BoatListView), true);
+        await Shell.Current.GoToAsync(nameof(BoatListView), true);
     }
 
     private async void OnGebruikersClicked(object sender, EventArgs e)
