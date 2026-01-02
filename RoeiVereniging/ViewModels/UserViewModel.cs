@@ -15,13 +15,8 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class UserViewModel : BaseViewModel
     {
-        private readonly UserRepository _userRepo;
-        
-        private List<UserDTO> _allUsers = new();
-
-
         private readonly IUserRepository _userRepository;
-        public ObservableCollection<User> Users { get; set; } = new();
+        public ObservableCollection<User> Users { get; } = new();
 
         public IList<TableColumnDefinition> UserTableColumns { get; }
 
@@ -51,13 +46,15 @@ namespace RoeiVereniging.ViewModels
         public void LoadUsers()
         {
             Users.Clear();
-            foreach (var user in _userRepository.GetAll())
+            foreach (User user in _userRepository.GetAll())
             {
+                Debug.WriteLine($"{user.FirstName}");
                 Users.Add(user);
             }
         }
 
-        public void RefreshUsers()
+        // sure this is needed?
+        public void Refresh()
         {
             LoadUsers();
         }

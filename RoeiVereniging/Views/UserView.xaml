@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RoeiVereniging.Views.UserView"
+             xmlns:viewmodels="clr-namespace:RoeiVereniging.ViewModels"
              xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
     <VerticalStackLayout>
-        <components:PageHeader PageTitle="Gebruikersoverzicht"/>
         <!--Temporary header till component is made-->
 
         <Grid BackgroundColor="White" Padding="0,10" ColumnSpacing="0">
@@ -64,7 +64,8 @@
                     Clicked="OnOverzichtClicked"/>
         </Grid>
             <components:TableComponent
+                ItemsSource="{Binding Users}" 
                 Columns="{Binding UserTableColumns}"
-                ItemsSource="{Binding Users}" />
+            />
     </VerticalStackLayout>
 </ContentPage>

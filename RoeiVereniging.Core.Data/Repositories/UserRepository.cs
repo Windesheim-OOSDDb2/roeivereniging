@@ -29,10 +29,9 @@ namespace RoeiVereniging.Core.Repositories
             ");
 
             string hashedPassword = PasswordHelper.HashPassword("test");
-            //string now = DateTime.UtcNow.ToString("o");
             InsertMultipleWithTransaction(new List<string> {
                 $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(1,'Test', 'User','test@test.nl', '{hashedPassword}', {(int)Role.User}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')",
-                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(2,'Test', 'User 2','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss} ', ' {DateTime.Now:yyyy-MM-dd HH:mm:ss}')"
+                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(2,'Michaellean', 'User 2','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss} ', ' {DateTime.Now:yyyy-MM-dd HH:mm:ss}')"
             });
         }
 
@@ -47,8 +46,8 @@ namespace RoeiVereniging.Core.Repositories
 
             if (reader.Read())
             {
-                var reg = DateTime.Parse(reader.GetString(8));
-                var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
+                //var reg = DateTime.Parse(reader.GetString(8));
+                //var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
                 user = new User(
                                    reader.GetInt32(0), // user_id
                                    reader.GetString(1), // firstName
@@ -59,11 +58,10 @@ namespace RoeiVereniging.Core.Repositories
                                    (BoatLevel)reader.GetInt32(6), //boat level
                                    DateOnly.FromDateTime(reader.GetDateTime(7)), //dateOfBirth
                                    reader.GetDateTime(8)
-                               //reg, // registrationDate
                                //last // lastActiveDate
                                );
-                user.RegistrationDate = reg;
-                user.LastActiveDate = last;
+                //user.RegistrationDate = reg;
+                //user.LastActiveDate = last;
             }
             CloseConnection();
 
