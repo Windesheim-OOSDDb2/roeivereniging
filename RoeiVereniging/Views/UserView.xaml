@@ -63,7 +63,15 @@
                     VerticalOptions="Center"
                     Clicked="OnOverzichtClicked"/>
         </Grid>
-            <components:TableComponent
+        <!-- Lid toevoegen knop -->
+                <Button
+                Text="Lid toevoegen"
+                Command="{Binding GoToAddUserCommand}"
+                StyleClass="PrimaryButton"
+                BackgroundColor="#5FA6E8"
+                HorizontalOptions="Fill" />
+        
+        <components:TableComponent
                 ItemsSource="{Binding Users}" 
                 Columns="{Binding UserTableColumns}"
             />

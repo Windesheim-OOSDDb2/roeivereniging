@@ -20,17 +20,11 @@ namespace RoeiVereniging.ViewModels
 
         public IList<TableColumnDefinition> UserTableColumns { get; }
 
-        public ICommand GoToAddUserCommand { get; }
 
         public UserViewModel()
         {
             _userRepository = new UserRepository();
             LoadUsers();
-
-            //GoToAddUserCommand = new Command(async () =>
-            //{
-            //    await Shell.Current.GoToAsync(nameof(AddUserPage));
-            //});
 
             UserTableColumns = new List<TableColumnDefinition>
             {
@@ -51,16 +45,10 @@ namespace RoeiVereniging.ViewModels
             }
         }
 
-        // sure this is needed?
-        public void Refresh()
+        [RelayCommand]
+        private async Task GoToAddUser()
         {
-            LoadUsers();
+            await Shell.Current.GoToAsync(nameof(AddUserView));
         }
-
-        //public async void GoToAddUserPage()
-        //{
-        //    // Implement navigation to AddUserPage
-        //    // await Shell.Current.GoToAsync(nameof(AddUserPage));
-        //}
     }
 }
