@@ -50,6 +50,7 @@ namespace RoeiVereniging
             builder.Services.AddTransient<AdminDashboardView>().AddTransient<AdminDashboardViewModel>();
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
             builder.Services.AddTransient<AddUserView>().AddTransient<AddUserViewModel>();
+            builder.Services.AddTransient<UserView>().AddTransient<UserViewModel>();
             builder.Services.AddSingleton<GlobalViewModel>();
             builder.Services.AddSingleton<AppShell>();
 
