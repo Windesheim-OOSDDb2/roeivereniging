@@ -206,5 +206,12 @@ namespace RoeiVereniging.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(AddUserView));
         }
+
+        [RelayCommand]
+        public async Task Logout()
+        {
+            _global.Logout();
+            await Shell.Current.GoToAsync("//LoginView");
+        }
     }
 }

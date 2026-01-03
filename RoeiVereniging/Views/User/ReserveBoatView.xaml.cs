@@ -18,5 +18,5 @@ public partial class ReserveBoatView : ContentPage
     {
         if (_viewModel == null) return;
         _viewModel.AttributeChanged();
-    }
+    } 
 }
