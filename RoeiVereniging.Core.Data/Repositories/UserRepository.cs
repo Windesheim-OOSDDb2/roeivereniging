@@ -47,14 +47,14 @@ namespace RoeiVereniging.Core.Repositories
             if (reader.Read())
             {
                 user = new User(
-                    reader.GetInt32(0), // user_id
-                    reader.GetString(1), // firstName
-                    reader.GetString(2), // lastName
-                    reader.GetString(3), // email
-                    reader.GetString(4), // password
-                    (Role)reader.GetInt32(5), //role
-                    (BoatLevel)reader.GetInt32(6), //boat level
-                    DateOnly.FromDateTime(reader.GetDateTime(7)), //dateOfBirth
+                    reader.GetInt32(0), 
+                    reader.GetString(1), 
+                    reader.GetString(2), 
+                    reader.GetString(3), 
+                    reader.GetString(4), 
+                    (Role)reader.GetInt32(5),
+                    (BoatLevel)reader.GetInt32(6), 
+                    DateOnly.FromDateTime(reader.GetDateTime(7)), 
                     reader.GetDateTime(8),
                     reader.GetDateTime(9)
                 );

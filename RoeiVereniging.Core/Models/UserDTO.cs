@@ -27,14 +27,8 @@
         public UserDTO(int userId, string firstName, string lastName, string registrationDate, string lastActiveDate)
         {
             UserId = userId;
-            //Name = name;
             FirstName = firstName;
             LastName = lastName;
-            //EmailAddress = emailAddress;
-            //DateofBirth = dateofBirth;
-            //Level = level;
-            //ReservationsCount = reservationsCount;
-            //DamageCount = damageCount;
             RegistrationDate = registrationDate;
             LastActiveDate = lastActiveDate;
         }
