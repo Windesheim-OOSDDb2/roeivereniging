@@ -8,7 +8,7 @@ namespace RoeiVereniging.Views.Components;
 
 public partial class TableComponent : ContentView
 {
-
+    public int rowCounter = 0;
     public event Action? FilterRequested;
     private void OnFilterRequested()
     {
@@ -171,7 +171,18 @@ public partial class TableComponent : ContentView
 
         TableView.ItemTemplate = new DataTemplate(() =>
         {
-            var grid = new Grid { ColumnSpacing = 0, RowSpacing = 0, BackgroundColor = Color.FromArgb("#5fa6e8") };
+            var grid = new Grid { ColumnSpacing = 0, RowSpacing = 0, };
+
+            if (rowCounter == 0)
+            {
+                grid.BackgroundColor = Color.FromArgb("#ffffff");
+                rowCounter += 1;
+            }
+            else
+            {
+                grid.BackgroundColor = Color.FromArgb("#dee6f8");
+                rowCounter -= 1;
+            }
 
             // Iterate through columns to create cells for each column
             for (int i = 0; i < Columns.Count; i++)
@@ -183,10 +194,9 @@ public partial class TableComponent : ContentView
                     VerticalOptions = LayoutOptions.Center,
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center,
-                    FontSize = 14,
+                    FontSize = 20,
                     TextColor = Colors.Black,
-                    BackgroundColor = Color.FromArgb("#5fa6e8"),
-                    Padding = new Thickness(12, 8),
+                    Padding = new Thickness(12, 18),
                 };
 
                 // Bind the text of the label to the respective column data
@@ -217,7 +227,12 @@ public partial class TableComponent : ContentView
             // Add TapGestureRecognizer to the grid (which represents a row)
             grid.GestureRecognizers.Add(tap);
 
-            return grid;
+            return new Border
+            {
+                Stroke = Colors.Black,
+                StrokeThickness = 1,
+                Content = grid
+            };
         });
     }
 
@@ -231,6 +246,7 @@ public partial class TableComponent : ContentView
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
+            FontSize = 20,
             Padding = new Thickness(12, 8),
             BackgroundColor = Color.FromArgb("#0854D1")
         };
@@ -256,6 +272,7 @@ public partial class TableComponent : ContentView
         {
             Title = column.Header,
             BackgroundColor = Color.FromArgb("#0854D1"),
+            FontSize = 20,
             TextColor = Colors.White
         };
 
@@ -279,6 +296,7 @@ public partial class TableComponent : ContentView
             Command = column.Command,
             BackgroundColor = Color.FromArgb("#5fa6e8"),
             TextColor = Colors.Black,
+            FontSize = 20,
             Padding = new Thickness(12, 8)
         };
     }

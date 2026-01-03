@@ -6,8 +6,8 @@
      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
      BackgroundColor="White">
 
-    <VerticalStackLayout Spacing="10">
-        <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
+    <VerticalStackLayout>
+        <Frame StyleClass="row-header" BackgroundColor="#0854D1">
 
             <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0">
 
