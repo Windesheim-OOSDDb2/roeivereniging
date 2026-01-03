@@ -10,6 +10,7 @@ public static class RouteGuard
         { nameof(AddBoatView), Role.Admin },
         { nameof(AdminDashboardView), Role.Admin },
         { nameof(BoatListView), Role.Admin },
+        { nameof(UserView), Role.Admin },
 
         // USER routes
         { nameof(ReservationView), Role.User },
