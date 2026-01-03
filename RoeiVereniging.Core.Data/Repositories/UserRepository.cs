@@ -46,25 +46,21 @@ namespace RoeiVereniging.Core.Repositories
 
             if (reader.Read())
             {
-                //var reg = DateTime.Parse(reader.GetString(8));
-                //var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
                 user = new User(
-                                   reader.GetInt32(0), // user_id
-                                   reader.GetString(1), // firstName
-                                   reader.GetString(2), // lastName
-                                   reader.GetString(3), // email
-                                   reader.GetString(4), // password
-                                   (Role)reader.GetInt32(5), //role
-                                   (BoatLevel)reader.GetInt32(6), //boat level
-                                   DateOnly.FromDateTime(reader.GetDateTime(7)), //dateOfBirth
-                                   reader.GetDateTime(8)
-                               //last // lastActiveDate
-                               );
-                //user.RegistrationDate = reg;
-                //user.LastActiveDate = last;
+                    reader.GetInt32(0), // user_id
+                    reader.GetString(1), // firstName
+                    reader.GetString(2), // lastName
+                    reader.GetString(3), // email
+                    reader.GetString(4), // password
+                    (Role)reader.GetInt32(5), //role
+                    (BoatLevel)reader.GetInt32(6), //boat level
+                    DateOnly.FromDateTime(reader.GetDateTime(7)), //dateOfBirth
+                    reader.GetDateTime(8),
+                    reader.GetDateTime(9)
+                );
+
             }
             CloseConnection();
-
             return user;
         }
 
@@ -81,20 +77,17 @@ namespace RoeiVereniging.Core.Repositories
                 var reg = DateTime.Parse(reader.GetString(8));
                 var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
                 user = new User(
-                                   reader.GetInt32(0),
-                                   reader.GetString(1),
-                                   reader.GetString(2),
-                                   reader.GetString(3),
-                                   reader.GetString(4),
-                                   (Role)reader.GetInt32(5),
-                                   (BoatLevel)reader.GetInt32(6),
-                                   DateOnly.FromDateTime(reader.GetDateTime(7)),
-                                   reader.GetDateTime(8)
-                               //reg,
-                               //last
-                               );
-                user.RegistrationDate = reg;
-                user.LastActiveDate = last;
+                    reader.GetInt32(0),
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                    reader.GetString(4),
+                    (Role)reader.GetInt32(5),
+                    (BoatLevel)reader.GetInt32(6),
+                    DateOnly.FromDateTime(reader.GetDateTime(7)),
+                    reader.GetDateTime(8),
+                    reader.GetDateTime(9)
+                );
             }
             CloseConnection();
             return user;
@@ -109,28 +102,40 @@ namespace RoeiVereniging.Core.Repositories
             List<User> users = new List<User>();
             while (reader.Read())
             {
-                //var reg = DateTime.Parse(reader.GetString(8));
-                //var last = reader.IsDBNull(9) ? reg : DateTime.Parse(reader.GetString(9));
                 users.Add(new User(
-                                   reader.GetInt32(0),
-                                   reader.GetString(1),
-                                   reader.GetString(2),
-                                   reader.GetString(3),
-                                   reader.GetString(4),
-                                   (Role)reader.GetInt32(5),
-                                   (BoatLevel)reader.GetInt32(6),
-                                   DateOnly.FromDateTime(reader.GetDateTime(7)),
-                                   reader.GetDateTime(8)
-                               //last
-                               ));
-                //user.RegistrationDate = reg;
-                //user.LastActiveDate = last;
-
-                //users.Add(user);
+                    reader.GetInt32(0),
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                    reader.GetString(4),
+                    (Role)reader.GetInt32(5),
+                    (BoatLevel)reader.GetInt32(6),
+                    DateOnly.FromDateTime(reader.GetDateTime(7)),
+                    reader.GetDateTime(8),
+                    reader.GetDateTime(9)
+                ));
             }
             CloseConnection();
             return users;
         }
+           
+        public User? UpdateActiveStatus(User user)
+        {
+            OpenConnection();
+            var now = DateTime.UtcNow.ToString("o");
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = "UPDATE user SET lastActiveDate = @lastActiveDate WHERE user_id = @userId";
+            cmd.Parameters.AddWithValue("@lastActiveDate", now);
+            cmd.Parameters.AddWithValue("@userId", user.UserId);
+
+            cmd.ExecuteNonQuery();
+            CloseConnection();
+
+            //update user object
+            user.LastActiveDate = DateTime.Parse(now);
+            return user;
+        }
+                 
 
         public User? Set(User newuser)
         {
@@ -157,7 +162,7 @@ namespace RoeiVereniging.Core.Repositories
             newuser.RegistrationDate = DateTime.Parse(now);
             newuser.LastActiveDate = newuser.RegistrationDate;
 
-            return new User(newId, newuser.FirstName, newuser.LastName, newuser.EmailAddress, newuser.Password, newuser.Role, newuser.Level, newuser.DateOfBirth, newuser.RegistrationDate);
+            return new User(newId, newuser.FirstName, newuser.LastName, newuser.EmailAddress, newuser.Password, newuser.Role, newuser.Level, newuser.DateOfBirth, newuser.RegistrationDate, newuser.LastActiveDate);
         }
  
         public void UpdateLastActive(int userId)

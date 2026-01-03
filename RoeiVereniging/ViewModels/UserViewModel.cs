@@ -27,8 +27,6 @@ namespace RoeiVereniging.ViewModels
             _userRepository = new UserRepository();
             LoadUsers();
 
-            // Searchbar filtering implemented here
-
             //GoToAddUserCommand = new Command(async () =>
             //{
             //    await Shell.Current.GoToAsync(nameof(AddUserPage));

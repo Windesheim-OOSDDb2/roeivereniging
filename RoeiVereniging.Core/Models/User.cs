@@ -25,7 +25,7 @@ namespace RoeiVereniging.Core.Models
         public Role Role { get; set; }
         public BoatLevel Level { get; set; } = BoatLevel.Beginner;
         public DateOnly DateOfBirth { get; set; }
-        public User(int id, string firstName, string lastName, string emailAddress, string password, Role role, BoatLevel level, DateOnly dateofBirth, DateTime registrationDate) : base(id, $"{firstName} {lastName}")
+        public User(int id, string firstName, string lastName, string emailAddress, string password, Role role, BoatLevel level, DateOnly dateofBirth, DateTime registrationDate, DateTime lastActiveDate) : base(id, $"{firstName} {lastName}")
         {
             UserId = id;
             FirstName = firstName;
@@ -36,7 +36,7 @@ namespace RoeiVereniging.Core.Models
             Level = level;
             DateOfBirth = dateofBirth;
             RegistrationDate = registrationDate;
-            //LastActiveDate = lastActiveDate;
+            LastActiveDate = lastActiveDate;
         }
     }
 }
