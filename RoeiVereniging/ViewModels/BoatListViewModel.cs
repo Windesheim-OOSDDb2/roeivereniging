@@ -24,6 +24,18 @@ namespace RoeiVereniging.ViewModels
 
         public ICommand GoToAddBoatCommand { get; }
 
+        public ICommand RowClickedCommand => new Command<Boat>(async boat =>
+        {
+            try
+            {
+                await Shell.Current.GoToAsync($"/BoatDetailView?boatId={boat.BoatId}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"navigation error: {ex.Message}");
+            }
+        });
+
         public BoatListViewModel()
         {
             _boatRepository = new BoatRepository();
@@ -32,6 +44,7 @@ namespace RoeiVereniging.ViewModels
             {
                 await Shell.Current.GoToAsync(nameof(AddBoatView));
             });
+
 
             BoatTableColumns = new List<TableColumnDefinition>
             {
@@ -61,6 +74,8 @@ namespace RoeiVereniging.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        
 
     }
 }

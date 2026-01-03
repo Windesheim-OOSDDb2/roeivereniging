@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:RoeiVereniging.ViewModels"
-             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
-             x:Class="RoeiVereniging.Views.BoatListView"
+             x:Class="RoeiVereniging.Views.BoatDetailView"
              BackgroundColor="White">
-
-    <ContentPage.BindingContext>
-        <viewmodels:BoatListViewModel />
-    </ContentPage.BindingContext>
 
     <VerticalStackLayout Spacing="0">
 
-        
-        <!--Temporary header till component is made-->
-        
+        <!-- Header gekopieerd van BoatListView -->
         <Grid BackgroundColor="White" Padding="0,10" ColumnSpacing="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -74,9 +66,43 @@
         <HorizontalStackLayout Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 10">
         </HorizontalStackLayout>
 
-        <components:TableComponent
-            Columns="{Binding BoatTableColumns}"
-            ItemsSource="{Binding Boats}"
-            RowClickedCommand="{Binding RowClickedCommand}"/>
+        <!-- Jouw eigen content hieronder -->
+        <Grid Margin="0,20,0,0" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="36">
+            <!-- Row 1 -->
+            <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Boot Id/Naam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding BoatDisplayText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Stuur: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding SteeringModeText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Row 2 -->
+            <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Niveau: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding BoatLevelText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Aantal roeiers: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Row 3 -->
+            <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Status: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding BoatStatusText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>
