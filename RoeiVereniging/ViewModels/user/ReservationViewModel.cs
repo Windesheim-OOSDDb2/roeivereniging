@@ -6,6 +6,7 @@ using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Repositories;
 using RoeiVereniging.Views;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace RoeiVereniging.ViewModels
@@ -15,6 +16,19 @@ namespace RoeiVereniging.ViewModels
         private List<ReservationViewDTO> _allReservations = new();
         private readonly GlobalViewModel _global;
         private readonly IAuthService _auth;
+
+        public ICommand RowClickedCommand => new Command<ReservationViewDTO>(async reservation =>
+        {
+            // Await the previous navigation to complete before starting a new one
+            try
+            {
+                await Shell.Current.GoToAsync($"/ReservationDetailView?id={reservation.ReservationId}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.WriteLine($"navigation error: {ex.Message}");
+            }
+        });
 
         public IList<TableColumnDefinition> ReservationColumns { get; }
 
@@ -103,14 +117,5 @@ namespace RoeiVereniging.ViewModels
             OnPropertyChanged(nameof(BoatNames));
             OnPropertyChanged(nameof(Levels));
         }
-
-        [ObservableProperty]
-        private string? selectedBoatName;
-
-        [ObservableProperty]
-        private BoatLevel selectedLevel;
-
-        public string DateSortText => "Datum";
-        public string TimeSortText => "Tijd";
     }
 }

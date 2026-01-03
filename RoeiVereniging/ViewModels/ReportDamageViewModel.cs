@@ -74,7 +74,6 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         private async Task SubmitReport()
         {
-            Debug.WriteLine("wuggelwug");
             if (string.IsNullOrWhiteSpace(Description))
             {
                 FeedbackMessage = "Beschrijving is verplicht.";

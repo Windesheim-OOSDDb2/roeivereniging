@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using RoeiVereniging.Core.Models;
+﻿
 using RoeiVereniging.ViewModels;
-
+using System.Diagnostics;
 namespace RoeiVereniging.Views
 {
     public partial class ReservationDetailView : ContentPage, IQueryAttributable
@@ -18,11 +12,17 @@ namespace RoeiVereniging.Views
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.TryGetValue("Reservation", out var reservationObj) && reservationObj is ReservationViewDTO reservation)
+            if (query.TryGetValue("id", out var stringId) && int.TryParse(stringId.ToString(), out int reservationId))
             {
-                BindingContext = new ReservationDetailViewModel(reservation);
+                BindingContext = new ReservationDetailViewModel(reservationId);
+            }
+            else
+            {
+                Debug.WriteLine("invalid param");
             }
         }
+
+
 
         private async void OnReportDamageClicked(object sender, EventArgs e)
         {
@@ -38,21 +38,9 @@ namespace RoeiVereniging.Views
         {
             if (BindingContext is ReservationDetailViewModel vm)
             {
-                int boatId = vm.BoatId;
-                await Shell.Current.GoToAsync($"DamageHistoryView?boatId={boatId}");
+                int reservationId = vm.Reservation.ReservationId;
+                await Shell.Current.GoToAsync($"DamageHistoryView?ReservationId={reservationId}");
             }
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            if (BindingContext is ReservationDetailViewModel vm)
-            {
-                vm.LoadDamages();
-            }
-        }
-
-
-
     }
 }
