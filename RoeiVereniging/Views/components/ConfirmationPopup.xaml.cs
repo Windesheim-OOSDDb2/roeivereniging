@@ -5,7 +5,7 @@ namespace RoeiVereniging.Views.components;
 
 public partial class ConfirmationPopup : Popup
 {
-    public ConfirmationPopup(string title, string message, string footer, [Optional] ImageSource? qrCodeImage)
+    public ConfirmationPopup(string title, string message, string footer, ImageSource? qrCodeImage)
     {
         InitializeComponent();
         MessageTitle.Text = title;
