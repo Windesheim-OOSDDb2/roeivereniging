@@ -41,7 +41,6 @@ namespace RoeiVereniging.ViewModels
             Users.Clear();
             foreach (User user in _userRepository.GetAll())
             {
-                Debug.WriteLine($"{user.FirstName}");
                 Users.Add(user);
             }
         }
