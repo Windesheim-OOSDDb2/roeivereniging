@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Data.Repositories;
 using RoeiVereniging.Core.Models;
 using System;
@@ -21,6 +22,9 @@ namespace RoeiVereniging.ViewModels
 
         public ObservableCollection<Damage> Damages { get; } = new();
 
+        public IRelayCommand DeleteBoatCommand { get; }
+        public IRelayCommand EditBoatCommand { get; }
+
         [ObservableProperty]
         private string boatDisplayText;
 
@@ -40,7 +44,21 @@ namespace RoeiVereniging.ViewModels
         {
             LoadBoatDetails(boatId);
             LoadDamagesByBoatId(boatId);
+            DeleteBoatCommand = new RelayCommand(OnDeleteBoat);
+            EditBoatCommand = new RelayCommand(OnEditBoat);
 
+        }
+
+        private void OnDeleteBoat()
+        {
+            // Implement boat deletion logic here
+            Debug.WriteLine("DeleteBoat command executed.");
+        }
+
+        private void OnEditBoat()
+        {
+            // Implement boat editing logic here
+            Debug.WriteLine("EditBoat command executed.");
         }
 
         private void LoadBoatDetails(int boatId)
