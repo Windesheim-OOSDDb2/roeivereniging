@@ -13,7 +13,6 @@ public partial class ConfirmationPopup : Popup
         MessageFooter.Text = footer;
         if (qrCodeImage == null)
         {
-            QrCodeImage.Source = "noimage.png";
             QrCode.IsVisible = false;
             QrCodeImage.IsVisible = false;
         } else
