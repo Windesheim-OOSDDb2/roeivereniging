@@ -210,8 +210,7 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public async Task Logout()
         {
-            _global.Logout();
-            await Shell.Current.GoToAsync("//LoginView");
+            await _global.Logout();
         }
     }
 }

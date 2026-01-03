@@ -6,9 +6,10 @@ namespace RoeiVereniging.ViewModels
     {
         public User? currentUser { get; set; }
 
-        public void Logout()
+        public async Task Logout()
         {
             currentUser = null;
+            await Shell.Current.GoToAsync("//LoginView");
         }
     }
 }
