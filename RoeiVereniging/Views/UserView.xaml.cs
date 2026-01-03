@@ -1,27 +1,16 @@
 using Microsoft.Maui.Controls;
 using RoeiVereniging.ViewModels;
-using RoeiVereniging.Views.Admin;
-
+using System.Threading.Tasks;
 
 namespace RoeiVereniging.Views;
 
-public partial class BoatListView : ContentPage
+public partial class UserView : ContentPage
 {
-	public BoatListView()
-	{
-		InitializeComponent();
-		BindingContext = new BoatListViewModel();
-	}
-
-    protected override void OnAppearing()
+    public UserView()
     {
-        base.OnAppearing();
-        if (BindingContext is BoatListViewModel vm)
-        {
-            vm.Refresh();
-        }
+        InitializeComponent();
+        BindingContext = new UserViewModel();
     }
-
     private async void OnBotenClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(BoatListView), true);
@@ -37,8 +26,8 @@ public partial class BoatListView : ContentPage
         // TODO: Navigatie naar reparatiespagina
     }
 
-    private async void OnOverzichtClicked(object sender, EventArgs e)
+    private void OnOverzichtClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(AdminDashboardView), true);
+        // TODO: Navigatie naar overzichtspagina
     }
-}
+} 

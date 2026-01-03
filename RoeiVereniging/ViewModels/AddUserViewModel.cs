@@ -58,7 +58,7 @@ namespace RoeiVereniging.ViewModels
         public void AddUser()
         {
             if (!ValidateInputs()) return;
-            User newUser = _userService.Set(new User(0, $"{FirstName} {LastName}", Email!, PasswordHelper.HashPassword(Password!), SelectedRole, SelectedBoatLevel, DateOnly.FromDateTime(DateOfBirth)));
+            User newUser = _userService.Set(new User(0, FirstName!, LastName!, Email!, PasswordHelper.HashPassword(Password!), SelectedRole, SelectedBoatLevel, DateOnly.FromDateTime(DateOfBirth), DateTime.Now, DateTime.Now));
             ShowSuccessPopup(newUser);
             GoBack();
         }
