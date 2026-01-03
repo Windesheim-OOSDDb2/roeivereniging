@@ -52,22 +52,19 @@ namespace RoeiVereniging.ViewModels
         private void OnDeleteBoat()
         {
             // Implement boat deletion logic here
-            Debug.WriteLine("DeleteBoat command executed.");
         }
 
         private void OnEditBoat()
         {
             // Implement boat editing logic here
-            Debug.WriteLine("EditBoat command executed.");
         }
 
         private void LoadBoatDetails(int boatId)
         {
-            var boat = _boatRepo.GetById(boatId);
+            Boat boat = _boatRepo.GetById(boatId);
 
             if (boat == null)
             {
-                Debug.WriteLine("Boat could not be loaded.");
                 return;
             }
 
@@ -88,9 +85,9 @@ namespace RoeiVereniging.ViewModels
         {
             Damages.Clear();
 
-            var damages = _damageRepository.GetByBoatId(boatId);
+            List<Damage> damages = _damageRepository.GetByBoatId(boatId);
 
-            foreach (var damage in damages)
+            foreach (Damage damage in damages)
             {
                 Damages.Add(damage);
             }
