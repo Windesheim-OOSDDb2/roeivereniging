@@ -9,7 +9,9 @@ namespace RoeiVereniging.Core.Models
     public enum Role : ushort
     {
         User = 0,
-        Admin = 1
+        Admin = 1,
+        Wedstrijdcommissaris = 2,
+        Materiallcommissaris = 3
     }
 }
     

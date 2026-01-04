@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Views;
+using RoeiVereniging.Views.components;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
 using System.Globalization;
+using QRCoder;
+using static QRCoder.PayloadGenerator;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -24,6 +27,7 @@ namespace RoeiVereniging.ViewModels
         private readonly IReservationService _reservationService;
         private readonly IBoatService _boatService;
         private readonly GlobalViewModel _global;
+        private readonly IQrCodeService _qrCodeService;
         public ObservableCollection<BoatType> BoatTypes => Enum.GetValues(typeof(BoatType)).Cast<BoatType>().ToObservableCollection();
 
         // Put all levels except "Alles" in an collection
@@ -60,10 +64,12 @@ namespace RoeiVereniging.ViewModels
         private TimeSpan OldTime = DateTime.Now.TimeOfDay;
         private DateTime OldDate = DateTime.Now;
 
-        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, GlobalViewModel global)
+
+        public ReserveBoatViewModel(IReservationService reservationService, IBoatService boatService, GlobalViewModel global, IQrCodeService qrCodeService)
         {
             _reservationService = reservationService;
             _boatService = boatService;
+            _qrCodeService = qrCodeService;
             Reservations = new(_reservationService.GetAll());
             Boats = new ObservableCollection<Boat>(_boatService.GetAll() ?? new List<Boat>());
             _global = global;
@@ -79,10 +85,9 @@ namespace RoeiVereniging.ViewModels
 
             if (selectedBoat == null)
             {
-                await UpdateErrorUi("Geen passende boot gevonden voor de gegeven criteria.");
                 return;
             }
-            else if (_reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2) 
+            else if (_global.currentUser.Role != Role.Admin && _global.currentUser.Role != Role.Materiallcommissaris && _reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2)
             {
                 await UpdateErrorUi("Je hebt al 2 actieve reserveringen. Verwijder een bestaande reservering om een nieuwe te maken.");
                 return;
@@ -90,15 +95,30 @@ namespace RoeiVereniging.ViewModels
 
             _reservationService.Set(new Reservation(1, _global.currentUser.Id, ReservationDateTime, ReservationDateTime.AddHours(2), DateTime.Now, selectedBoat.Id));
 
+            // Show confirmation popup with reservation details and QR code
+            ShowPopup(selectedBoat, ReservationDateTime);
+
+            ResetInputs();
+        }
+
+        public void ShowPopup(Boat selectedBoat, DateTime reservationDateTime)
+        {
             string titleText = "Reservering bevestigd";
             string dateText = date.ToString("d MMMM yyyy", new CultureInfo("nl-NL"));
             string timeText = time.ToString(@"hh\:mm");
             string popupText = $"De reservering voor {dateText} om {timeText} is succesvol gereserveerd!\nTot dan!";
             string footerText = "Ps. zet de reservering in je eigen agenda!.";
-            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText);
-            Shell.Current.CurrentPage.ShowPopup(popup);
+            ImageSource qrCode = GenerateQrCode(selectedBoat, reservationDateTime);
 
-            ResetInputs();
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup(titleText, popupText, footerText, qrCode);
+            Shell.Current.CurrentPage.ShowPopup(popup);
+        }
+
+        private ImageSource GenerateQrCode(Boat selectedBoat, DateTime reservationDateTime)
+        {
+            string payload = new CalendarEvent($"Reservering RoeiMeister", $"Roeien met {selectedBoat.name}", "", reservationDateTime, reservationDateTime.AddHours(2), false).ToString();
+
+            return ImageSource.FromStream(() => _qrCodeService.GenerateQrCode(payload));
         }
 
         public void ResetInputs()
@@ -145,11 +165,38 @@ namespace RoeiVereniging.ViewModels
 
         public Boat? GetBoat()
         {
-            if (Type is BoatType boatType && Difficulty is BoatLevel boatLevel)
+            if (Type is not BoatType boatType || Difficulty is not BoatLevel boatLevel)
             {
-                return _boatService.Get(Amount, true, boatLevel, boatType);
+                UpdateErrorUi("Het gegeven type en of niveau is niet geldig");
+                return null;
             }
-            return null;
+
+            List<Boat> boats = _boatService.Get(Amount, true, boatLevel, boatType);
+            if (boats == null || !boats.Any())
+            {
+                UpdateErrorUi("Geen passende boot gevonden met de gegeven data");
+                return null;
+            }
+
+            var availableBoat = CheckAvailability(boats, date.Date + time);
+            if (availableBoat == null)
+            {
+                UpdateErrorUi("Alle boten zijn bezet voor deze datum en tijd probeer een ander moment");
+            }
+
+            return availableBoat;
+        }
+
+        public Boat? CheckAvailability(List<Boat> boats, DateTime reservationDateTime)
+        {
+            // Get all reservations that overlap with the given reservationDateTime
+            var reservedBoatIds = _reservationService.GetAll()
+                .Where(reservation => reservation.StartTime <= reservationDateTime && reservation.EndTime >= reservationDateTime)
+                .Select(reservation => reservation.BoatId)
+                .ToHashSet();
+
+            // Find the first boat that is not reserved
+            return boats.FirstOrDefault(boat => !reservedBoatIds.Contains(boat.Id));
         }
 
         [RelayCommand]

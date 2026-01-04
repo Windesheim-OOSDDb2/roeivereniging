@@ -2,6 +2,7 @@
 using RoeiVereniging.ViewModels;
 using RoeiVereniging.Views;
 using RoeiVereniging.Views.Admin;
+using System.Diagnostics;
 
 namespace RoeiVereniging
 {
@@ -38,6 +39,8 @@ namespace RoeiVereniging
         private void OnShellNavigating(object sender, ShellNavigatingEventArgs e)
         {
             var targetRoute = e.Target.Location.OriginalString.Split('/').Last();
+
+            _global.CurrentRoute = targetRoute;
 
             // if route is not yet taken into routeguard, there is no protection and any role is required
             if (!RouteGuard.ProtectedRoutes.TryGetValue(targetRoute, out var requiredRole))

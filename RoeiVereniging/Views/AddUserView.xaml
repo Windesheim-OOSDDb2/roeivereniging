@@ -31,7 +31,7 @@
         <!-- Header -->
         
         <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="6">
-            <components:PageHeader PageTitle="Gebruiker toevoegen"/>
+            <components:PageHeader PageTitle="Gebruiker toevoegen" BackTarget="UserView"/>
         </VerticalStackLayout>
         
         <!-- Row 1 -->
