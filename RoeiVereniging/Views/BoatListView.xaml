@@ -12,9 +12,9 @@
 
     <VerticalStackLayout Spacing="0">
 
-        
+
         <!--Temporary header till component is made-->
-        
+
         <Grid BackgroundColor="White" Padding="0,10" ColumnSpacing="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -71,11 +71,22 @@
                     Clicked="OnOverzichtClicked"/>
         </Grid>
 
-        <HorizontalStackLayout Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 10">
-        </HorizontalStackLayout>
+        <Button
+         Text="Boot toevoegen"
+         Command="{Binding GoToAddBoatCommand}"
+         StyleClass="PrimaryButton"
+         BackgroundColor="#5FA6E8"
+         HorizontalOptions="Fill" />
 
+
+        <HorizontalStackLayout 
+            Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 0">
+        </HorizontalStackLayout>
+        
+       
         <components:TableComponent
             Columns="{Binding BoatTableColumns}"
-            ItemsSource="{Binding Boats}" />
+            ItemsSource="{Binding Boats}"
+            RowClickedCommand="{Binding RowClickedCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
