@@ -5,13 +5,20 @@ namespace RoeiVereniging.Views.components;
 
 public partial class ConfirmationPopup : Popup
 {
-    public ConfirmationPopup(string title, string text, string footer)
+    public ConfirmationPopup(string title, string message, string footer, ImageSource? qrCodeImage)
     {
         InitializeComponent();
-
-        MessageTitle.Text = $"{title}";
-        MessageLabel.Text = $"{text}";
-        MessageFooter.Text = $"{footer}";
+        MessageTitle.Text = title;
+        MessageLabel.Text = message;
+        MessageFooter.Text = footer;
+        if (qrCodeImage == null)
+        {
+            QrCode.IsVisible = false;
+            QrCodeImage.IsVisible = false;
+        } else
+        {
+            QrCodeImage.Source = qrCodeImage;
+        }
     }
 
     private void OnDoneClicked(object sender, EventArgs e)
