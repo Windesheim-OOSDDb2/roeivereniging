@@ -16,6 +16,8 @@ public partial class BoatListView : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        ((App)Application.Current).GlobalViewModel.CurrentRoute = nameof(BoatListView);
+
         if (BindingContext is BoatListViewModel vm)
         {
             vm.Refresh();
