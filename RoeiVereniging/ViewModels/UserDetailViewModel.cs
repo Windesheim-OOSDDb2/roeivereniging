@@ -24,25 +24,28 @@ namespace RoeiVereniging.ViewModels
         public IRelayCommand EditUserCommand { get; }
 
         [ObservableProperty]
-        private string firstName;
+        private string firstNameText;
 
         [ObservableProperty]
-        private string lastName;
+        private string lastNameText;
 
         [ObservableProperty]
-        private string emailAddress;
+        private string emailAdressText;
 
         [ObservableProperty]
-        private DateOnly dateOfBirth;
+        private DateOnly dateOfBirthText;
 
         [ObservableProperty]
-        private string boatLevel;
+        private string boatLevelText;
 
         [ObservableProperty]
-        private string reservationCount;
+        private string userIdText;
 
         [ObservableProperty]
-        private string damageCount;
+        private string reservationCountText;
+
+        [ObservableProperty]
+        private string damageCountText;
 
         public UserDetailViewModel(int userId)
         {
@@ -70,21 +73,23 @@ namespace RoeiVereniging.ViewModels
                 return;
             }
 
-            firstName = user.FirstName;
-            lastName = user.LastName;
-            emailAddress = user.EmailAddress;
-            dateOfBirth = user.DateOfBirth;
-            boatLevel = user.Level.ToString();
-            reservationCount = _reservationRepository.GetByUserId(userId).Count().ToString();
-            //damageCount = _damageRepository.GetByUserId = (userId).Count().ToString();
+            firstNameText = user.FirstName;
+            lastNameText = user.LastName;
+            emailAdressText = user.EmailAddress;
+            dateOfBirthText = user.DateOfBirth;
+            boatLevelText = user.Level.ToString();
+            userIdText = user.UserId.ToString();
+            reservationCountText = _reservationRepository.GetByUserId(userId).Count().ToString();
+            damageCountText = _damageRepository.GetByUserId(userId).Count().ToString();
 
-            OnPropertyChanged(nameof(FirstName));
-            OnPropertyChanged(nameof(LastName));
-            OnPropertyChanged(nameof(EmailAddress));
-            OnPropertyChanged(nameof(DateOfBirth));
-            OnPropertyChanged(nameof(BoatLevel));
-            OnPropertyChanged(nameof(ReservationCount));
-            OnPropertyChanged(nameof(DamageCount));
+            OnPropertyChanged(nameof(firstNameText));
+            OnPropertyChanged(nameof(lastNameText));
+            OnPropertyChanged(nameof(emailAdressText));
+            OnPropertyChanged(nameof(dateOfBirthText));
+            OnPropertyChanged(nameof(boatLevelText));
+            OnPropertyChanged(nameof(userIdText));
+            OnPropertyChanged(nameof(reservationCountText));
+            OnPropertyChanged(nameof(damageCountText));
         }
 
     }

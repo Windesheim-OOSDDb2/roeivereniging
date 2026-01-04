@@ -71,13 +71,13 @@
             <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Voornaam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding FirstName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding FirstNameText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
             <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Achternaam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding LastName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding LastNameText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -85,13 +85,13 @@
             <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Email: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding EmailAdress}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding EmailAdressText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
             <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Geboortedatum: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding DateOfBirth}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding DateOfBirthText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -99,13 +99,27 @@
             <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Niveau: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding BoatLevel}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding BoatLevelText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
-            <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+            <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Lid ID: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserIdText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Row 4 -->
+            <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Reserveringen: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding ReservationCount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding ReservationCountText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="3" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Aantal schade: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding DamageCountText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
         </Grid>

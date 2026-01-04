@@ -67,18 +67,18 @@
                    FontAttributes="Bold"
                 />
 
-                <CollectionView ItemsSource="{Binding Top3RecentDamages}"
+                    <CollectionView ItemsSource="{Binding Top3RecentDamages}"
                         ItemsLayout="HorizontalList"
                         HeightRequest="120">
 
-                    <CollectionView.ItemTemplate>
+                        <CollectionView.ItemTemplate>
                             <DataTemplate>
-                            <Frame BackgroundColor="White"
+                                <Frame BackgroundColor="White"
                                BorderColor="#0854d1"
                                Padding="12"
-                               WidthRequest="220">  
+                               WidthRequest="220">
 
-                                <VerticalStackLayout>
+                                    <VerticalStackLayout>
                                         <Label Text="{Binding Description}"
                                    FontAttributes="Bold"
                                    TextColor="#082757"/>
