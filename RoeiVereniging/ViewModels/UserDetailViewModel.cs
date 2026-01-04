@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Repositories;
+using RoeiVereniging.Views;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -20,26 +21,8 @@ namespace RoeiVereniging.ViewModels
         private readonly DamageRepository _damageRepository = new DamageRepository();
         private readonly IReservationRepository _reservationRepository = new ReservationRepository();
 
-        public IRelayCommand DeleteUserCommand { get; }
-        public IRelayCommand EditUserCommand { get; }
-
         [ObservableProperty]
-        private string firstNameText;
-
-        [ObservableProperty]
-        private string lastNameText;
-
-        [ObservableProperty]
-        private string emailAdressText;
-
-        [ObservableProperty]
-        private DateOnly dateOfBirthText;
-
-        [ObservableProperty]
-        private string boatLevelText;
-
-        [ObservableProperty]
-        private string userIdText;
+        private User userData;
 
         [ObservableProperty]
         private string reservationCountText;
@@ -50,15 +33,15 @@ namespace RoeiVereniging.ViewModels
         public UserDetailViewModel(int userId)
         {
             LoadUserDetails(userId);
-            DeleteUserCommand = new RelayCommand(OnDeleteUser);
-            EditUserCommand = new RelayCommand(OnEditUser);
         }
-        
+
+        [RelayCommand]
         private void OnDeleteUser()
         {
             // Logic to delete user
         }
 
+        [RelayCommand]
         private void OnEditUser()
         {
             // Logic to edit user
@@ -72,24 +55,13 @@ namespace RoeiVereniging.ViewModels
                 return;
             }
 
-            firstNameText = user.FirstName;
-            lastNameText = user.LastName;
-            emailAdressText = user.EmailAddress;
-            dateOfBirthText = user.DateOfBirth;
-            boatLevelText = user.Level.ToString();
-            userIdText = user.UserId.ToString();
+            userData = user;
             reservationCountText = _reservationRepository.GetByUserId(userId).Count().ToString();
             damageCountText = _damageRepository.GetByUserId(userId).Count().ToString();
 
-            OnPropertyChanged(nameof(firstNameText));
-            OnPropertyChanged(nameof(lastNameText));
-            OnPropertyChanged(nameof(emailAdressText));
-            OnPropertyChanged(nameof(dateOfBirthText));
-            OnPropertyChanged(nameof(boatLevelText));
-            OnPropertyChanged(nameof(userIdText));
+            OnPropertyChanged(nameof(userData));
             OnPropertyChanged(nameof(reservationCountText));
             OnPropertyChanged(nameof(damageCountText));
         }
-
     }
 }
