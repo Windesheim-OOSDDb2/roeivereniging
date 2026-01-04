@@ -5,5 +5,5 @@ public partial class UserDetailView : ContentPage
 	public UserDetailView()
 	{
 		InitializeComponent();
-	}
+    }
 }

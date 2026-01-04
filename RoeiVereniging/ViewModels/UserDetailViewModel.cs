@@ -76,7 +76,7 @@ namespace RoeiVereniging.ViewModels
             dateOfBirth = user.DateOfBirth;
             boatLevel = user.Level.ToString();
             reservationCount = _reservationRepository.GetByUserId(userId).Count().ToString();
-            //damageCount = _damageRepository.GetByUserId=(userId).Count().ToString();
+            //damageCount = _damageRepository.GetByUserId = (userId).Count().ToString();
 
             OnPropertyChanged(nameof(FirstName));
             OnPropertyChanged(nameof(LastName));
