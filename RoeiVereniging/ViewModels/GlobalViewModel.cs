@@ -4,6 +4,12 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class GlobalViewModel : BaseViewModel
     {
-        public required User currentUser { get; set; }
+        public User? currentUser { get; set; }
+
+        public async Task Logout()
+        {
+            currentUser = null;
+            await Shell.Current.GoToAsync("//LoginView");
+        }
     }
 }

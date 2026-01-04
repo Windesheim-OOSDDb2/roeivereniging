@@ -21,6 +21,7 @@ namespace RoeiVereniging.Core.Services
 
             if (PasswordHelper.VerifyPassword(password, user.Password))
             {
+                _userRepo.UpdateActiveStatus(user);
                 return user;
             }
 

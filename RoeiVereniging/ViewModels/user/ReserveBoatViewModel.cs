@@ -218,19 +218,26 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        public async Task GoToAddBoats()
-        {
-            await Shell.Current.GoToAsync(nameof(AddBoatView));
-        }
-        [RelayCommand]
         public async Task GoToWeatherPage()
         {
             await Shell.Current.GoToAsync(nameof(WeatherView));
+        }
+
+        [RelayCommand]
+        public async Task GoToBoatList()
+        {
+            await Shell.Current.GoToAsync(nameof(BoatListView));
         }
         [RelayCommand]
         public async Task GoToAddUserPage()
         {
             await Shell.Current.GoToAsync(nameof(AddUserView));
+        }
+
+        [RelayCommand]
+        public async Task Logout()
+        {
+            await _global.Logout();
         }
     }
 }
