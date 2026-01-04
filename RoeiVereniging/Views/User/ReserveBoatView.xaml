@@ -38,6 +38,7 @@
         <!-- header -->
         <Image Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="0" Source="logo.png" HorizontalOptions="Start" />
         <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" FontAttributes="Bold" TextColor="#082757" />
+        <ImageButton Command="{Binding LogoutCommand}" Grid.Column="4" Grid.ColumnSpan="2"  Grid.Row="0" Source="logout.png" HorizontalOptions="End" />
 
         <!-- Row 2 -->
         
