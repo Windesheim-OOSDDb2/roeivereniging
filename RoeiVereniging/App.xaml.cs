@@ -10,5 +10,7 @@ namespace RoeiVereniging
             InitializeComponent();
             MainPage = shell;
         }
+
+        public GlobalViewModel GlobalViewModel { get; } = new GlobalViewModel();
     }
 }
