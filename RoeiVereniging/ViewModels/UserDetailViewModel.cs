@@ -69,7 +69,6 @@ namespace RoeiVereniging.ViewModels
             User user = _userRepository.Get(userId);
             if (user == null)
             {
-                Debug.WriteLine($"User with ID {userId} not found.");
                 return;
             }
 
