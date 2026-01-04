@@ -11,7 +11,7 @@ namespace RoeiVereniging
         private readonly IAuthService _auth;
 
         public AppShell(GlobalViewModel global, IAuthService auth)
-        {   
+        {
             InitializeComponent();
 
             _global = global;
@@ -25,7 +25,13 @@ namespace RoeiVereniging
             Routing.RegisterRoute(nameof(WeatherView), typeof(WeatherView));
             Routing.RegisterRoute(nameof(AdminDashboardView), typeof(AdminDashboardView));
             Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
+            Routing.RegisterRoute(nameof(ReservationDetailView), typeof(ReservationDetailView));
+            Routing.RegisterRoute(nameof(ReportDamageView), typeof(ReportDamageView));
+            Routing.RegisterRoute(nameof(DamageHistoryView), typeof(DamageHistoryView));
+            Routing.RegisterRoute(nameof(BoatListView), typeof(BoatListView));
             Routing.RegisterRoute(nameof(AddUserView), typeof(AddUserView));
+            Routing.RegisterRoute(nameof(UserView), typeof(UserView));
+            Routing.RegisterRoute(nameof(BoatDetailView), typeof(BoatDetailView));
         }
 
         private void OnShellNavigating(object sender, ShellNavigatingEventArgs e)

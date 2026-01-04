@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
+using System.Diagnostics;
 
 namespace RoeiVereniging.Core.Data.Repositories
 {
@@ -129,14 +130,14 @@ namespace RoeiVereniging.Core.Data.Repositories
 
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);    
+                    int reservation_id = reader.GetInt32(0);    
                     int userId = reader.GetInt32(1);
                     DateTime startTime = DateTime.Parse(reader.GetString(2));
                     DateTime endTime = DateTime.Parse(reader.GetString(3));
                     DateTime createdAt = DateTime.Parse(reader.GetString(4));
                     int boatId = reader.GetInt32(5);
                     int messaged = reader.GetInt32(6);
-                    reservationList.Add(new Reservation(id, userId, startTime, endTime, createdAt, boatId, messaged));
+                    reservationList.Add(new Reservation(reservation_id, userId, startTime, endTime, createdAt, boatId, messaged));
                 }
             }
             CloseConnection();
@@ -159,9 +160,10 @@ namespace RoeiVereniging.Core.Data.Repositories
             return count;
         }
 
-        public Reservation? Get(int id)
+        public Reservation Get(int id)
         {
-            return reservationList.FirstOrDefault(r => r.Id == id);
+            GetAll();
+            return reservationList.First(r => r.Id == id);
         }
 
         public List<Reservation> GetByDate(DateTime date)

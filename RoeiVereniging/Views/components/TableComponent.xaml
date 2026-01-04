@@ -6,24 +6,22 @@
      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
      BackgroundColor="White">
 
-    <VerticalStackLayout Spacing="10">
-        <Frame StyleClass="row-header" BackgroundColor="#0854D1" Padding="10">
+    <VerticalStackLayout>
+        <Frame StyleClass="row-header" BackgroundColor="#0854D1">
 
             <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0">
 
             </Grid>
         </Frame>
 
-        <ScrollView>
-            <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame StyleClass="row-card" BackgroundColor="#5fa6e8" Padding="10">
-                            <Grid x:Name="RowGrid" ColumnSpacing="0" RowSpacing="0" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
+        <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8" Padding="10">
+                        <Grid x:Name="RowGrid" ColumnSpacing="0" RowSpacing="0" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentView>

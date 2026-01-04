@@ -16,7 +16,11 @@
 
         <components:PageHeader PageTitle="Mijn reserveringen"/>
 
-        <components:TableComponent ItemsSource="{Binding MyReservations}" Columns="{Binding ReservationColumns}" />
+        <components:TableComponent 
+            ItemsSource="{Binding MyReservations}" 
+            Columns="{Binding ReservationColumns}"
+            RowClickedCommand="{Binding RowClickedCommand}"
+        />
 
     </VerticalStackLayout>
 
