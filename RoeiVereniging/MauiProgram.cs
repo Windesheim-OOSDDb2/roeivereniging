@@ -35,6 +35,7 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddSingleton<IEmailService, EmailService>();
             builder.Services.AddSingleton<IAuthService, AuthService>();
+            builder.Services.AddSingleton<IQrCodeService, QrCodeService>();
 
             // Repositories
             builder.Services.AddSingleton<IBoatRepository, BoatRepository>();
