@@ -38,8 +38,8 @@ namespace RoeiVereniging.Core.Data.Repositories
             string sql = "SELECT * FROM boat";
 
             OpenConnection();
-            using var command = new SqliteCommand(sql, Connection);
-            using var reader = command.ExecuteReader();
+            using SqliteCommand command = new SqliteCommand(sql, Connection);
+            using SqliteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
@@ -51,7 +51,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                 int seats = reader.GetInt32(5);
                 bool steering = reader.GetBoolean(6);
 
-                var boat = new Boat(
+                Boat boat = new Boat(
                     id,
                     name,
                     seats,
@@ -81,7 +81,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public List<Boat> Get(int amount, bool steeringwheelposition, BoatLevel difficulty, BoatType type)
         {
-            var boats = boatList.Where(b =>
+            List<Boat> boats = boatList.Where(b =>
                 b.SeatsAmount == amount &&
                 b.SteeringWheelPosition == steeringwheelposition &&
                 b.Level == difficulty &&
