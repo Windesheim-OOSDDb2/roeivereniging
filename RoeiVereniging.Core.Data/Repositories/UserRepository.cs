@@ -31,7 +31,8 @@ namespace RoeiVereniging.Core.Repositories
             string hashedPassword = PasswordHelper.HashPassword("test");
             InsertMultipleWithTransaction(new List<string> {
                 $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(1,'Test', 'User','test@test.nl', '{hashedPassword}', {(int)Role.User}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')",
-                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(2,'Michaellean', 'User 2','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss} ', ' {DateTime.Now:yyyy-MM-dd HH:mm:ss}')"
+                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(2,'Michaellean', 'User 2','admin@test.nl', '{hashedPassword}', {(int)Role.Admin}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss} ', ' {DateTime.Now:yyyy-MM-dd HH:mm:ss}')",
+                $@"INSERT OR IGNORE INTO user (user_id, firstName, lastName, email, password, role, level, dateOfBirth, registrationDate, lastActiveDate) VALUES(3,'Materiaal', 'Commisaris','mats@com.nl', '{hashedPassword}', {(int)Role.Materiallcommissaris}, 1, '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss} ', ' {DateTime.Now:yyyy-MM-dd HH:mm:ss}')"
             });
         }
 
