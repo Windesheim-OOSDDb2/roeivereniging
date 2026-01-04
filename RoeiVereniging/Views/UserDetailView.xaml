@@ -66,7 +66,7 @@
         </HorizontalStackLayout>
 
 
-        <Grid Margin="0,50,0,0" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="36">
+        <Grid Margin="0,50,0,0" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="36">
             <!-- Row 1 -->
             <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
