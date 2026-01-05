@@ -26,7 +26,10 @@ namespace RoeiVereniging.Core.Data.Repositories
             InsertMultipleWithTransaction(new List<string> {
                $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
                $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(4,'Vliegende Vis',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Fixing},3, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(5,'Gloeiende Kwal',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Broken},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(6,'Oreo Orca',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Broken},2, true)"
             });
             LoadBoats();
         }

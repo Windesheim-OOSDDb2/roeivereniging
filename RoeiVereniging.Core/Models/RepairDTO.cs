@@ -15,7 +15,7 @@ namespace RoeiVereniging.Core.Models
 
         public string Schade { get; set; } = "Geen schade";
 
-        public DateTime? Notificationdate { get; set; }
+        public DateTime? NotificationDate { get; set; }
 
     }
 }

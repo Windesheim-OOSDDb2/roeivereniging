@@ -6,9 +6,6 @@
              x:Class="RoeiVereniging.Views.RepairView"
              BackgroundColor="White">
 
-    <ContentPage.BindingContext>
-        <viewmodels:RepairViewModel />
-    </ContentPage.BindingContext>
     <VerticalStackLayout Spacing="0">
         <components:AdminPageHeader />
         

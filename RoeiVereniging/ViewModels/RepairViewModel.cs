@@ -16,25 +16,52 @@ namespace RoeiVereniging.ViewModels
 {
     public class RepairViewModel : BaseViewModel
     {
-        private readonly IBoatRepository _boatRepository = new BoatRepository();
-        private readonly DamageRepository _damageRepository = new DamageRepository();
+        private readonly IBoatRepository _boatRepository;
+        private readonly DamageRepository _damageRepository;
+        private readonly GlobalViewModel _global;
+        private readonly IAuthService _auth;
 
         public ObservableCollection<RepairDTO> Repairs { get; } = new();
         public IList<TableColumnDefinition> RepairTableColumns { get; }
 
-        public RepairViewModel()
+        public RepairViewModel(IBoatRepository boatRepository, DamageRepository damageRepository, GlobalViewModel global, IAuthService auth)
         {
-            _damageRepository = new DamageRepository();
-            _boatRepository = new BoatRepository();
+            _boatRepository = boatRepository;
+            _damageRepository = damageRepository;
+            _global = global;
+            _auth = auth;
+
             LoadRepairs();
 
             RepairTableColumns = new List<TableColumnDefinition>
             {
                 new () { Header = "Schade", BindingPath = "Schade", HeaderType = TableHeaderType.Select },
-                new () {Header = "Bootnaam", BindingPath= "BoatName", HeaderType = TableHeaderType.Select},
-                new () { Header = "Status", BindingPath = "BoatStatus", HeaderType = TableHeaderType.Select },
+                new () { Header = "Bootnaam", BindingPath= "BoatName", HeaderType = TableHeaderType.Select},
+                new () { Header = "Status", BindingPath = "Status", HeaderType = TableHeaderType.Select },
                 new () { Header = "Meldingdatum", BindingPath = "NotificationDate", HeaderType = TableHeaderType.SortDate, StringFormat = "{0:dd-MM-yyyy}"  }
             };
+        }
+
+        private RepairDTO MapToDto(Boat boat, Damage? lastDamage)
+        {
+            var dto = new RepairDTO
+            {
+                BoatId = boat.BoatId,
+                BoatName = boat.Name,
+                Status = boat.BoatStatus,
+                NotificationDate = lastDamage?.ReportedAt
+            };
+
+            if (boat.BoatStatus == BoatStatus.Fixing || boat.BoatStatus == BoatStatus.Broken)
+            {
+                dto.Schade = lastDamage == null ? "Schade" : lastDamage.Description;
+            }
+            else
+            {
+                dto.Schade = "Geen schade";
+            }
+
+            return dto;
         }
 
         public void LoadRepairs()
@@ -51,25 +78,7 @@ namespace RoeiVereniging.ViewModels
                     .OrderByDescending(d => d.ReportedAt)
                     .FirstOrDefault();
 
-                var dto = new RepairDTO
-                {
-                    BoatId = boat.BoatId,
-                    BoatName = boat.Name,
-                    Status = boat.BoatStatus,
-                };
-
-                if (boat.BoatStatus == BoatStatus.Fixing || boat.BoatStatus == BoatStatus.Broken)
-                {
-                    dto.Schade = lastDamage == null ? "Schade" : lastDamage.Description;
-                    dto.Notificationdate = lastDamage?.ReportedAt;
-                }
-                else
-                {
-                    dto.Schade = "Geen schade";
-                    dto.Notificationdate = null;
-                }
-
-                Repairs.Add(dto);
+                Repairs.Add(MapToDto(boat, lastDamage));
             }
         }
     }

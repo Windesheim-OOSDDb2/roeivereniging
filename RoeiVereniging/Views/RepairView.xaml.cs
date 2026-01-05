@@ -1,10 +1,17 @@
+using RoeiVereniging.ViewModels;
 namespace RoeiVereniging.Views;
 
 public partial class RepairView : ContentPage
 {
-	public RepairView()
+	public RepairView(RepairViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = new ViewModels.RepairViewModel();
+		BindingContext = viewModel;
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as RepairViewModel)?.LoadRepairs();
+    }
+
 }
