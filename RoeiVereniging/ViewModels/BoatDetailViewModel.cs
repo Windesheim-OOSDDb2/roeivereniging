@@ -44,6 +44,9 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private Boat boat;
 
+        [ObservableProperty]
+        private int boatId;
+
         public BoatDetailViewModel(int boatId)
         {
             LoadBoatDetails(boatId);
