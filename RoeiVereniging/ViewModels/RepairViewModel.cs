@@ -52,7 +52,7 @@ namespace RoeiVereniging.ViewModels
                 NotificationDate = lastDamage?.ReportedAt
             };
 
-            if (boat.BoatStatus == BoatStatus.Fixing || boat.BoatStatus == BoatStatus.Broken)
+            if (boat.BoatStatus == BoatStatus.Onderhoud || boat.BoatStatus == BoatStatus.Kapot)
             {
                 dto.Schade = lastDamage == null ? "Schade" : lastDamage.Description;
             }
