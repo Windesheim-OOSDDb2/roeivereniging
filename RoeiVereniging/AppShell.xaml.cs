@@ -34,6 +34,7 @@ namespace RoeiVereniging
             Routing.RegisterRoute(nameof(UserView), typeof(UserView));
             Routing.RegisterRoute(nameof(BoatDetailView), typeof(BoatDetailView));
             Routing.RegisterRoute(nameof(UserDetailView), typeof(UserDetailView));
+            Routing.RegisterRoute(nameof(EditBoatView), typeof(EditBoatView));
         }
 
         private void OnShellNavigating(object sender, ShellNavigatingEventArgs e)
@@ -58,6 +59,7 @@ namespace RoeiVereniging
                     await GoToAsync($"///{nameof(LoginView)}");
                 });
             }
+            
         }
     }
 }

@@ -24,9 +24,9 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR REPLACE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
             });
             LoadBoats();
         }
@@ -118,5 +118,28 @@ namespace RoeiVereniging.Core.Data.Repositories
             CloseConnection();
             return item;
         }
+
+        public Boat Update(Boat item)
+        {
+            string updateQuery = @"UPDATE boat SET name = @Name, SteeringwheelPosition = @SteeringWheelPosition, seats_amount = @Seats_Amount, level = @Level, type = @Type, status = @Status WHERE boat_id = @BoatId;";
+
+            OpenConnection();
+            using (SqliteCommand command = new(updateQuery, Connection))
+            {
+                command.Parameters.AddWithValue("@Name", item.Name);
+                command.Parameters.AddWithValue("@SteeringWheelPosition", item.SteeringWheelPosition);
+                command.Parameters.AddWithValue("@Seats_Amount", item.SeatsAmount);
+                command.Parameters.AddWithValue("@Level", (int)item.Level);
+                command.Parameters.AddWithValue("@Type", (int)item.Type);
+                command.Parameters.AddWithValue("@Status", (int)item.BoatStatus);
+                command.Parameters.AddWithValue("@BoatId", item.BoatId);
+
+                command.ExecuteNonQuery();
+            }
+
+            CloseConnection();
+            return item;
+        }
+
     }
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             xmlns:conv="clr-namespace:RoeiVereniging.Converters"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             x:Class="RoeiVereniging.Views.EditBoatView">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid BackgroundColor="White">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="4">
+            <components:PageHeader PageTitle="Boot Aanpassen"/>
+        </VerticalStackLayout>
+
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Naam"/>
+            <Border Stroke="Black" StrokeThickness="0.5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Entry TextColor="#082757" Text="{Binding Name}" Visual="Default" />
+            </Border>
+        </VerticalStackLayout>
+
+
+        <VerticalStackLayout Grid.Column="2"  Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Label TextColor="#082757" Text="Boot soort"/>
+            <Border Stroke="#DEE6F8" StrokeThickness="0">
+                <Picker
+                    BackgroundColor="#DEE6F8"
+                    TextColor="#082757"
+                    ItemsSource="{Binding BoatTypes}"
+                    SelectedItem="{Binding BoatType, Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+
+            </Border>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Button 
+            Text="Boot Aanpassen" 
+            Command="{Binding EditBoatCommand}" 
+            IsEnabled="{Binding AddProductEnabled}" 
+            HorizontalOptions="FillAndExpand"
+            BackgroundColor="#082757"
+            TextColor="#DEE6F8"/>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,5,0">
+            <Button 
+            Text="Annuleren" 
+            Command="{Binding CancelCommand}"
+            HorizontalOptions="FillAndExpand"
+            BackgroundColor="#D7263D"
+            TextColor="#DEE6F8"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
