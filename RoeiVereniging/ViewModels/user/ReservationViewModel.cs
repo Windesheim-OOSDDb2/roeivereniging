@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Data.Repositories;
+using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
 using RoeiVereniging.Core.Repositories;
@@ -16,6 +17,10 @@ namespace RoeiVereniging.ViewModels
         private List<ReservationViewDTO> _allReservations = new();
         private readonly GlobalViewModel _global;
         private readonly IAuthService _auth;
+        private readonly IReservationService _reservationService;
+        private readonly IUserRepository _userRepo;
+        private readonly IBoatRepository _boatRepo;
+
 
         public ICommand RowClickedCommand => new Command<ReservationViewDTO>(async reservation =>
         {
@@ -36,17 +41,11 @@ namespace RoeiVereniging.ViewModels
 
         public List<string> BoatNames { get; private set; } = new();
         public List<BoatLevel> Levels { get; private set; } = new();
-
-
-        private readonly IReservationService _reservationService;
-        private readonly UserRepository _userRepo;
-        private readonly BoatRepository _boatRepo;
-
-        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global, IAuthService auth)
+        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global, IAuthService auth, IUserRepository userRepo, IBoatRepository boatRepo)
         {
             _reservationService = reservationService;
-            _userRepo = new UserRepository();
-            _boatRepo = new BoatRepository();
+            _userRepo = userRepo;
+            _boatRepo = boatRepo;
             _global = global;
             _auth = auth;
 

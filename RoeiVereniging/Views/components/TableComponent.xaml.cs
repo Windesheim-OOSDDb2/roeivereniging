@@ -176,12 +176,12 @@ public partial class TableComponent : ContentView
             if (rowCounter == 0)
             {
                 grid.BackgroundColor = Color.FromArgb("#ffffff");
-                rowCounter += 1;
+                rowCounter = 1;
             }
             else
             {
                 grid.BackgroundColor = Color.FromArgb("#dee6f8");
-                rowCounter -= 1;
+                rowCounter = 0;
             }
 
             // Iterate through columns to create cells for each column
@@ -191,12 +191,11 @@ public partial class TableComponent : ContentView
 
                 var label = new Label
                 {
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center,
+                    FontSize = 16,
+                    TextColor = Color.FromArgb("#082757"),
+                    HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment = TextAlignment.Center,
-                    FontSize = 20,
-                    TextColor = Colors.Black,
-                    Padding = new Thickness(12, 18),
+                    Padding = new Thickness(14, 12)
                 };
 
                 // Bind the text of the label to the respective column data
@@ -227,11 +226,16 @@ public partial class TableComponent : ContentView
             // Add TapGestureRecognizer to the grid (which represents a row)
             grid.GestureRecognizers.Add(tap);
 
-            return new Border
-            {
-                Stroke = Colors.Black,
-                StrokeThickness = 1,
-                Content = grid
+            return new VerticalStackLayout {
+                Spacing = 0,
+                Children = {
+                    grid,
+                    new BoxView
+                    {
+                        HeightRequest = 1,
+                        BackgroundColor = Color.FromArgb("#0854d1")
+                    }
+                }
             };
         });
     }
@@ -242,13 +246,12 @@ public partial class TableComponent : ContentView
         return new Label
         {
             Text = column.Header,
-            TextColor = Colors.White,
+            FontSize = 18,
             FontAttributes = FontAttributes.Bold,
-            HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Center,
-            FontSize = 20,
-            Padding = new Thickness(12, 8),
-            BackgroundColor = Color.FromArgb("#0854D1")
+            TextColor = Color.FromArgb("#082757"),
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center,
+            Padding = new Thickness(12, 8)
         };
     }
     private View CreateSortableHeader(TableColumnDefinition column)
@@ -271,9 +274,10 @@ public partial class TableComponent : ContentView
         Picker picker = new()
         {
             Title = column.Header,
-            BackgroundColor = Color.FromArgb("#0854D1"),
-            FontSize = 20,
-            TextColor = Colors.White
+            FontSize = 16,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#082757"),
+            TitleColor = Color.FromArgb("#082757"),
         };
 
         // for each unique item there will be a column added to the select
@@ -293,11 +297,12 @@ public partial class TableComponent : ContentView
         return new Button
         {
             Text = column.Header,
-            Command = column.Command,
+            FontSize = 16,
             BackgroundColor = Color.FromArgb("#5fa6e8"),
-            TextColor = Colors.Black,
-            FontSize = 20,
-            Padding = new Thickness(12, 8)
+            TextColor = Color.FromArgb("#ffffff"),
+            CornerRadius = 8,
+            Padding = new Thickness(12, 6),
+            Command = column.Command
         };
     }
 
