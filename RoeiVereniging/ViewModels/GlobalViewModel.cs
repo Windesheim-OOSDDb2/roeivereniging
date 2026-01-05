@@ -27,7 +27,7 @@ namespace RoeiVereniging.ViewModels
 
         public bool IsGebruikersActive => CurrentRoute == nameof(UserView);
         public bool IsBotenActive => CurrentRoute == nameof(BoatListView);
-        public bool IsReparatiesActive => CurrentRoute == "ReparatiesView"; 
+        public bool IsReparatiesActive => CurrentRoute == nameof(RepairView); 
         public bool IsOverzichtActive => CurrentRoute == "OverzichtView";
 
 
