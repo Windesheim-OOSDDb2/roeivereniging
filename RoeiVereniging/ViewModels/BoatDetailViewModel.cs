@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Data.Repositories;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,20 +45,15 @@ namespace RoeiVereniging.ViewModels
         {
             LoadBoatDetails(boatId);
             LoadDamagesByBoatId(boatId);
-            DeleteBoatCommand = new RelayCommand(OnDeleteBoat);
-            EditBoatCommand = new RelayCommand(OnEditBoat);
 
         }
 
-        private void OnDeleteBoat()
+        [RelayCommand]
+        public async Task GoToEditBoat()
         {
-            // Implement boat deletion logic here
+            await Shell.Current.GoToAsync(nameof(EditBoatView));
         }
 
-        private void OnEditBoat()
-        {
-            // Implement boat editing logic here
-        }
 
         private void LoadBoatDetails(int boatId)
         {

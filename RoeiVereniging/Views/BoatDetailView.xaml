@@ -107,8 +107,8 @@
                     WidthRequest="180"
                     HeightRequest="44"
                     CornerRadius="10"
-                    HorizontalOptions="End"
-                    Command="{Binding DeleteBoatCommand}" />
+                    HorizontalOptions="End" />
+                    <!--Command="{Binding DeleteBoatCommand}"-->
             <Button Grid.Column="1"
                     Text="Aanpassen"
                     BackgroundColor="#082757"
@@ -119,7 +119,7 @@
                     HeightRequest="44"
                     CornerRadius="10"
                     HorizontalOptions="End"
-                    Command="{Binding EditBoatCommand}" />
+                    Command="{Binding GoToEditBoatCommand}" />
         </Grid>
     </VerticalStackLayout>
 </ContentPage>
