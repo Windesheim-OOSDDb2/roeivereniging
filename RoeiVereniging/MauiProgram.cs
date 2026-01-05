@@ -56,7 +56,8 @@ namespace RoeiVereniging
             builder.Services.AddTransient<AddUserView>().AddTransient<AddUserViewModel>();
             builder.Services.AddTransient<UserView>().AddTransient<UserViewModel>();
             builder.Services.AddTransient<EditBoatView>().AddTransient<EditBoatViewModel>();
-            
+            builder.Services.AddTransient<RepairView>().AddTransient<RepairViewModel>();
+
             builder.Services.AddSingleton<GlobalViewModel>();
             builder.Services.AddSingleton<AppShell>();
 
