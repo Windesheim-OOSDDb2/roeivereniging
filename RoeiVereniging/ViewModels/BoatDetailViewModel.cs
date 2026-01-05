@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Data.Repositories;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,39 +41,42 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private string boatStatusText;
 
+        [ObservableProperty]
+        private Boat boat;
+
+        [ObservableProperty]
+        private int boatId;
+
         public BoatDetailViewModel(int boatId)
         {
             LoadBoatDetails(boatId);
             LoadDamagesByBoatId(boatId);
-            DeleteBoatCommand = new RelayCommand(OnDeleteBoat);
-            EditBoatCommand = new RelayCommand(OnEditBoat);
 
         }
 
-        private void OnDeleteBoat()
+        [RelayCommand]
+        public async Task GoToEditBoat(int boatId)
         {
-            // Implement boat deletion logic here
+            await Shell.Current.GoToAsync($"{nameof(EditBoatView)}?BoatId={boatId}");
         }
 
-        private void OnEditBoat()
-        {
-            // Implement boat editing logic here
-        }
 
         private void LoadBoatDetails(int boatId)
         {
-            Boat boat = _boatRepo.GetById(boatId);
+            Boat fetchedBoat = _boatRepo.GetById(boatId);
 
-            if (boat == null)
+            if (fetchedBoat == null)
             {
                 return;
             }
 
-            boatDisplayText = boat.Name;
-            steeringModeText = boat.SteeringWheelPosition.ToString();
-            boatLevelText = boat.Level.ToString();
-            seatsAmount = boat.SeatsAmount.ToString();
-            boatStatusText = boat.BoatStatus.ToString();
+            boat = fetchedBoat;
+
+            boatDisplayText = fetchedBoat.Name;
+            steeringModeText = fetchedBoat.SteeringWheelPosition.ToString();
+            boatLevelText = fetchedBoat.Level.ToString();
+            seatsAmount = fetchedBoat.SeatsAmount.ToString();
+            boatStatusText = fetchedBoat.BoatStatus.ToString();
 
             OnPropertyChanged(nameof(boatDisplayText));
             OnPropertyChanged(nameof(steeringModeText));
