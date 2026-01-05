@@ -23,66 +23,70 @@ namespace RoeiVereniging.ViewModels
 
         public ObservableCollection<Damage> Damages { get; } = new();
 
-        public IRelayCommand DeleteBoatCommand { get; }
-        public IRelayCommand EditBoatCommand { get; }
-
-        [ObservableProperty]
-        private string boatDisplayText;
-
-        [ObservableProperty]
-        private string steeringModeText;
-
-        [ObservableProperty]
-        private string boatLevelText;
-
-        [ObservableProperty]
-        private string seatsAmount;
-
-        [ObservableProperty]
-        private string boatStatusText;
-
         [ObservableProperty]
         private Boat boat;
 
         [ObservableProperty]
-        private int boatId;
+        private string changeBoatStatusButtonText;
 
         public BoatDetailViewModel(int boatId)
         {
             LoadBoatDetails(boatId);
             LoadDamagesByBoatId(boatId);
+        }
 
+        [RelayCommand]
+        private void ChangeBoatStatus()
+        {
+            if (Boat.BoatStatus != BoatStatus.Gearchiveerd)
+            {
+                Boat.BoatStatus = BoatStatus.Gearchiveerd;
+                ChangeBoatStatusButtonText = "Herstellen";
+            }
+            else
+            {
+                Boat.BoatStatus = BoatStatus.Werkend;
+                ChangeBoatStatusButtonText = "Archiveren";
+            }
+            _boatRepo.UpdateStatus(Boat);
+            OnPropertyChanged(nameof(Boat));
         }
 
         [RelayCommand]
         public async Task GoToEditBoat(int boatId)
         {
+            if (Boat.BoatStatus != BoatStatus.Gearchiveerd)
+            {
+                Boat.BoatStatus = BoatStatus.Gearchiveerd;
+                ChangeBoatStatusButtonText = "Herstellen";
+            }
+            else
+            {
+                Boat.BoatStatus = BoatStatus.Werkend;
+                ChangeBoatStatusButtonText = "Archiveren";
+            }
+            _boatRepo.UpdateStatus(Boat);
+            OnPropertyChanged(nameof(Boat));
             await Shell.Current.GoToAsync($"{nameof(EditBoatView)}?BoatId={boatId}");
         }
 
-
         private void LoadBoatDetails(int boatId)
         {
-            Boat fetchedBoat = _boatRepo.GetById(boatId);
+            Boat = _boatRepo.GetById(boatId);
 
-            if (fetchedBoat == null)
+            if (Boat == null)
             {
                 return;
             }
 
-            boat = fetchedBoat;
-
-            boatDisplayText = fetchedBoat.Name;
-            steeringModeText = fetchedBoat.SteeringWheelPosition.ToString();
-            boatLevelText = fetchedBoat.Level.ToString();
-            seatsAmount = fetchedBoat.SeatsAmount.ToString();
-            boatStatusText = fetchedBoat.BoatStatus.ToString();
-
-            OnPropertyChanged(nameof(boatDisplayText));
-            OnPropertyChanged(nameof(steeringModeText));
-            OnPropertyChanged(nameof(boatLevelText));
-            OnPropertyChanged(nameof(seatsAmount));
-            OnPropertyChanged(nameof(boatStatusText));
+            if (Boat.BoatStatus != BoatStatus.Gearchiveerd)
+            {
+                ChangeBoatStatusButtonText = "Archiveren";
+            }
+            else
+            {
+                ChangeBoatStatusButtonText = "Herstellen";
+            }
         }
 
         private void LoadDamagesByBoatId(int boatId)
