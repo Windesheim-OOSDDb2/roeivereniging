@@ -16,5 +16,7 @@ namespace RoeiVereniging.Core.Interfaces.Services
         public List<Boat> GetAll();
 
         public Boat Add(Boat item);
+
+        public Boat Update(Boat item);
     }
 }
