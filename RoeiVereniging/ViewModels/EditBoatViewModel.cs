@@ -93,7 +93,7 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync(nameof(BoatListView));
         }
 
         [RelayCommand]
