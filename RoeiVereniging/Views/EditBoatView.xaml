@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="4">
-            <components:PageHeader PageTitle="Boot Aanpassen"/>
+            <components:PageHeader PageTitle="Boot Aanpassen" BackTarget="BoatListView"/>
         </VerticalStackLayout>
 
 

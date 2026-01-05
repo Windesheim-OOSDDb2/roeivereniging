@@ -186,7 +186,7 @@ namespace RoeiVereniging.ViewModels
                 var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Boot succesvol aangepast", "Je boot is aangepast en opgeslagen in de database", "");
 
                 await Shell.Current.CurrentPage.ShowPopupAsync(popup);
-                await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync(nameof(BoatDetailView));
 
                 ErrorMessage = "";
             }

@@ -97,7 +97,7 @@
         </Frame>
         <Grid ColumnDefinitions="*,*"
               Margin="0,0,0,0"
-              Padding="0,100,500,0">
+              Padding="0,0,500,0">
             <Button Grid.Column="0"
                     Text="Verwijderen"
                     BackgroundColor="#D32F2F"
