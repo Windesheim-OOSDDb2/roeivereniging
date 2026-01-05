@@ -77,6 +77,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Admin\EditUserView.xaml.cs">
+	    <DependentUpon>EditUserView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\BoatListView.xaml.cs">
 	    <DependentUpon>BoatListView.xaml</DependentUpon>
 	  </Compile>
@@ -89,6 +92,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\Admin\EditUserView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Admin\AdminDashboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

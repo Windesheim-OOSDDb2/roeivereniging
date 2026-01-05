@@ -19,6 +19,18 @@ namespace RoeiVereniging.ViewModels
         private readonly IUserRepository _userRepository;
         public ObservableCollection<User> Users { get; } = new();
 
+        public ICommand RowClickedCommand => new Command<User>(async user =>
+        {
+            try
+            {
+                await Shell.Current.GoToAsync($"{nameof(EditUserView)}?id={user.UserId}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"navigation error: {ex.Message}");
+            }
+        });
+
         public IList<TableColumnDefinition> UserTableColumns { get; }
 
 

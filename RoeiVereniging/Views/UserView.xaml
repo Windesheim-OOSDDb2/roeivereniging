@@ -6,8 +6,6 @@
              xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
     <VerticalStackLayout>
-        <!--Temporary header till component is made-->
-
         <components:AdminPageHeader />
         <!-- Lid toevoegen knop -->
                 <Button
@@ -16,10 +14,11 @@
                 StyleClass="PrimaryButton"
                 BackgroundColor="#5FA6E8"
                 HorizontalOptions="Fill" />
-        
+
         <components:TableComponent
                 ItemsSource="{Binding Users}" 
                 Columns="{Binding UserTableColumns}"
+                RowClickedCommand="{Binding RowClickedCommand}"
             />
     </VerticalStackLayout>
 </ContentPage>
