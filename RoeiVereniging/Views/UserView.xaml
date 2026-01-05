@@ -8,8 +8,9 @@
     <VerticalStackLayout>
 
         <components:AdminPageHeader />
-        <Button
-                Text="Lid toevoegen"
+        <!-- Lid toevoegen knop -->
+                <Button
+                Text="Gebruiker toevoegen"
                 Command="{Binding GoToAddUserCommand}"
                 StyleClass="PrimaryButton"
                 BackgroundColor="#5FA6E8"
