@@ -119,7 +119,8 @@
                     HeightRequest="44"
                     CornerRadius="10"
                     HorizontalOptions="End"
-                    Command="{Binding GoToEditBoatCommand}" />
+                    Command="{Binding GoToEditBoatCommand}"
+                    CommandParameter="{Binding Boat.BoatId}"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

@@ -41,6 +41,9 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private string boatStatusText;
 
+        [ObservableProperty]
+        private Boat boat;
+
         public BoatDetailViewModel(int boatId)
         {
             LoadBoatDetails(boatId);
@@ -49,26 +52,28 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        public async Task GoToEditBoat()
+        public async Task GoToEditBoat(int boatId)
         {
-            await Shell.Current.GoToAsync(nameof(EditBoatView));
+            await Shell.Current.GoToAsync($"{nameof(EditBoatView)}?BoatId={boatId}");
         }
 
 
         private void LoadBoatDetails(int boatId)
         {
-            Boat boat = _boatRepo.GetById(boatId);
+            Boat fetchedBoat = _boatRepo.GetById(boatId);
 
-            if (boat == null)
+            if (fetchedBoat == null)
             {
                 return;
             }
 
-            boatDisplayText = boat.Name;
-            steeringModeText = boat.SteeringWheelPosition.ToString();
-            boatLevelText = boat.Level.ToString();
-            seatsAmount = boat.SeatsAmount.ToString();
-            boatStatusText = boat.BoatStatus.ToString();
+            boat = fetchedBoat;
+
+            boatDisplayText = fetchedBoat.Name;
+            steeringModeText = fetchedBoat.SteeringWheelPosition.ToString();
+            boatLevelText = fetchedBoat.Level.ToString();
+            seatsAmount = fetchedBoat.SeatsAmount.ToString();
+            boatStatusText = fetchedBoat.BoatStatus.ToString();
 
             OnPropertyChanged(nameof(boatDisplayText));
             OnPropertyChanged(nameof(steeringModeText));

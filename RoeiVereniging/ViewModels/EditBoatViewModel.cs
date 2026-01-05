@@ -21,6 +21,7 @@ using static Microsoft.Maui.Controls.Internals.Profile;
 
 namespace RoeiVereniging.ViewModels
 {
+    [QueryProperty(nameof(BoatId), "BoatId")]
     public partial class EditBoatViewModel : BaseViewModel
     {
 
@@ -40,6 +41,7 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty] private BoatType boatType;
         [ObservableProperty] private bool isVisible = true;
         [ObservableProperty] private string errorMessage;
+        [ObservableProperty] private int boatId;
 
 
         private string titleText;
@@ -63,9 +65,24 @@ namespace RoeiVereniging.ViewModels
 
         public void OnAppearing()
         {
-            Boat = _boatService.Get(1);
+            Boat = _boatService.Get(BoatId);
             Name = Boat.Name;
             BoatType = Boat.Type;
+        }
+
+        partial void OnBoatIdChanged(int value)
+        {
+            Boat = _boatService.Get(value);
+            if (Boat != null)
+            {
+                Name = Boat.Name;
+                BoatType = Boat.Type;
+            }
+            else
+            {
+                ErrorMessage = "Boot niet gevonden!";
+                IsVisible = false;
+            }
         }
 
         [RelayCommand]
