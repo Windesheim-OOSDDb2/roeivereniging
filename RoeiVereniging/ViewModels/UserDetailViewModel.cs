@@ -17,9 +17,9 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class UserDetailViewModel : ObservableObject
     {
-        private readonly IUserRepository _userRepository = new UserRepository();
-        private readonly DamageRepository _damageRepository = new DamageRepository();
-        private readonly IReservationRepository _reservationRepository = new ReservationRepository();
+        private readonly IUserRepository _userRepository;
+        private readonly IDamageRepository _damageRepository;
+        private readonly IReservationRepository _reservationRepository;
 
         [ObservableProperty]
         private User userData;
@@ -30,8 +30,11 @@ namespace RoeiVereniging.ViewModels
         [ObservableProperty]
         private string damageCountText;
 
-        public UserDetailViewModel(int userId)
+        public UserDetailViewModel(int userId, IUserRepository userRepo, IDamageRepository damageRepo, IReservationRepository reservationRepository)
         {
+            _userRepository = userRepo;
+            _damageRepository = damageRepo;
+            _reservationRepository = reservationRepository;
             LoadUserDetails(userId);
         }
 

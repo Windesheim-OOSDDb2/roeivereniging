@@ -91,7 +91,7 @@ namespace RoeiVereniging.Core.Data.Repositories
             return list;
         }
 
-        public List<Damage> GetByUserId(int userId)
+        public List<Damage>? GetByUserId(int userId)
         {
             List<Damage> list = new List<Damage>();
             OpenConnection();
