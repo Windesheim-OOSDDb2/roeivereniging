@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-     x:Class="RoeiVereniging.Views.Components.TableComponent"
-     x:Name="This"
-     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-     BackgroundColor="White">
+    x:Class="RoeiVereniging.Views.Components.TableComponent"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#F1F5F9">
 
-    <VerticalStackLayout>
-        <Frame StyleClass="row-header" BackgroundColor="#0854D1">
+    <VerticalStackLayout Spacing="12" Padding="12">
 
-            <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0">
-
-            </Grid>
+        <Frame BackgroundColor="#f1f5f9" Padding="12" BorderColor="Transparent" HasShadow="True">
+            <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="Center"/>
         </Frame>
 
-        <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame StyleClass="row-card" BackgroundColor="#5fa6e8" Padding="10">
-                        <Grid x:Name="RowGrid" ColumnSpacing="0" RowSpacing="0" />
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem" SelectionMode="None"/>
+
     </VerticalStackLayout>
 </ContentView>
