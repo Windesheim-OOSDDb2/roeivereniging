@@ -9,7 +9,7 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
         public List<User> GetAll();
         public User? UpdateActiveStatus(User user);
         public User? Set(User newuser);
-        public User Update(User updatedUser);
+        public User? Update(User updatedUser);
     }
 }
 
