@@ -49,7 +49,7 @@ namespace RoeiVereniging.ViewModels
                 BoatId = boat.BoatId,
                 BoatName = boat.Name,
                 Status = boat.BoatStatus,
-                NotificationDate = lastDamage?.ReportedAt
+                NotificationDate = lastDamage?.ReportedAt ?? DateTime.MinValue
             };
 
             if (boat.BoatStatus == BoatStatus.Onderhoud || boat.BoatStatus == BoatStatus.Kapot)
