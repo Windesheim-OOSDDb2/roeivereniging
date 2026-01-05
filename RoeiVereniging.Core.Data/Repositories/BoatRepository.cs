@@ -85,7 +85,8 @@ namespace RoeiVereniging.Core.Data.Repositories
                 b.SeatsAmount == amount &&
                 b.SteeringWheelPosition == steeringwheelposition &&
                 b.Level == difficulty &&
-                b.Type == type).ToList();
+                b.Type == type &&
+                b.BoatStatus == BoatStatus.Working).ToList();
 
             return boats;
         }
