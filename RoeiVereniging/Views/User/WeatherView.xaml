@@ -16,9 +16,9 @@
     </ContentPage.Resources>
 
 
-    <Grid RowDefinitions="Auto, *" Padding="20,10">
+    <Grid RowDefinitions="Auto, *">
         <components:PageHeader PageTitle="Weersverwachting"/>
-        <Grid Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="140">
+        <Grid Padding="20,10" Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="140">
 
             <Border Grid.Column="0" 
                     BackgroundColor="{Binding LiveBackgroundColor}"

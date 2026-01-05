@@ -6,20 +6,21 @@
              xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
     <VerticalStackLayout>
-        <!--Temporary header till component is made-->
 
         <components:AdminPageHeader />
-        <!-- Lid toevoegen knop -->
-                <Button
-                Text="Lid toevoegen"
-                Command="{Binding GoToAddUserCommand}"
-                StyleClass="PrimaryButton"
-                BackgroundColor="#5FA6E8"
-                HorizontalOptions="Fill" />
-        
+        <Button
+            Text="Lid toevoegen"
+            Command="{Binding GoToAddUserCommand}"
+            StyleClass="PrimaryButton"
+            BackgroundColor="#5FA6E8"
+            HorizontalOptions="Start" 
+            WidthRequest="150"
+            Margin="20, 0"
+        />
+
         <components:TableComponent
-                ItemsSource="{Binding Users}" 
-                Columns="{Binding UserTableColumns}"
-            />
+            ItemsSource="{Binding Users}" 
+            Columns="{Binding UserTableColumns}"
+        />
     </VerticalStackLayout>
 </ContentPage>

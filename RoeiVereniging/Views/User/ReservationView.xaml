@@ -12,7 +12,7 @@
         <StyleSheet Source="/Resources/Styles/global.css" />
     </ContentPage.Resources>
 
-    <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White">
+    <VerticalStackLayout Spacing="10" BackgroundColor="White">
 
         <components:PageHeader PageTitle="Mijn reserveringen"/>
 

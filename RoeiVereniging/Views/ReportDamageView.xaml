@@ -5,8 +5,8 @@
 			 xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              BackgroundColor="White">
 
-        <VerticalStackLayout Padding="20,0,20,16" Spacing="0">
-			<components:PageHeader PageTitle="Schade melden" />
+        <VerticalStackLayout Spacing="0">
+	        <components:PageHeader PageTitle="Schade melden" />
             <!-- Titel -->
             <Label Text="{Binding BoatDisplayText}"
                    FontSize="16"
