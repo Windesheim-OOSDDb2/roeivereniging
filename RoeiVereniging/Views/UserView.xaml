@@ -11,7 +11,7 @@
         <components:AdminPageHeader />
         <!-- Lid toevoegen knop -->
                 <Button
-                Text="Lid toevoegen"
+                Text="Gebruiker toevoegen"
                 Command="{Binding GoToAddUserCommand}"
                 StyleClass="PrimaryButton"
                 BackgroundColor="#5FA6E8"
