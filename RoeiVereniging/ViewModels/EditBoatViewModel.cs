@@ -36,12 +36,16 @@ namespace RoeiVereniging.ViewModels
     new ObservableCollection<BoatType>(
         Enum.GetValues(typeof(BoatType)).Cast<BoatType>());
 
+        public ObservableCollection<BoatStatus> BoatStatuses { get; } =
+    new ObservableCollection<BoatStatus>(Enum.GetValues(typeof(BoatStatus)).Cast<BoatStatus>());
+
         [ObservableProperty] private Boat boat;
         [ObservableProperty] private string name;
         [ObservableProperty] private BoatType boatType;
         [ObservableProperty] private bool isVisible = true;
         [ObservableProperty] private string errorMessage;
         [ObservableProperty] private int boatId;
+        [ObservableProperty] private BoatStatus boatStatus;
 
 
         private string titleText;
@@ -51,7 +55,6 @@ namespace RoeiVereniging.ViewModels
         private bool steeringWheelPosition;
         private int seatsAmount;
         private BoatLevel boatlevel;
-        private BoatStatus boatStatus;
 
         public EditBoatViewModel(IBoatService boatService)
         {
@@ -68,6 +71,7 @@ namespace RoeiVereniging.ViewModels
             Boat = _boatService.Get(BoatId);
             Name = Boat.Name;
             BoatType = Boat.Type;
+            boatStatus = Boat.BoatStatus;
         }
 
         partial void OnBoatIdChanged(int value)
@@ -77,6 +81,7 @@ namespace RoeiVereniging.ViewModels
             {
                 Name = Boat.Name;
                 BoatType = Boat.Type;
+                boatStatus = Boat.BoatStatus;
             }
             else
             {
@@ -198,6 +203,7 @@ namespace RoeiVereniging.ViewModels
                 Boat.SeatsAmount = seatsAmount;
                 Boat.SteeringWheelPosition = steeringWheelPosition;
                 Boat.Level = boatlevel;
+                Boat.BoatStatus = boatStatus;
 
                 _boatService.Update(Boat);
                 var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Boot succesvol aangepast", "Je boot is aangepast en opgeslagen in de database", "");
