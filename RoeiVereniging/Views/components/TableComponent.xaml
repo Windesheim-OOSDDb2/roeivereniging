@@ -7,7 +7,7 @@
 
     <VerticalStackLayout Spacing="12" Padding="12">
 
-        <Frame BackgroundColor="#f1f5f9" Padding="12" BorderColor="Transparent" HasShadow="True">
+        <Frame CornerRadius="0" BackgroundColor="#dee6f8" Padding="12" BorderColor="Transparent" HasShadow="True">
             <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="Center"/>
         </Frame>
 

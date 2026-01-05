@@ -233,7 +233,7 @@ public partial class TableComponent : ContentView
                     new BoxView
                     {
                         HeightRequest = 1,
-                        BackgroundColor = Color.FromArgb("#5fa6e8")
+                        BackgroundColor = Color.FromArgb("#0854d1")
                     }
                 }
             };
