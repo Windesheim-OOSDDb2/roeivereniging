@@ -176,5 +176,33 @@ namespace RoeiVereniging.Core.Repositories
             cmd.ExecuteNonQuery();
             CloseConnection();
         }
+
+        public User Update(User updatedUser)
+        {
+            OpenConnection();
+            using var cmd = Connection.CreateCommand();
+            cmd.CommandText = @"
+                UPDATE user 
+                SET firstName = @firstName, 
+                    lastName = @lastName, 
+                    email = @EmailAddress, 
+                    password = @password, 
+                    role = @role, 
+                    level = @level, 
+                    dateOfBirth = @dateOfBirth
+                WHERE user_id = @userId;";
+            cmd.Parameters.AddWithValue("@firstName", updatedUser.FirstName);
+            cmd.Parameters.AddWithValue("@lastName", updatedUser.LastName);
+            cmd.Parameters.AddWithValue("@EmailAddress", updatedUser.EmailAddress);
+            cmd.Parameters.AddWithValue("@password", updatedUser.Password);
+            cmd.Parameters.AddWithValue("@role", (int)updatedUser.Role);
+            cmd.Parameters.AddWithValue("@level", (int)updatedUser.Level);
+            cmd.Parameters.AddWithValue("@dateOfBirth", updatedUser.DateOfBirth.ToDateTime(TimeOnly.MinValue));
+            cmd.Parameters.AddWithValue("@userId", updatedUser.UserId);
+            cmd.ExecuteNonQuery();
+            CloseConnection();
+
+            return updatedUser;
+        }
     }
 }
