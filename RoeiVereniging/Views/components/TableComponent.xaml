@@ -11,7 +11,10 @@
             <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="Center"/>
         </Frame>
 
-        <CollectionView x:Name="TableView" ItemSizingStrategy="MeasureFirstItem" SelectionMode="None"/>
-
+        <CollectionView x:Name="TableView" 
+                        ItemSizingStrategy="MeasureFirstItem" 
+                        SelectionMode="None"
+                        HeightRequest="600">
+        </CollectionView>
     </VerticalStackLayout>
 </ContentView>
