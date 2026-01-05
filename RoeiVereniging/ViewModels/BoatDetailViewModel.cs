@@ -37,14 +37,14 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         private void ChangeBoatStatus()
         {
-            if (Boat.BoatStatus != BoatStatus.Archived)
+            if (Boat.BoatStatus != BoatStatus.Gearchiveerd)
             {
-                Boat.BoatStatus = BoatStatus.Archived;
+                Boat.BoatStatus = BoatStatus.Gearchiveerd;
                 ChangeBoatStatusButtonText = "Herstellen";
             }
             else
             {
-                Boat.BoatStatus = BoatStatus.Working;
+                Boat.BoatStatus = BoatStatus.Werkend;
                 ChangeBoatStatusButtonText = "Archiveren";
             }
             _boatRepo.UpdateStatus(Boat);
@@ -66,7 +66,7 @@ namespace RoeiVereniging.ViewModels
                 return;
             }
 
-            if (Boat.BoatStatus != BoatStatus.Archived)
+            if (Boat.BoatStatus != BoatStatus.Gearchiveerd)
             {
                 ChangeBoatStatusButtonText = "Archiveren";
             }
