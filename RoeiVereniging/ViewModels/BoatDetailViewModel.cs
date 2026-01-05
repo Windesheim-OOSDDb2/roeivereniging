@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Data.Repositories;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,9 +53,21 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        private void EditBoat()
+        public async Task GoToEditBoat(int boatId)
         {
-            // Implement boat editing logic here
+            if (Boat.BoatStatus != BoatStatus.Gearchiveerd)
+            {
+                Boat.BoatStatus = BoatStatus.Gearchiveerd;
+                ChangeBoatStatusButtonText = "Herstellen";
+            }
+            else
+            {
+                Boat.BoatStatus = BoatStatus.Werkend;
+                ChangeBoatStatusButtonText = "Archiveren";
+            }
+            _boatRepo.UpdateStatus(Boat);
+            OnPropertyChanged(nameof(Boat));
+            await Shell.Current.GoToAsync($"{nameof(EditBoatView)}?BoatId={boatId}");
         }
 
         private void LoadBoatDetails(int boatId)

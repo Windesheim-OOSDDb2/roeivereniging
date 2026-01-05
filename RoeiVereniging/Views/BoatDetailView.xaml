@@ -100,7 +100,7 @@
         </Frame>
         <Grid ColumnDefinitions="*,*"
               Margin="0,0,0,0"
-              Padding="0,10,500,0">
+              Padding="0,0,500,0">
             <Button Grid.Column="0"
                     Text="{Binding ChangeBoatStatusButtonText}"
                     BackgroundColor="#D32F2F"
@@ -122,7 +122,8 @@
                     HeightRequest="44"
                     CornerRadius="10"
                     HorizontalOptions="End"
-                    Command="{Binding EditBoatCommand}" />
+                    Command="{Binding GoToEditBoatCommand}"
+                    CommandParameter="{Binding Boat.BoatId}"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>
