@@ -25,9 +25,10 @@ public partial class AdminPageHeader : ContentView
         await Shell.Current.GoToAsync(nameof(UserView), true);
     }
 
-    private void OnReparatiesClicked(object sender, EventArgs e)
+    private async void OnReparatiesClicked(object sender, EventArgs e)
     {
-        // TODO: Navigatie naar reparatiespagina
+        _global.CurrentRoute = nameof(RepairView);
+        await Shell.Current.GoToAsync(nameof(RepairView), true);
     }
 
     private void OnOverzichtClicked(object sender, EventArgs e)

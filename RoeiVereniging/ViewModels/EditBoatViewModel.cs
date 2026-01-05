@@ -21,6 +21,7 @@ using static Microsoft.Maui.Controls.Internals.Profile;
 
 namespace RoeiVereniging.ViewModels
 {
+    [QueryProperty(nameof(BoatId), "BoatId")]
     public partial class EditBoatViewModel : BaseViewModel
     {
 
@@ -35,11 +36,16 @@ namespace RoeiVereniging.ViewModels
     new ObservableCollection<BoatType>(
         Enum.GetValues(typeof(BoatType)).Cast<BoatType>());
 
+        public ObservableCollection<BoatStatus> BoatStatuses { get; } =
+    new ObservableCollection<BoatStatus>(Enum.GetValues(typeof(BoatStatus)).Cast<BoatStatus>());
+
         [ObservableProperty] private Boat boat;
         [ObservableProperty] private string name;
         [ObservableProperty] private BoatType boatType;
         [ObservableProperty] private bool isVisible = true;
         [ObservableProperty] private string errorMessage;
+        [ObservableProperty] private int boatId;
+        [ObservableProperty] private BoatStatus boatStatus;
 
 
         private string titleText;
@@ -49,7 +55,6 @@ namespace RoeiVereniging.ViewModels
         private bool steeringWheelPosition;
         private int seatsAmount;
         private BoatLevel boatlevel;
-        private BoatStatus boatStatus;
 
         public EditBoatViewModel(IBoatService boatService)
         {
@@ -63,15 +68,32 @@ namespace RoeiVereniging.ViewModels
 
         public void OnAppearing()
         {
-            Boat = _boatService.Get(1);
+            Boat = _boatService.Get(BoatId);
             Name = Boat.Name;
             BoatType = Boat.Type;
+            BoatStatus = Boat.BoatStatus;
+        }
+
+        partial void OnBoatIdChanged(int value)
+        {
+            Boat = _boatService.Get(value);
+            if (Boat != null)
+            {
+                Name = Boat.Name;
+                BoatType = Boat.Type;
+                BoatStatus = Boat.BoatStatus;
+            }
+            else
+            {
+                ErrorMessage = "Boot niet gevonden!";
+                IsVisible = false;
+            }
         }
 
         [RelayCommand]
         public async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync(nameof(BoatListView));
         }
 
         [RelayCommand]
@@ -181,12 +203,13 @@ namespace RoeiVereniging.ViewModels
                 Boat.SeatsAmount = seatsAmount;
                 Boat.SteeringWheelPosition = steeringWheelPosition;
                 Boat.Level = boatlevel;
+                Boat.BoatStatus = boatStatus;
 
                 _boatService.Update(Boat);
                 var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Boot succesvol aangepast", "Je boot is aangepast en opgeslagen in de database", "");
 
                 await Shell.Current.CurrentPage.ShowPopupAsync(popup);
-                await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync(nameof(BoatListView));
 
                 ErrorMessage = "";
             }

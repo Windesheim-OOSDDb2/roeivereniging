@@ -254,11 +254,6 @@ namespace RoeiVereniging.ViewModels
             await Shell.Current.GoToAsync(nameof(AddUserView));
         }
 
-        [RelayCommand]
-        public async Task GoToEditBoat()
-        {
-            await Shell.Current.GoToAsync(nameof(EditBoatView));
-        }
 
         [RelayCommand]
         public async Task Logout()
