@@ -11,5 +11,6 @@ namespace RoeiVereniging.Core.Models
         Working = 0,
         Broken = 1,
         Fixing = 2,
+        Archived = 3
     }
 }

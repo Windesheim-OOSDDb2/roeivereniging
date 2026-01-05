@@ -119,6 +119,19 @@ namespace RoeiVereniging.Core.Data.Repositories
             return item;
         }
 
+        public void UpdateStatus(Boat boat)
+        {
+            string updateQuery = "UPDATE boat SET status = @Status WHERE boat_id = @BoatId;";
+            OpenConnection();
+            using (SqliteCommand command = new(updateQuery, Connection))
+            {
+                command.Parameters.AddWithValue("Status", boat.BoatStatus);
+                command.Parameters.AddWithValue("BoatId", boat.BoatId);
+                command.ExecuteNonQuery();
+            }
+            CloseConnection();
+        }
+
         public Boat Update(Boat item)
         {
             string updateQuery = @"UPDATE boat SET name = @Name, SteeringwheelPosition = @SteeringWheelPosition, seats_amount = @Seats_Amount, level = @Level, type = @Type, status = @Status WHERE boat_id = @BoatId;";
