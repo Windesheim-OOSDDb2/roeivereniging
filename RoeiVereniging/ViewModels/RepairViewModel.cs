@@ -17,14 +17,14 @@ namespace RoeiVereniging.ViewModels
     public class RepairViewModel : BaseViewModel
     {
         private readonly IBoatRepository _boatRepository;
-        private readonly DamageRepository _damageRepository;
+        private readonly IDamageRepository _damageRepository;
         private readonly GlobalViewModel _global;
         private readonly IAuthService _auth;
 
         public ObservableCollection<RepairDTO> Repairs { get; } = new();
         public IList<TableColumnDefinition> RepairTableColumns { get; }
 
-        public RepairViewModel(IBoatRepository boatRepository, DamageRepository damageRepository, GlobalViewModel global, IAuthService auth)
+        public RepairViewModel(IBoatRepository boatRepository, IDamageRepository damageRepository, GlobalViewModel global, IAuthService auth)
         {
             _boatRepository = boatRepository;
             _damageRepository = damageRepository;
@@ -44,7 +44,7 @@ namespace RoeiVereniging.ViewModels
 
         private RepairDTO MapToDto(Boat boat, Damage? lastDamage)
         {
-            var dto = new RepairDTO
+            RepairDTO dto = new RepairDTO
             {
                 BoatId = boat.BoatId,
                 BoatName = boat.Name,
@@ -68,8 +68,8 @@ namespace RoeiVereniging.ViewModels
         {
             Repairs.Clear();
 
-            var boats = _boatRepository.GetAll();
-            var damages = _damageRepository.GetAll();
+            List<Boat> boats = _boatRepository.GetAll();
+            List<Damage> damages = _damageRepository.GetAll();
 
             foreach (var boat in boats)
             {

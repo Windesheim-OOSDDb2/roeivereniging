@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Models;
 
 namespace RoeiVereniging.Core.Data.Repositories
 {
-    public class DamageRepository : DatabaseConnection
+    public class DamageRepository : DatabaseConnection, IDamageRepository
     {
         public DamageRepository()
         {
@@ -69,7 +70,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public List<Damage> GetAll()
         {
-            var list = new List<Damage>();
+            List<Damage> list = new List<Damage>();
             OpenConnection();
             using var cmd = Connection.CreateCommand();
             cmd.CommandText = "SELECT damage_id, reservation_id, boat_id, user_id, description, reported_at, severity FROM Damage";
