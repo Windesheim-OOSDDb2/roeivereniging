@@ -273,6 +273,7 @@
             BackgroundColor="#DEE6F8"
             TextColor="#082757"
             Text="Gebruiker toevoegen >"/>
+        
         <Button 
             Grid.Column="1"
             Grid.ColumnSpan="2"
