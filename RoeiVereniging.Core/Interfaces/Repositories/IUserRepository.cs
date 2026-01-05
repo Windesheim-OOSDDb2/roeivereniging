@@ -7,6 +7,8 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
         public User? Get(string email);
         public User? Get(int id);
         public List<User> GetAll();
+        public User? UpdateActiveStatus(User user);
+        public User? Set(User newuser);
     }
 }
 

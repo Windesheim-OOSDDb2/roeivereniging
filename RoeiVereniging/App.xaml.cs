@@ -5,10 +5,12 @@ namespace RoeiVereniging
 {
     public partial class App : Application
     {
-        public App(LoginView viewModel)
+        public App(AppShell shell)
         {
             InitializeComponent();
-            MainPage = new NavigationPage(viewModel);
+            MainPage = shell;
         }
+
+        public GlobalViewModel GlobalViewModel { get; } = new GlobalViewModel();
     }
 }

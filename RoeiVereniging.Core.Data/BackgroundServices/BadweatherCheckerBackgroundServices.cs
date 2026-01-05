@@ -63,9 +63,14 @@ namespace RoeiVereniging.Core.Services
             {
                 var Response = await WeatherHelper.GetWeatherAsync("zwolle", _apiKey);
 
-                wkVerw = Response.WkVerw != null
+                wkVerw = Response?.WkVerw != null
                     ? Response.WkVerw.Select(w => new WkVerwUi(w)).ToArray()
                     : Array.Empty<WkVerwUi>();
+
+                if (Response == null)
+                {
+                    Debug.WriteLine("Error: Weather API response is null.");
+                }
 
                 
                 foreach (var weather in wkVerw.Take(3))

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace RoeiVereniging.Core.Models
 {
-    public enum Role : ushort
+    public enum EnumDamageSeverity
     {
-        None = 0,
-        Admin = 1
+        Licht,
+        Matig,
+        Ernstig
     }
 }

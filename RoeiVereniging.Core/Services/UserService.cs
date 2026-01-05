@@ -31,5 +31,10 @@ namespace RoeiVereniging.Core.Services
         {
             return _userRepository.GetAll();
         }
+
+        public User? Set(User newuser)
+        {
+            return _userRepository.Set(newuser);
+        }
     }
 }

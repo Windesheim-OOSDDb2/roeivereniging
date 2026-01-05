@@ -34,6 +34,11 @@ namespace RoeiVereniging.Core.Services
             return _reservationRepository.GetUnmessaged();
         }
 
+        public int GetActiveReservationsCountByUserId(int id)
+        {
+            return _reservationRepository.GetActiveReservationsCountByUserId(id);
+        }
+
         public List<Reservation> GetByUser(int userId)
         {
             return _reservationRepository.GetByUserId(userId);

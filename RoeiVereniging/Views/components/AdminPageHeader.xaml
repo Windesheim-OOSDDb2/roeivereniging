@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView 
+    x:Class="RoeiVereniging.Views.Components.AdminPageHeader"
+    x:Name="This"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="White">
+    <Grid BackgroundColor="White" Padding="0,10" ColumnSpacing="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="0" Margin="0,0,0,0">
+            <Image Source="logo.png" HeightRequest="100" />
+            <Label FontAttributes="Bold"
+               FontSize="18"
+               TextColor="#D32F2F"
+               HorizontalOptions="Center"
+               Margin="0,-10,0,0"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="1" Padding="0, 20, 0 ,0" HorizontalOptions="Center">
+            <Button
+                Text="Gebruikers"
+                FontAttributes="Bold"
+                FontSize="32"
+                TextColor="#082757"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="OnGebruikersClicked"/>
+            <BoxView HeightRequest="3" Color="#082757"
+                     HorizontalOptions="Fill"
+                     IsVisible="{Binding IsGebruikersActive}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="2" Padding="0, 20, 0 ,0" HorizontalOptions="Center">
+            <Button
+                Text="Boten"
+                FontAttributes="Bold"
+                FontSize="32"
+                TextColor="#082757"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="OnBotenClicked"/>
+            <BoxView HeightRequest="3" Color="#082757"
+                     HorizontalOptions="Fill"
+                     IsVisible="{Binding IsBotenActive}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="3" Padding="0, 20, 0 ,0" HorizontalOptions="Center">
+            <Button 
+                Text="Reparaties"
+                FontAttributes="Bold"
+                FontSize="32"
+                TextColor="#082757"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="OnReparatiesClicked"/>
+            <BoxView HeightRequest="3" Color="#082757"
+                     HorizontalOptions="Fill"
+                     IsVisible="{Binding IsReparatiesActive}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="4" Padding="0, 20, 0 ,0" HorizontalOptions="Center">
+            <Button 
+                Text="Overzicht"
+                FontAttributes="Bold"
+                FontSize="32"
+                TextColor="#082757"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="OnOverzichtClicked"/>
+            <BoxView HeightRequest="3" Color="#082757"
+                     HorizontalOptions="Fill"
+                     IsVisible="{Binding IsOverzichtActive}" />
+        </VerticalStackLayout>
+        <ImageButton 
+            Clicked="OnLogoutClicked"
+            Grid.Column="5" 
+            Source="logout.png" 
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+        />
+    </Grid>
+
+</ContentView>
