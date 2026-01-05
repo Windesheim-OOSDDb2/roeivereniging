@@ -71,7 +71,7 @@ namespace RoeiVereniging.ViewModels
             Boat = _boatService.Get(BoatId);
             Name = Boat.Name;
             BoatType = Boat.Type;
-            boatStatus = Boat.BoatStatus;
+            BoatStatus = Boat.BoatStatus;
         }
 
         partial void OnBoatIdChanged(int value)
@@ -81,7 +81,7 @@ namespace RoeiVereniging.ViewModels
             {
                 Name = Boat.Name;
                 BoatType = Boat.Type;
-                boatStatus = Boat.BoatStatus;
+                BoatStatus = Boat.BoatStatus;
             }
             else
             {
