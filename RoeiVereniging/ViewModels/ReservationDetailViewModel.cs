@@ -97,7 +97,6 @@ public partial class ReservationDetailViewModel : ObservableObject
         Reservation reservation = _reservationRepository.Get(reservationId);
         if (reservation == null)
         {
-            // Maybe return to overview page or such? or popup? @Daniel
             return;
         }
 
@@ -105,7 +104,6 @@ public partial class ReservationDetailViewModel : ObservableObject
 
         if (boat == null)
         {
-            // Maybe return to overview page or such? or popup? @Daniel
             return;
         }
 
@@ -126,7 +124,6 @@ public partial class ReservationDetailViewModel : ObservableObject
             );
         } catch (Exception e)
         {
-            // Maybe return to overview page or such? or popup? @Daniel
         }
 
         boatDisplayText = boat.Name;
