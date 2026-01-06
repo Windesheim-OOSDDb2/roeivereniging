@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using QRCoder;
 using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Interfaces.Services;
@@ -159,6 +161,11 @@ namespace RoeiVereniging.ViewModels
 
                 Boat boat = new Boat(1, Name,seatsAmount, steeringWheelPosition,boatlevel, boatStatus, BoatType);
                 _boatService.Add(boat);
+
+                var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Boot toegevoegd.", $"De boot met naam: {Name} en type:{BoatType.GetEnumDescription()} is succesvol toegevoegd.", "De boot zal nu ook in de lijst staan");
+                Shell.Current.CurrentPage.ShowPopup(popup);
+
+                Shell.Current.GoToAsync(nameof(BoatListView));
                 ErrorMessage = "";
             }
             else

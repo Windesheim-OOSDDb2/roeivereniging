@@ -16,7 +16,7 @@
         <CollectionView x:Name="TableView" 
                         ItemSizingStrategy="MeasureFirstItem" 
                         SelectionMode="None"
-                        HeightRequest="600">
+                        HeightRequest="450">
         </CollectionView>
     </VerticalStackLayout>
 </ContentView>
