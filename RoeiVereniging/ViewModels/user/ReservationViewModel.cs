@@ -50,8 +50,8 @@ namespace RoeiVereniging.ViewModels
             _auth = auth;
 
 
-            // Fill the columns, the BindingPath must mattch the name of a public property on the object pushed to the table component
-            // the binding path is used to read the value ofor displaying the cell and applying filters to the column 
+            // Fill the columns, the BindingPath must attach the name of a public property on the object pushed to the table component
+            // the binding path is used to read the value for displaying the cell and applying filters to the column 
             ReservationColumns = new List<TableColumnDefinition>
             {
                 new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },

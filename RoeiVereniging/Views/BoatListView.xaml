@@ -19,6 +19,7 @@
          Command="{Binding GoToAddBoatCommand}"
          StyleClass="PrimaryButton"
          BackgroundColor="#5FA6E8"
+         TextColor="#082757"
          WidthRequest="150"
          HorizontalOptions="Start" 
          Margin="20, 0"/>

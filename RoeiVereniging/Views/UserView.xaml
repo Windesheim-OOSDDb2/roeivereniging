@@ -13,6 +13,7 @@
             Command="{Binding GoToAddUserCommand}"
             StyleClass="PrimaryButton"
             BackgroundColor="#5FA6E8"
+            TextColor="#082757"
             HorizontalOptions="Start" 
             WidthRequest="200"
             Margin="20, 0"

@@ -30,14 +30,4 @@ public partial class BoatDetailView : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(UserView), true);
     }
-
-    private async void OnReparatiesClicked(object sender, EventArgs e)
-    {
-        // TODO: Navigatie naar reparatiespagina
-    }
-
-    private async void OnOverzichtClicked(object sender, EventArgs e)
-    {
-        //await Shell.Current.GoToAsync(nameof(AdminDashboardView), true);
-    }
 }
