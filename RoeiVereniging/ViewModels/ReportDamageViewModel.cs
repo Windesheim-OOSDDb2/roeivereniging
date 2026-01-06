@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Services;
 using RoeiVereniging.Core.Repositories;
+using CommunityToolkit.Maui.Views;
 
 namespace RoeiVereniging.ViewModels
 {
@@ -102,7 +103,9 @@ namespace RoeiVereniging.ViewModels
             FeedbackMessage = "Schade succesvol gerapporteerd. Bedankt!";
             Description = string.Empty;
 
-            
+            var popup = new RoeiVereniging.Views.components.ConfirmationPopup("Schade succesvol gemeld!", "De schade is succesvol binnengekomen en we gaan er zo spoedig mogelijk mee bezig.", "Nogmaals bedankt voor het melden.");
+            Shell.Current.CurrentPage.ShowPopup(popup);
+
             await Shell.Current.GoToAsync("..");
         }
 

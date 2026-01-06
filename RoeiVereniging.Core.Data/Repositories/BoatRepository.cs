@@ -89,7 +89,6 @@ namespace RoeiVereniging.Core.Data.Repositories
         {
             List<Boat> boats = boatList.Where(b =>
                 b.SeatsAmount == amount &&
-                b.SteeringWheelPosition == steeringwheelposition &&
                 b.Level == difficulty &&
                 b.Type == type &&
                 b.BoatStatus == BoatStatus.Werkend).ToList();

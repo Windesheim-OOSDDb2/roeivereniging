@@ -87,7 +87,7 @@ namespace RoeiVereniging.ViewModels
             {
                 return;
             }
-            else if (_global.currentUser.Role != Role.Admin && _global.currentUser.Role != Role.Materiallcommissaris && _reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2)
+            else if (_global.currentUser.Role != Role.Admin && _global.currentUser.Role != Role.Wedstrijdcommissaris && _reservationService.GetActiveReservationsCountByUserId(_global.currentUser.Id) >= 2)
             {
                 await UpdateErrorUi("Je hebt al 2 actieve reserveringen. Verwijder een bestaande reservering om een nieuwe te maken.");
                 return;
@@ -248,12 +248,6 @@ namespace RoeiVereniging.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(BoatListView));
         }
-        [RelayCommand]
-        public async Task GoToAddUserPage()
-        {
-            await Shell.Current.GoToAsync(nameof(AddUserView));
-        }
-
 
         [RelayCommand]
         public async Task Logout()
