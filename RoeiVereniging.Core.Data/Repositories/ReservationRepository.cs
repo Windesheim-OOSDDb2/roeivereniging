@@ -29,6 +29,8 @@ namespace RoeiVereniging.Core.Data.Repositories
                 @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged) VALUES(2,1,'2025-01-11 14:00','2025-01-11 15:00','2025-01-01',2, 0)",
                 @"INSERT OR IGNORE INTO Reservation (reservation_id, user_id, start_time, end_time, created_at, boat_id, messaged) VALUES(3,1,'2025-01-12 18:00','2025-01-12 19:30','2025-01-01',3, 0)"
             });
+
+            GetAll();
         }
 
         public List<Reservation> GetByUserId(int userId)
