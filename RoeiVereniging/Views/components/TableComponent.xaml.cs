@@ -248,7 +248,7 @@ public partial class TableComponent : ContentView
             Text = column.Header,
             FontSize = 18,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#082757"),
+            TextColor = Color.FromArgb("#ffffff"),
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
             Padding = new Thickness(12, 8)
@@ -277,7 +277,7 @@ public partial class TableComponent : ContentView
             FontSize = 16,
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#082757"),
-            TitleColor = Color.FromArgb("#082757"),
+            TitleColor = Color.FromArgb("#ffffff"),
         };
 
         // for each unique item there will be a column added to the select

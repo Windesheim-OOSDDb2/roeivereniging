@@ -15,6 +15,54 @@
     </ContentPage.Resources>
     
     <Grid>
+        <!-- header -->
+        <Border
+            BackgroundColor="White"   
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            Padding="20,14"
+            Stroke="Transparent">
+
+            <Border.Shadow>
+                <Shadow
+                    Offset="0,1"
+                    Radius="2"
+                    Opacity="0.2"
+                />
+            </Border.Shadow>
+
+            <Grid 
+                Padding="0"
+                ColumnDefinitions="Auto,*,Auto"
+                VerticalOptions="Center">
+                <Image 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"
+                    HeightRequest="60"
+                    Source="logo.png"
+                    HorizontalOptions="Start" 
+                />
+                <Label
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Text="Reserveren"
+                    FontSize="38"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="#082757"
+                    InputTransparent="True" />
+                <ImageButton
+                    Grid.Column="4"
+                    Grid.ColumnSpan="2"
+                    Source="logout.png"
+                    HeightRequest="60"
+                    Command="{Binding LogoutCommand}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End" />
+
+            </Grid>
+        </Border>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -35,13 +83,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- header -->
-        <Image Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="0" Source="logo.png" HorizontalOptions="Start" />
-        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="Reserveren" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" FontAttributes="Bold" TextColor="#082757" />
-        <ImageButton Command="{Binding LogoutCommand}" Grid.Column="4" Grid.ColumnSpan="2"  Grid.Row="0" Source="logout.png" HorizontalOptions="End" />
-
-        <!-- Row 2 -->
-        
         <!-- Date picker start-->
 
         <Border

@@ -14,9 +14,7 @@ namespace RoeiVereniging.ViewModels
 {
     public partial class ReservationViewModel : BaseViewModel
     {
-        private List<ReservationViewDTO> _allReservations = new();
         private readonly GlobalViewModel _global;
-        private readonly IAuthService _auth;
         private readonly IReservationService _reservationService;
         private readonly IUserRepository _userRepo;
         private readonly IBoatRepository _boatRepo;
@@ -41,13 +39,12 @@ namespace RoeiVereniging.ViewModels
 
         public List<string> BoatNames { get; private set; } = new();
         public List<BoatLevel> Levels { get; private set; } = new();
-        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global, IAuthService auth, IUserRepository userRepo, IBoatRepository boatRepo)
+        public ReservationViewModel(IReservationService reservationService, GlobalViewModel global, IUserRepository userRepo, IBoatRepository boatRepo)
         {
             _reservationService = reservationService;
             _userRepo = userRepo;
             _boatRepo = boatRepo;
             _global = global;
-            _auth = auth;
 
 
             // Fill the columns, the BindingPath must mattch the name of a public property on the object pushed to the table component
@@ -56,7 +53,7 @@ namespace RoeiVereniging.ViewModels
             {
                 new() { Header = "Bootnaam", BindingPath = "BoatName", HeaderType = TableHeaderType.Select },
                 new() { Header = "Niveau", BindingPath = "BoatLevelText", HeaderType = TableHeaderType.Select },
-                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}", HeaderType = TableHeaderType.SortDate },
+                new() { Header = "Datum", BindingPath = "StartTime", StringFormat = "{0:dd/MM/yyyy}", HeaderType = TableHeaderType.SortDate},
                 new() { Header = "Tijd", BindingPath = "StartTime", StringFormat = "{0:HH:mm}", HeaderType = TableHeaderType.SortTime },
             };
 
@@ -73,9 +70,11 @@ namespace RoeiVereniging.ViewModels
 
             var reservations = _reservationService.GetByUser(user.Id);
 
-            _allReservations.Clear();
             MyReservations.Clear();
 
+            // Here I transform the reservations into a typed object (a DTO in this case).
+            // This DTO contains the data needed for the table and it gives typing to the public properties
+            // These public properties can now be accessed by the Binding path
             foreach (var reservation in reservations)
             {
                 if (boatById.TryGetValue(reservation.BoatId, out var boat))
@@ -92,12 +91,11 @@ namespace RoeiVereniging.ViewModels
                         boat.SteeringWheelPosition ? SteeringMode.Required : SteeringMode.Disabled
                     );
 
-                    _allReservations.Add(dto);
                     MyReservations.Add(dto);
                 }
             }
 
-            BoatNames = _allReservations
+            BoatNames = MyReservations
                 .Select(r => r.BoatName)
                 .Distinct()
                 .ToList();
@@ -105,7 +103,7 @@ namespace RoeiVereniging.ViewModels
             // I insert a None level to make sure user can reset filter
             BoatNames.Insert(0, "Bootnaam");
 
-            Levels = _allReservations
+            Levels = MyReservations
                 .Select(r => r.BoatLevel)
                 .Distinct()
                 .ToList();
