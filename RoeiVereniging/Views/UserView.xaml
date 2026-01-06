@@ -20,5 +20,6 @@
                 ItemsSource="{Binding Users}" 
                 Columns="{Binding UserTableColumns}"
                 RowClickedCommand="{Binding RowClickedCommand}"/>
+        
     </VerticalStackLayout>
 </ContentPage>

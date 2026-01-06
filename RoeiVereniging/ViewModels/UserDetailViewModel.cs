@@ -45,9 +45,9 @@ namespace RoeiVereniging.ViewModels
         }
 
         [RelayCommand]
-        private void OnEditUser()
+        public async Task OnEditUser()
         {
-            // Logic to edit user
+            await Shell.Current.GoToAsync($"{nameof(EditUserView)}?id={userData.UserId}");
         }
 
         private void LoadUserDetails(int userId)

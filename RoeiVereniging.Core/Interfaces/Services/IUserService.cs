@@ -8,5 +8,6 @@ namespace RoeiVereniging.Core.Interfaces.Services
         public User? Get(int id);
         public List<User> GetAll();
         public User? Set(User newuser);
+        public User? Update(User updatedUser);
     }
 }
