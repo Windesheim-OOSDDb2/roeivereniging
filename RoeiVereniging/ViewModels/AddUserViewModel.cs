@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using RoeiVereniging.Core.Helpers;
 using RoeiVereniging.Core.Interfaces.Services;
 using RoeiVereniging.Core.Models;
+using RoeiVereniging.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -66,7 +67,7 @@ namespace RoeiVereniging.ViewModels
         [RelayCommand]
         public async void GoBack()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync(nameof(UserView));
         }
 
         public void ShowSuccessPopup(User newUser)
