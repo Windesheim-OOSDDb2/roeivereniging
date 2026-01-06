@@ -34,16 +34,14 @@ namespace RoeiVereniging.ViewModels
         private string? password;
 
         [ObservableProperty]
-        private DateTime dateOfBirth = DateTime.Now;
-
+        private DateTime dateOfBirth;
         [ObservableProperty]
-        private BoatLevel selectedBoatLevel = BoatLevel.Beginner;
-
+        private BoatLevel selectedBoatLevel;
         [ObservableProperty]
         private Role selectedRole;
 
         [ObservableProperty]
-        private string? dateOfBirthDisplay = DateTime.Now.ToString("dd-MM-yyyy");
+        private string? dateOfBirthDisplay;
 
         [ObservableProperty]
         private string? errorMessage;
