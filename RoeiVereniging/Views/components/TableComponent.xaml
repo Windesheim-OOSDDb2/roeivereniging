@@ -3,7 +3,9 @@
     x:Class="RoeiVereniging.Views.Components.TableComponent"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="#F1F5F9">
+    BackgroundColor="#F1F5F9"
+    Margin="20"
+    >
 
     <VerticalStackLayout Spacing="12" Padding="12">
 

@@ -19,7 +19,9 @@
          Command="{Binding GoToAddBoatCommand}"
          StyleClass="PrimaryButton"
          BackgroundColor="#5FA6E8"
-         HorizontalOptions="Fill" />
+         WidthRequest="150"
+         HorizontalOptions="Start" 
+         Margin="20, 0"/>
 
 
         <HorizontalStackLayout 

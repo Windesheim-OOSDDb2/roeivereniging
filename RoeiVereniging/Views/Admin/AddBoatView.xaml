@@ -52,12 +52,12 @@
             <Label TextColor="#082757" Text="Boot soort"/>
             <Border Stroke="#DEE6F8" StrokeThickness="0">
                 <Picker
-    BackgroundColor="#DEE6F8"
-    TextColor="#082757"
-    ItemsSource="{Binding BoatTypes}"
-    SelectedItem="{Binding BoatType, Mode=TwoWay}"
-    ItemDisplayBinding="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
-
+                    BackgroundColor="#DEE6F8"
+                    TextColor="#082757"
+                    ItemsSource="{Binding BoatTypes}"
+                    SelectedItem="{Binding BoatType, Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Converter={StaticResource EnumDescriptionConverter}}" 
+                />
             </Border>
         </VerticalStackLayout>
 
