@@ -14,5 +14,6 @@ namespace RoeiVereniging.Core.Interfaces.Repositories
         public void Add(Damage damage);
 
         public List<Damage> GetAll();
+        public List<Damage>? GetByUserId(int damageId);
     }
 }

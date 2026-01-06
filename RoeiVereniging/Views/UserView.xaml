@@ -19,8 +19,8 @@
         />
 
         <components:TableComponent
-            ItemsSource="{Binding Users}" 
-            Columns="{Binding UserTableColumns}"
-        />
+                ItemsSource="{Binding Users}" 
+                Columns="{Binding UserTableColumns}"
+                RowClickedCommand="{Binding RowClickedCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
