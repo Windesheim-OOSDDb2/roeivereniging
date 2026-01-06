@@ -30,6 +30,9 @@ public partial class LoginViewModel : BaseViewModel
         if (user != null)
         {
             _global.currentUser = user;
+            Email = string.Empty;
+            Password = string.Empty;
+            LoginMessage = string.Empty;
         }
         else
         {
