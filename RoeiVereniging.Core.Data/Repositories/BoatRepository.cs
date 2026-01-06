@@ -24,9 +24,15 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Werkend},4, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Werkend},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Werkend},1, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(4,'Vliegende Vis',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Onderhoud},3, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(5,'Gloeiende Kwal',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Kapot},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(6,'Oreo Orca',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Kapot},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Werkend},4, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Expert},{(int)BoatStatus.Werkend},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Werkend},1, true)"
             });
             LoadBoats();
         }
@@ -85,7 +91,8 @@ namespace RoeiVereniging.Core.Data.Repositories
                 b.SeatsAmount == amount &&
                 b.SteeringWheelPosition == steeringwheelposition &&
                 b.Level == difficulty &&
-                b.Type == type).ToList();
+                b.Type == type &&
+                b.BoatStatus == BoatStatus.Werkend).ToList();
 
             return boats;
         }
@@ -117,6 +124,19 @@ namespace RoeiVereniging.Core.Data.Repositories
             }
             CloseConnection();
             return item;
+        }
+
+        public void UpdateStatus(Boat boat)
+        {
+            string updateQuery = "UPDATE boat SET status = @Status WHERE boat_id = @BoatId;";
+            OpenConnection();
+            using (SqliteCommand command = new(updateQuery, Connection))
+            {
+                command.Parameters.AddWithValue("Status", boat.BoatStatus);
+                command.Parameters.AddWithValue("BoatId", boat.BoatId);
+                command.ExecuteNonQuery();
+            }
+            CloseConnection();
         }
 
         public Boat Update(Boat item)

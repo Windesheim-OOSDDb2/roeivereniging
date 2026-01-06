@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
              xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
              x:Class="RoeiVereniging.Views.BoatDetailView"
+             x:DataType="vm:BoatDetailViewModel"
              BackgroundColor="White">
 
     <VerticalStackLayout Spacing="0">
@@ -20,13 +23,13 @@
             <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Boot Naam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding BoatDisplayText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding Boat.Name}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
             <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Stuur: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding SteeringModeText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding Boat.SteeringWheelPosition}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -34,13 +37,13 @@
             <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Niveau: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding BoatLevelText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding Boat.Level}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
             <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Aantal roeiers: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding Boat.SeatsAmount}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
 
@@ -48,7 +51,7 @@
             <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Status: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
-                    <Label Text="{Binding BoatStatusText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding Boat.BoatStatus}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
         </Grid>
@@ -72,7 +75,7 @@
                                 ItemsLayout="HorizontalList"
                                 HeightRequest="120">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="m:Damage">
                                 <Frame BackgroundColor="White"
                                    BorderColor="#0854d1"
                                    Padding="12"
@@ -97,9 +100,9 @@
         </Frame>
         <Grid ColumnDefinitions="*,*"
               Margin="0,0,0,0"
-              Padding="0,100,500,0">
+              Padding="0,0,500,0">
             <Button Grid.Column="0"
-                    Text="Verwijderen"
+                    Text="{Binding ChangeBoatStatusButtonText}"
                     BackgroundColor="#D32F2F"
                     TextColor="White"
                     FontAttributes="Bold"
@@ -108,7 +111,7 @@
                     HeightRequest="44"
                     CornerRadius="10"
                     HorizontalOptions="End"
-                    Command="{Binding DeleteBoatCommand}" />
+                    Command="{Binding ChangeBoatStatusCommand}" />
             <Button Grid.Column="1"
                     Text="Aanpassen"
                     BackgroundColor="#082757"
@@ -119,7 +122,8 @@
                     HeightRequest="44"
                     CornerRadius="10"
                     HorizontalOptions="End"
-                    Command="{Binding EditBoatCommand}" />
+                    Command="{Binding GoToEditBoatCommand}"
+                    CommandParameter="{Binding Boat.BoatId}"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

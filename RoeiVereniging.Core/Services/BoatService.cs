@@ -43,6 +43,11 @@ namespace RoeiVereniging.Core.Services
             return _boatRepository.Add(item);
         }
 
+        public void UpdateStatus(Boat boat)
+        {
+            _boatRepository.UpdateStatus(boat);
+        }
+
         public Boat Update(Boat item)
         {
             return _boatRepository.Update(item);

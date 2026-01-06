@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             x:Class="RoeiVereniging.Views.UserDetailView"
+             x:DataType="vm:UserDetailViewModel"
+             BackgroundColor="White">
+
+    <VerticalStackLayout Spacing="0">
+
+        <components:AdminPageHeader />
+        <HorizontalStackLayout Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 10">
+        </HorizontalStackLayout>
+
+
+        <Grid Margin="0,50,0,0" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="36">
+            <!-- Row 1 -->
+            <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Voornaam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserData.FirstName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Achternaam: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserData.LastName}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Row 2 -->
+            <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Email: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserData.EmailAddress}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Geboortedatum: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserData.DateOfBirth}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Row 3 -->
+            <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Niveau: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserData.Level}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Lid Id: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding UserData.UserId}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Row 4 -->
+            <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Reserveringen: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding ReservationCountText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="3" Grid.Column="1" BackgroundColor="#DEE6F8" CornerRadius="8" Padding="12" WidthRequest="600">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Aantal schade: " TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="{Binding DamageCountText}" TextColor="#082757" FontSize="16" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*"
+              Margin="0,0,0,0"
+              Padding="100,100,0,0">
+            <Button Grid.Column="0"
+                    Text="Verwijderen"
+                    BackgroundColor="#D32F2F"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    WidthRequest="500"
+                    HeightRequest="44"
+                    CornerRadius="10"
+                    HorizontalOptions="Start"
+                    Command="{Binding DeleteUserCommand}" />
+            <Button Grid.Column="1"
+                    Text="Aanpassen"
+                    BackgroundColor="#082757"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    WidthRequest="500"
+                    HeightRequest="44"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    Command="{Binding EditUserCommand}" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

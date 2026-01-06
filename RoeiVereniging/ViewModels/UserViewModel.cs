@@ -17,6 +17,20 @@ namespace RoeiVereniging.ViewModels
     public partial class UserViewModel : BaseViewModel
     {
         private readonly IUserRepository _userRepository;
+
+        public ICommand RowClickedCommand => new Command<User>(async user =>
+        {
+            // Await the previous navigation to complete before starting a new one
+            try
+            {
+                await Shell.Current.GoToAsync($"/UserDetailView?userId={user.UserId}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.WriteLine($"navigation error: {ex.Message}");
+            }
+        });
+
         public ObservableCollection<User> Users { get; } = new();
 
         public ICommand RowClickedCommand => new Command<User>(async user =>
