@@ -90,6 +90,7 @@ namespace RoeiVereniging.Core.Services
                                 if (boat != null && user != null)
                                 {
                                     _mailService.SendDangerousWeatherMail(reservation.StartTime, boat.name, user.EmailAddress);
+                                    reservation.Messaged = 1;
                                     _reservationService.MarkMessaged(reservation.Id);
                                 }
                             }
