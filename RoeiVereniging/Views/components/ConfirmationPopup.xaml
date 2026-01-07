@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="RoeiVereniging.Views.components.ConfirmationPopup"
+               Color="Transparent"
+               CanBeDismissedByTappingOutsideOfPopup="False">
+
+    <Border StrokeShape="RoundRectangle 10"
+            StrokeThickness="0"
+            BackgroundColor="#E2EAF7"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="590"
+            Padding="0">
+
+        <Grid ColumnDefinitions="*, Auto"
+              RowDefinitions="Auto, Auto, Auto"
+              Padding="40,50"
+              RowSpacing="30"
+              ColumnSpacing="40">
+
+            <Label x:Name="MessageTitle"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   TextColor="Black"
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+
+            <VerticalStackLayout Grid.Row="1" Grid.Column="0"
+                                 Spacing="25"
+                                 VerticalOptions="Center">
+                <Label x:Name="MessageLabel"
+                       TextColor="Black"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" />
+
+                <Label x:Name="MessageFooter"
+                       TextColor="Black"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <Frame x:Name="QrCode"
+                   Grid.Row="1" Grid.Column="1"
+                   Padding="10"
+                   BackgroundColor="White"
+                   CornerRadius="10"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center">
+                <Image x:Name="QrCodeImage"
+                       WidthRequest="150"
+                       HeightRequest="150"
+                       Aspect="AspectFit"
+                       Source="{Binding QrCodeImage}" />
+            </Frame>
+
+            <Button Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Text="Klaar"
+                    BackgroundColor="#0f2a50"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="60"
+                    HorizontalOptions="Fill"
+                    Clicked="OnDoneClicked"/>
+        </Grid>
+    </Border>
+</toolkit:Popup>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoeiVereniging.Views.ReportDamageView"
+			 xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
+
+        <VerticalStackLayout Spacing="0">
+	        <components:PageHeader PageTitle="Schade melden" />
+            <!-- Titel -->
+            <Label Text="{Binding BoatDisplayText}"
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="#0A2A5C"
+                   Margin="0,0,0,24"/>
+            
+            <!-- Schade label en editor -->
+            <VerticalStackLayout Padding="130, 0" Spacing="20">
+                <Label Text="Schade"
+                       FontSize="22"
+                       TextColor="Black"
+                       Margin="38,0,0,0"/>
+                <Frame BorderColor="Black"
+					   BackgroundColor="White"
+                       CornerRadius="10"
+                       Padding="0"
+                       HasShadow="False"
+                       HeightRequest="120"
+					   Margin="36,20,32,20">
+                    <Editor Text="{Binding Description}"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Margin="8,0"
+							TextColor="Black"
+                            AutoSize="TextChanges"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <!-- Ernst  -->
+            <HorizontalStackLayout Padding="130,0" Spacing="0">
+                <Picker Title="Ernst"
+						TitleColor="Black"
+                        ItemsSource="{Binding SeverityLevels}"
+                        SelectedItem="{Binding Severity}"
+                        FontSize="22"
+                        BackgroundColor="#E6ECFA"
+                        TextColor="Black"
+                        HeightRequest="100"
+                        WidthRequest="160"
+                        HorizontalOptions="Start"
+                        Margin="36,0,32,20"/>
+            </HorizontalStackLayout>
+
+            <!-- Schade melden knop -->
+            <Button Text="Schade melden"
+                    Command="{Binding SubmitReportCommand}"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    BackgroundColor="#0A2A5C"
+                    TextColor="White"
+                    CornerRadius="8"
+					WidthRequest="1550"
+                    Margin="32,80,32,0"
+                    HorizontalOptions="Fill"/>
+
+            <HorizontalStackLayout>
+                <!-- Feedback -->
+			    <Label Text="{Binding FeedbackMessage}"
+				   TextColor="Green"
+				   FontAttributes="Bold"
+				   FontSize="18"
+				   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+				   Margin="830,50,0,0"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+</ContentPage>

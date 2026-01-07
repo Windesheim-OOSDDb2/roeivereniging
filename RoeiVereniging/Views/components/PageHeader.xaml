@@ -4,36 +4,51 @@
     x:Name="This"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="White">
+    Margin="0,0,0,12">
 
-    <Grid Padding="20,0" ColumnDefinitions="Auto, *, Auto">
+    <Border
+        BackgroundColor="White"
+        Padding="20,14"
+        Stroke="Transparent">
 
-        <ImageButton
-        Grid.Column="0"
-        Source="logo.png"
-        HeightRequest="100"
-        VerticalOptions="Center"
-        Clicked="OnHomeClicked"/>
+        <Border.Shadow>
+            <Shadow
+                Offset="0,1"
+                Radius="2"
+                Opacity="0.2" />
+        </Border.Shadow>
 
-        <ImageButton
-        Grid.Column="2"
-        Source="back.png"
-        HeightRequest="32"
-        WidthRequest="32"
-        Clicked="OnBackClicked"
-        VerticalOptions="Center"
-        HorizontalOptions="End" />
+        <Grid Padding="0"
+              ColumnDefinitions="Auto,*,Auto"
+              VerticalOptions="Center">
 
-        <Label
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Text="{Binding PageTitle, Source={x:Reference This}}"
-            FontSize="32"
-            FontAttributes="Bold"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            TextColor="#082757"
-            InputTransparent="True" />
-    </Grid>
+            <ImageButton
+                Grid.Column="0"
+                Source="logo.png"
+                HeightRequest="48"
+                VerticalOptions="Center"
+                Clicked="OnHomeClicked"/>
+
+            <ImageButton
+                Grid.Column="2"
+                Source="back.png"
+                HeightRequest="32"
+                WidthRequest="32"
+                Clicked="OnBackClicked"
+                VerticalOptions="Center"
+                HorizontalOptions="End" />
+
+            <Label
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Text="{Binding PageTitle, Source={x:Reference This}}"
+                FontSize="20"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="#082757"
+                InputTransparent="True" />
+        </Grid>
+    </Border>
 
 </ContentView>

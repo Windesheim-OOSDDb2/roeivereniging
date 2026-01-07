@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:m="clr-namespace:RoeiVereniging.Core.Models;assembly=RoeiVereniging.Core"
+             x:Class="RoeiVereniging.Views.WeatherView"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="DarkBlue">#0047AB</Color>
+        <Color x:Key="LightBlue">#5C9BE5</Color>
+        <Color x:Key="HeaderColor">#0D2E60</Color>
+        <Color x:Key="LiveBackgroundColor">#D7263D</Color>
+        <StyleSheet Source="/Resources/Styles/global.css" />
+    </ContentPage.Resources>
+
+
+    <Grid RowDefinitions="Auto, *">
+        <components:PageHeader PageTitle="Weersverwachting"/>
+        <Grid Padding="20,10" Grid.Row="1" ColumnDefinitions="4*, 5*" ColumnSpacing="140">
+
+            <Border Grid.Column="0" 
+                    BackgroundColor="{Binding LiveBackgroundColor}"
+                    StrokeThickness="0">
+                <Grid RowDefinitions="Auto, *, Auto">
+                    <Label Grid.Row="0"
+                           Text="Vandaag"
+                           TextColor="White"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,30,0,0"/>
+
+                    <HorizontalStackLayout Grid.Row="1" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center"
+                                           Spacing="10">
+                        <Image Source="{Binding LiveWeatherIcon}" 
+                               HeightRequest="150" 
+                               WidthRequest="150" 
+                               VerticalOptions="Center" 
+                               Aspect="AspectFit"/>
+
+                        <Label Text="{Binding LiveWeather.Temp}"
+                               TextColor="White"
+                               FontSize="80"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+                        <Label Text="°"
+                               FontSize="80"
+                               FontAttributes="Bold"/>
+                    </HorizontalStackLayout>
+
+                    <Label Grid.Row="2"
+                           Text="{Binding LiveWeatherMessage}"
+                           TextColor="White"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           Margin="0,10,0,20">
+                        <Label.Triggers>
+                            <!-- Hide when message is empty -->
+                            <DataTrigger TargetType="Label" Binding="{Binding LiveWeatherMessage}" Value="">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <!-- Hide when message is null -->
+                            <DataTrigger TargetType="Label" Binding="{Binding LiveWeatherMessage}" Value="{x:Null}">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    BackgroundColor="#0854D1"
+                    StrokeThickness="0">
+                <Grid RowDefinitions="Auto, *, Auto">
+                    <VerticalStackLayout Grid.Column="1">
+                        <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding WkVerw}"
+                            SelectionMode="None"
+                            BackgroundColor="Transparent">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto, Auto, *"
+                                        BackgroundColor="{StaticResource LightBlue}"
+                                        HeightRequest="90"
+                                        Padding="15,0"
+                                        Margin="0,0,0,12">
+                                        <Image Grid.Column="0" Source="{Binding IconImage}" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" Aspect="AspectFit"/>
+                                        <Label Grid.Column="1" Text="{Binding TempRange}" TextColor="White" FontSize="30" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="{Binding Dag}" TextColor="White" FontSize="28" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                            <CollectionView.EmptyView>
+                                <StackLayout Spacing="16">
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Label Grid.Column="1" Text="" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Label Grid.Column="1" Text="" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Label Grid.Column="1" Text="" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Label Grid.Column="1" Text="" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource LightBlue}" HeightRequest="120" Padding="15,0" Margin="0,0,0,12">
+                                        <Label Grid.Column="1" Text="" TextColor="White" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" Margin="15,0,0,0"/>
+                                        <Label Grid.Column="2" Text="" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"/>
+                                    </Grid>
+                                </StackLayout>
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                    <Label Grid.Row="0"
+                        Text="{Binding LiveWeatherMessage}"
+                        TextColor="White"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        Margin="0,0,0,6">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding LiveWeatherMessage}" Value="">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding LiveWeatherMessage}" Value="{x:Null}">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             x:Class="RoeiVereniging.Views.BoatListView"
+             BackgroundColor="White">
+
+    <ContentPage.BindingContext>
+        <viewmodels:BoatListViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Spacing="0">
+
+        <components:AdminPageHeader />
+        
+        <Button
+         Text="Boot toevoegen"
+         Command="{Binding GoToAddBoatCommand}"
+         StyleClass="PrimaryButton"
+         BackgroundColor="#5FA6E8"
+         TextColor="#082757"
+         WidthRequest="150"
+         HorizontalOptions="Start" 
+         Margin="20, 0"/>
+
+
+        <HorizontalStackLayout 
+            Padding="0,0,180,0" HorizontalOptions="End" BackgroundColor="White" Margin="0, 0, 0, 0">
+        </HorizontalStackLayout>
+        
+       
+        <components:TableComponent
+            Columns="{Binding BoatTableColumns}"
+            ItemsSource="{Binding Boats}"
+            RowClickedCommand="{Binding RowClickedCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

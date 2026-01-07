@@ -8,8 +8,9 @@ namespace RoeiVereniging.Core.Models
 {
     public enum BoatStatus : ushort
     {
-        Working = 0,
-        Broken = 1,
-        Fixing = 2,
+        Werkend = 0,
+        Kapot = 1,
+        Onderhoud = 2,
+        Gearchiveerd = 3
     }
 }

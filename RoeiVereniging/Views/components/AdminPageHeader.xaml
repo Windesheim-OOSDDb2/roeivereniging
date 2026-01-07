@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="RoeiVereniging.Views.Components.AdminPageHeader"
+    x:Name="This"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Margin="0,0,0,12">
+
+    <Border
+        BackgroundColor="White"
+        Padding="20,14"
+        Stroke="Transparent">
+
+        <Border.Shadow>
+            <Shadow
+                Offset="0,1"
+                Radius="2"
+                Opacity="0.2" />
+        </Border.Shadow>
+
+        <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+
+            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <Image Source="logo.png" HeightRequest="48" />
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout
+                Grid.Column="1"
+                Spacing="40"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="6">
+                    <Button
+                        Text="Gebruikers"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        BackgroundColor="Transparent"
+                        TextColor="#082757"
+                        Clicked="OnGebruikersClicked" />
+                    <BoxView
+                        HeightRequest="3"
+                        WidthRequest="28"
+                        Color="#082757"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsGebruikersActive}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Button
+                        Text="Boten"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        BackgroundColor="Transparent"
+                        TextColor="#082757"
+                        Clicked="OnBotenClicked" />
+                    <BoxView
+                        HeightRequest="3"
+                        WidthRequest="28"
+                        Color="#082757"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsBotenActive}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Button
+                        Text="Reparaties"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        BackgroundColor="Transparent"
+                        TextColor="#082757"
+                        Clicked="OnReparatiesClicked" />
+                    <BoxView
+                        HeightRequest="3"
+                        WidthRequest="28"
+                        Color="#082757"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsReparatiesActive}" />
+                </VerticalStackLayout>
+
+                <!-- For when we have a KPI dashboard -->
+                <!-- <VerticalStackLayout Spacing="6">
+                    <Button
+                        Text="Overzicht"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        BackgroundColor="Transparent"
+                        TextColor="#082757"
+                        Clicked="OnOverzichtClicked" />
+                    <BoxView
+                        HeightRequest="3"
+                        WidthRequest="28"
+                        Color="#082757"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsOverzichtActive}" />
+                </VerticalStackLayout> -->
+
+            </HorizontalStackLayout>
+
+            <ImageButton
+                Grid.Column="2"
+                Source="logout.png"
+                HeightRequest="28"
+                WidthRequest="28"
+                BackgroundColor="Transparent"
+                Clicked="OnLogoutClicked"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+
+        </Grid>
+    </Border>
+
+</ContentView>

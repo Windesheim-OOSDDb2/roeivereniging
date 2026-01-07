@@ -7,6 +7,8 @@ using RoeiVereniging.Core.Interfaces.Repositories;
 using RoeiVereniging.Core.Data.Repositories;
 using CommunityToolkit.Maui;
 using RoeiVereniging.Core.Repositories;
+using RoeiVereniging.Views.Admin;
+using RoeiVereniging.ViewModels.admin;
 
 namespace RoeiVereniging
 {
@@ -31,18 +33,46 @@ namespace RoeiVereniging
             builder.Services.AddSingleton<IBoatService, BoatService>();
             builder.Services.AddSingleton<IReservationService, ReservationService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
+            builder.Services.AddSingleton<IAuthService, AuthService>();
+            builder.Services.AddSingleton<IQrCodeService, QrCodeService>();
 
             // Repositories
             builder.Services.AddSingleton<IBoatRepository, BoatRepository>();
             builder.Services.AddSingleton<IReservationRepository, ReservationRepository>();
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
+            builder.Services.AddSingleton<IDamageRepository, DamageRepository>();
 
             // Views and ViewModels
-            builder.Services.AddTransient<StartView>().AddTransient<StartViewModel>();
+            builder.Services.AddTransient<LoginView>().AddTransient<LoginViewModel>();
             builder.Services.AddTransient<ReserveBoatView>().AddTransient<ReserveBoatViewModel>();
             builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
+            builder.Services.AddTransient<AddBoatView>().AddTransient<AddBoatViewModel>();
+            builder.Services.AddTransient<ReservationView>().AddTransient<ReservationViewModel>();
+            builder.Services.AddTransient<AdminDashboardView>().AddTransient<AdminDashboardViewModel>();
             builder.Services.AddTransient<WeatherView>().AddTransient<WeatherViewModel>();
-            return builder.Build();
+            builder.Services.AddTransient<ReservationDetailView>().AddTransient<ReservationDetailViewModel>();
+            builder.Services.AddTransient<ReportDamageView>().AddTransient<ReportDamageViewModel>();
+            builder.Services.AddTransient<AddUserView>().AddTransient<AddUserViewModel>();
+            builder.Services.AddTransient<EditUserView>().AddTransient<EditUserViewModel>();
+            builder.Services.AddTransient<UserView>().AddTransient<UserViewModel>();
+            builder.Services.AddTransient<UserDetailView>().AddTransient<UserDetailViewModel>();
+            builder.Services.AddTransient<EditBoatView>().AddTransient<EditBoatViewModel>();
+            builder.Services.AddTransient<RepairView>().AddTransient<RepairViewModel>();
+
+            builder.Services.AddSingleton<GlobalViewModel>();
+            builder.Services.AddSingleton<AppShell>();
+
+            // Background Services
+            builder.Services.AddSingleton<BadweatherCheckerBackgroundServices>();
+
+            // Build the app
+            var app = builder.Build();
+
+            // After building the app, start the backgrouservice
+            app.Services.GetService<BadweatherCheckerBackgroundServices>()?.Start();
+
+            return app;
         }
     }
 }

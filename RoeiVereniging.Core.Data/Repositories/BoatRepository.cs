@@ -10,6 +10,7 @@ namespace RoeiVereniging.Core.Data.Repositories
 
         public BoatRepository()
         {
+
             CreateTable(@"
                 CREATE TABLE IF NOT EXISTS boat (
                     boat_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,9 +24,15 @@ namespace RoeiVereniging.Core.Data.Repositories
             ");
 
             InsertMultipleWithTransaction(new List<string> {
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Roeiboot},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},4, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Kano},{(int)BoatLevel.Expert},{(int)BoatStatus.Working},2, true)",
-               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.Kano},{(int)BoatLevel.Beginner},{(int)BoatStatus.Working},1, true)"
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.onex},{(int)BoatLevel.Expert},{(int)BoatStatus.Werkend},1, false)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.twox},{(int)BoatLevel.Gemiddeld},{(int)BoatStatus.Werkend},2, false)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.fourxmin},{(int)BoatLevel.Gevorderd},{(int)BoatStatus.Werkend},4, false)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(4,'Vliegende Vis',{(int)BoatType.fourxplus},{(int)BoatLevel.Gemiddeld},{(int)BoatStatus.Onderhoud},4, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(5,'Gloeiende Kwal',{(int)BoatType.Conex},{(int)BoatLevel.Beginner},{(int)BoatStatus.Kapot},1, false)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(6,'Oreo Orca',{(int)BoatType.Ctwox},{(int)BoatLevel.Beginner},{(int)BoatStatus.Kapot},2, false)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(1,'Zwarte Parel',{(int)BoatType.Ctwoxplus},{(int)BoatLevel.Beginner},{(int)BoatStatus.Werkend},2, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(2,'Blauwe Dolfijn',{(int)BoatType.Cfourxplus},{(int)BoatLevel.Beginner},{(int)BoatStatus.Werkend},4, true)",
+               $@"INSERT OR IGNORE INTO boat (boat_id, name, type, level, status, seats_amount, SteeringwheelPosition) VALUES(3,'Snelle Tonijn',{(int)BoatType.twomin},{(int)BoatLevel.Gevorderd},{(int)BoatStatus.Werkend},2, false)"
             });
             LoadBoats();
         }
@@ -37,8 +44,8 @@ namespace RoeiVereniging.Core.Data.Repositories
             string sql = "SELECT * FROM boat";
 
             OpenConnection();
-            using var command = new SqliteCommand(sql, Connection);
-            using var reader = command.ExecuteReader();
+            using SqliteCommand command = new SqliteCommand(sql, Connection);
+            using SqliteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
@@ -50,7 +57,7 @@ namespace RoeiVereniging.Core.Data.Repositories
                 int seats = reader.GetInt32(5);
                 bool steering = reader.GetBoolean(6);
 
-                var boat = new Boat(
+                Boat boat = new Boat(
                     id,
                     name,
                     seats,
@@ -78,25 +85,80 @@ namespace RoeiVereniging.Core.Data.Repositories
             return boat;
         }
 
-        public Boat? Get(int amount, bool steeringwheelposition, string difficulty, BoatType type)
+        public List<Boat> Get(int amount, bool steeringwheelposition, BoatLevel difficulty, BoatType type)
         {
-            if (!Enum.TryParse<BoatLevel>(difficulty, true, out var minLevel))
-            {
-                return boatList.FirstOrDefault();
-            }
-
-            var boat = boatList.FirstOrDefault(b =>
+            List<Boat> boats = boatList.Where(b =>
                 b.SeatsAmount == amount &&
-                b.SteeringWheelPosition == steeringwheelposition &&
-                b.Level == minLevel &&
-                b.BoatType == type);
+                b.Level == difficulty &&
+                b.Type == type &&
+                b.BoatStatus == BoatStatus.Werkend).ToList();
 
-            return boat ?? boatList.FirstOrDefault();
+            return boats;
+        }
+
+        public Boat? GetById(int id)
+        {
+            return boatList.FirstOrDefault(b => b.BoatId == id);
         }
 
         public List<Boat> GetAll()
         {
             return boatList;
         }
+
+        public Boat Add(Boat item)
+        {
+            string insertQuery = $"INSERT INTO boat(name, Steeringwheelposition, seats_amount, level, type, status) VALUES(@Name, @SteeringWheelPosition, @Seats_Amount, @Level, @Type, @Status) Returning RowId;";
+            OpenConnection();
+            using (SqliteCommand command = new(insertQuery, Connection))
+            {
+                command.Parameters.AddWithValue("Name", item.Name);
+                command.Parameters.AddWithValue("SteeringWheelPosition", item.SteeringWheelPosition);
+                command.Parameters.AddWithValue("Seats_Amount", item.SeatsAmount);
+                command.Parameters.AddWithValue("Level", item.Level);
+                command.Parameters.AddWithValue("Type", item.Type);
+                command.Parameters.AddWithValue("Status", item.BoatStatus);
+
+                item.Id = Convert.ToInt32(command.ExecuteScalar());
+            }
+            CloseConnection();
+            return item;
+        }
+
+        public void UpdateStatus(Boat boat)
+        {
+            string updateQuery = "UPDATE boat SET status = @Status WHERE boat_id = @BoatId;";
+            OpenConnection();
+            using (SqliteCommand command = new(updateQuery, Connection))
+            {
+                command.Parameters.AddWithValue("Status", boat.BoatStatus);
+                command.Parameters.AddWithValue("BoatId", boat.BoatId);
+                command.ExecuteNonQuery();
+            }
+            CloseConnection();
+        }
+
+        public Boat Update(Boat item)
+        {
+            string updateQuery = @"UPDATE boat SET name = @Name, SteeringwheelPosition = @SteeringWheelPosition, seats_amount = @Seats_Amount, level = @Level, type = @Type, status = @Status WHERE boat_id = @BoatId;";
+
+            OpenConnection();
+            using (SqliteCommand command = new(updateQuery, Connection))
+            {
+                command.Parameters.AddWithValue("@Name", item.Name);
+                command.Parameters.AddWithValue("@SteeringWheelPosition", item.SteeringWheelPosition);
+                command.Parameters.AddWithValue("@Seats_Amount", item.SeatsAmount);
+                command.Parameters.AddWithValue("@Level", (int)item.Level);
+                command.Parameters.AddWithValue("@Type", (int)item.Type);
+                command.Parameters.AddWithValue("@Status", (int)item.BoatStatus);
+                command.Parameters.AddWithValue("@BoatId", item.BoatId);
+
+                command.ExecuteNonQuery();
+            }
+
+            CloseConnection();
+            return item;
+        }
+
     }
 }

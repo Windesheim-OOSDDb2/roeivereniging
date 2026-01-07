@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoeiVereniging.Views.UserView"
+             xmlns:viewmodels="clr-namespace:RoeiVereniging.ViewModels"
+             xmlns:components="clr-namespace:RoeiVereniging.Views.Components"
+             BackgroundColor="White">
+    <VerticalStackLayout>
+
+        <components:AdminPageHeader />
+        <Button
+            Text="Gebruiker toevoegen"
+            Command="{Binding GoToAddUserCommand}"
+            StyleClass="PrimaryButton"
+            BackgroundColor="#5FA6E8"
+            TextColor="#082757"
+            HorizontalOptions="Start" 
+            WidthRequest="200"
+            Margin="20, 0"
+        />
+
+        <components:TableComponent
+                ItemsSource="{Binding Users}" 
+                Columns="{Binding UserTableColumns}"
+                RowClickedCommand="{Binding RowClickedCommand}"/>
+        
+    </VerticalStackLayout>
+</ContentPage>

@@ -10,11 +10,11 @@ namespace RoeiVereniging.Core.Models
     public partial class Boat : Model
     {
         public int BoatId { get; set; }
-        public BoatLevel Level { get; set; }
         public int SeatsAmount { get; set; }
-        public bool SteeringWheelPosition { get; set; }
-        public BoatType BoatType { get; set; } = BoatType.Roeiboot;
-        public BoatStatus BoatStatus { get; set; } = BoatStatus.Working;
+        public bool SteeringWheelPosition {  get; set; }
+        public BoatLevel Level { get; set; }
+        public BoatType Type { get; set; }
+        public BoatStatus BoatStatus { get; set; } = BoatStatus.Werkend;
 
         public Boat(int id, string name, int seatsAmount, bool steeringWheelPosition, BoatLevel level, BoatStatus boatStatus, BoatType boatType)
             : base(id, name)
@@ -24,7 +24,7 @@ namespace RoeiVereniging.Core.Models
             SteeringWheelPosition = steeringWheelPosition;
             Level = level;
             BoatStatus = boatStatus;
-            BoatType = boatType;
+            Type = boatType;
         }
         public override string? ToString()
         {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="RoeiVereniging.Views.Components.TableComponent"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#F1F5F9"
+    Margin="20"
+    >
+
+    <VerticalStackLayout Spacing="12" Padding="12">
+
+        <Frame CornerRadius="0" BackgroundColor="#dee6f8" Padding="12" BorderColor="Transparent" HasShadow="True">
+            <Grid x:Name="HeaderGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="Center"/>
+        </Frame>
+
+        <CollectionView x:Name="TableView" 
+                        ItemSizingStrategy="MeasureFirstItem" 
+                        SelectionMode="None"
+                        HeightRequest="450">
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentView>

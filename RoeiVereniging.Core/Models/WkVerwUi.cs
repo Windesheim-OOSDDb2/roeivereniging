@@ -12,7 +12,7 @@ namespace RoeiVereniging.Core.Models
         private readonly WkVerw _dto;
 
         public WkVerwUi(WkVerw dto) => _dto = dto ?? throw new ArgumentNullException(nameof(dto));
-
+        public string Datum => _dto.Dag;
         public string Dag => ConvertDateToDayHelper.ConvertToDayName(_dto.Dag) ?? string.Empty;
         public double MinTemp => _dto.MinTemp;
         public double MaxTemp => _dto.MaxTemp;
